@@ -18,7 +18,7 @@ public class Sala implements Serializable {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Codigo;
+    private Integer codigo;
 
 
 

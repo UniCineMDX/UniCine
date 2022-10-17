@@ -16,6 +16,5 @@ public interface AdministradorSuperRepo extends JpaRepository<AdministradorSuper
 
     @Query("select a from AdministradorSuper a where a.correo = :correo and a.password = :password")
     AdministradorSuper comprobarAutenticacion(String correo, String password);
-
     AdministradorSuper findByCorreoAndPassword(String correo, String password);
 }
