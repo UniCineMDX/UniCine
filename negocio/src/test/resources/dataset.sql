@@ -110,6 +110,7 @@ insert into compra values (5, "2022/06/09", "TARJETA_CREDITO", 20000, "123", 5, 
 
 
 
+
 insert into entrada values (1, 1, "ASISTIO", 1, 6000, 1);
 insert into entrada values (2, 1, "ASISTIO", 2, 6000, 1);
 insert into entrada values (3, 1, "ASISTIO", 3, 6000, 2);
