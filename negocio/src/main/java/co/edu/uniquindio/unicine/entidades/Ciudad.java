@@ -34,6 +34,7 @@ public class Ciudad implements Serializable {
      * Este es el metodo constructor de la clase Ciudad
      * @param nombre
      */
+    @Builder
     public Ciudad(String nombre) {
         this.nombre = nombre;
     }
