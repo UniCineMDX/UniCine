@@ -13,4 +13,8 @@ public interface CuponClienteRepo extends JpaRepository<CuponCliente, Integer>{
     //alreves
     @Query("select cup from Cliente cli join cli.cupones cup where cli.correo = :correo")
     List<CuponCliente>obtenerCupones (String correo);
+
+    //Esta consulta busca el cupon de un cliente dado el codigo del cupon
+    @Query("select cupCli from CuponCliente cupCli where cupCli.cupon.codigo = :codigoCupon")
+    CuponCliente buscarCuponClientePorCodigoCupon(Integer codigoCupon);
 }

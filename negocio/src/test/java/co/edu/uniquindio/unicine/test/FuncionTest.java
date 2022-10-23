@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
+import co.edu.uniquindio.unicine.dto.FuncionDTO;
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.FuncionRepo;
 import co.edu.uniquindio.unicine.repo.HorarioRepo;
@@ -18,116 +19,88 @@ import java.util.Optional;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class FuncionTest {
-
     @Autowired
     private FuncionRepo funcionRepo;
-
-
-    @Autowired
-    private HorarioRepo horarioRepo;
-
 
     @Autowired
     private PeliculaRepo peliculaRepo;
 
+    @Autowired
+    private HorarioRepo horarioRepo;
 
     @Autowired
     private SalaRepo salaRepo;
 
-
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void registrar(){
-
-        Horario horario = horarioRepo.findById(1).get();
-
-        Pelicula pelicula = peliculaRepo.findById(1).get();
-
-        Sala sala = salaRepo.findById(1).get();
-
-        Funcion funcion = new Funcion(6.500,horario,pelicula,sala);
-        Funcion guardado = funcionRepo.save(funcion);
-
-        System.out.println(guardado);
-
-    }
-
-
+    //@Autowired
+    //private AdminTeatroServicioImpl adminTeatroServicioImpl;
 
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerPeliculaFuncion(){
-
-        String nombrePelicula = funcionRepo.obtenerNombrePelicula(1);
-
-        Assertions.assertEquals("Corre", nombrePelicula);
-
-        System.out.println(nombrePelicula);
-
+        String nombrePelicula = funcionRepo.obtenerNombrePelicula(5);
+        Assertions.assertEquals("Batman", nombrePelicula);
     }
 
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerPeliculas(){
+        List<Pelicula> listaPelicula = funcionRepo.obtenerPelicula();
+        listaPelicula.forEach(System.out::println);
+    }
 
-
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFunciones(){
+        List<FuncionDTO> listaFunciones = funcionRepo.listarFunciones(2);
+        listaFunciones.forEach(System.out::println);
+    }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerFuncionesSinCompra(){
-
-        List<Funcion>funciones = funcionRepo.obtenerFuncionesSinCompra(1);
-
-        funciones.forEach(System.out::println);
-
-
+        List<Funcion> listaFuncion = funcionRepo.obtenerFuncionesSinCompra(3);
+        System.out.println(listaFuncion);
     }
+
+    /*
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesTeatro(){
+        List<Funcion> listaFunciones = funcionRepo.obtenerFuncionesTeatro(1, "", "");
+        System.out.println(listaFunciones);
+    }*/
 
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminar(){
-
-        Funcion buscado = funcionRepo.findById(1).orElse(null);
-        funcionRepo.delete(buscado);
-
-        Assertions.assertNull(funcionRepo.findById(1).orElse(null));
-
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar(){
-
-        Funcion guardado = funcionRepo.findById(1).orElse(null);
-        guardado.setPrecio(9000.0);
-
-        Funcion nuevo = funcionRepo.save(guardado);
-
-        Assertions.assertEquals(9000.0, nuevo.getPrecio());
-
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener(){
-
-        Optional<Funcion> buscado = funcionRepo.findById(1);
-
-        Assertions.assertNotNull(buscado.orElse(null));
-
+    public void ListaEntradas(){
+        List<Entrada> listaEntradas = funcionRepo.listaEntradas(4);
+        System.out.println(listaEntradas);
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void listar() {
-
-        List<Funcion> lista = funcionRepo.findAll();
-
-        //for each para que no aparezcan todos pegados
-        lista.forEach(System.out::println);
-
+    public void ListasCompras() {
+        List<Compra> listaCompras = funcionRepo.listaCompra(3);
+        System.out.println(listaCompras);
     }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void verificarSillas() {
+        List<Entrada> listaEntradas = funcionRepo.verificarSillas(1, 2, 2);
+        System.out.println(listaEntradas);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void verificarSilla() {
+        Entrada entrada = funcionRepo.verificarSilla(1, 3, 3);
+        System.out.println(entrada);
+    }
+
+
+
+
 
 }

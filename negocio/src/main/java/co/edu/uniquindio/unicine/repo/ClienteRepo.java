@@ -14,7 +14,6 @@ public interface ClienteRepo extends JpaRepository<Cliente, String>{
 
     @Query("select c from Cliente c where c.correo = ?1")
     Cliente obtener(String email);
-
     Cliente findByCorreo(String correo);
 
     @Query("select c from Cliente c where c.correo = :correo and c.password = :password")
@@ -33,4 +32,6 @@ public interface ClienteRepo extends JpaRepository<Cliente, String>{
 
     @Query("select cli.nombre, comp from Cliente cli left join cli.compras comp")
     List<Object[]>obtenerComprasTodos();
+
+
 }

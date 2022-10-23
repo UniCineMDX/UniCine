@@ -19,18 +19,12 @@ public class Teatro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
-
     @Column(nullable = false, length = 50)
     private String direccion;
 
 
     @Column(nullable = false, length = 10)
     private String telefono;
-
-
-    @Enumerated(EnumType.STRING)
-    private EstadoTeatro estadoTeatro;
-
 
 
     @ManyToOne
@@ -47,11 +41,9 @@ public class Teatro implements Serializable {
     @ToString.Exclude
     private List<Sala>salas;
 
-
-    public Teatro(String direccion, String telefono, EstadoTeatro estadoTeatro, AdministradorTeatro admiTeatro, Ciudad ciudad) {
+    public Teatro(String direccion, String telefono, AdministradorTeatro admiTeatro, Ciudad ciudad) {
         this.direccion = direccion;
         this.telefono = telefono;
-        this.estadoTeatro = estadoTeatro;
         this.admiTeatro = admiTeatro;
         this.ciudad = ciudad;
     }

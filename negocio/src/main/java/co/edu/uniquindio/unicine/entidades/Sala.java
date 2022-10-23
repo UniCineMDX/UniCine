@@ -21,7 +21,6 @@ public class Sala implements Serializable {
     private Integer codigo;
 
 
-
     @Column(nullable = false,length = 50)
     private String nombre;
 
@@ -37,15 +36,19 @@ public class Sala implements Serializable {
     private List<Funcion>funciones;
 
 
+    @Enumerated(EnumType.STRING)
+    private EstadoSala estadoSala;
+
 
     @ManyToOne
     @ToString.Exclude
     private Teatro teatro;
 
-
-    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro) {
+    public Sala(String nombre, DistribucionSilla distribucionSilla, EstadoSala estadoSala, Teatro teatro) {
         this.nombre = nombre;
         this.distribucionSilla = distribucionSilla;
+        this.estadoSala = estadoSala;
         this.teatro = teatro;
     }
+
 }

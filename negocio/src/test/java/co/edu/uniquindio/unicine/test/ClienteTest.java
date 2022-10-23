@@ -5,6 +5,7 @@ import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.CuponCliente;
 import co.edu.uniquindio.unicine.entidades.EstadoCliente;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -19,9 +21,6 @@ public class ClienteTest {
 
     @Autowired
     private ClienteRepo clienteRepo;
-
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -34,8 +33,12 @@ public class ClienteTest {
 
     }
 
-
-
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtener(){
+        Optional<Cliente> clienteBuscado = clienteRepo.findById("123");
+        Assertions.assertNotNull(clienteBuscado.orElse(null));
+    }
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -47,7 +50,6 @@ public class ClienteTest {
         compras.forEach(System.out::println);
 
     }
-
 
 
     @Test
@@ -71,6 +73,23 @@ public class ClienteTest {
                 System.out.println(o[0] + "," + o[1])
         );
 
+    }
+/*
+    @Test
+    public void eliminar(){
+        Cliente clienteBuscado = clienteRepo.findById("344").orElse(null);
+        clienteRepo.delete(clienteBuscado);
+        Assertions.assertNull(clienteRepo.findById("344").orElse(null));
+    }
+*/
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void actualizar(){
+        Cliente guardado = clienteRepo.findById("123").orElse(null);
+        guardado.setNombre("Camilo");
+        Cliente clienteNuevo = clienteRepo.save(guardado);
+        Assertions.assertEquals("Camilo", clienteNuevo.getNombre());
     }
 
 }
