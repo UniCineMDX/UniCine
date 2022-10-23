@@ -1,10 +1,7 @@
 package co.edu.uniquindio.unicine.entidades;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -23,6 +20,7 @@ public class AdministradorTeatro extends Persona implements Serializable {
     private List<Teatro> teatros;
 
 
+    @Builder
     public AdministradorTeatro(String cedula, String nombre, String correo, String password, String fotoUrl) {
         super(cedula, nombre, correo, password, fotoUrl);
     }

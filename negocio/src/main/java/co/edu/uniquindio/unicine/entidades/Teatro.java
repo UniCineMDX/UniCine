@@ -28,10 +28,6 @@ public class Teatro implements Serializable {
     private String telefono;
 
 
-    @Enumerated(EnumType.STRING)
-    private EstadoTeatro estadoTeatro;
-
-
 
     @ManyToOne
     @ToString.Exclude
@@ -48,10 +44,10 @@ public class Teatro implements Serializable {
     private List<Sala>salas;
 
 
-    public Teatro(String direccion, String telefono, EstadoTeatro estadoTeatro, AdministradorTeatro admiTeatro, Ciudad ciudad) {
+    @Builder
+    public Teatro(String direccion, String telefono, AdministradorTeatro admiTeatro, Ciudad ciudad) {
         this.direccion = direccion;
         this.telefono = telefono;
-        this.estadoTeatro = estadoTeatro;
         this.admiTeatro = admiTeatro;
         this.ciudad = ciudad;
     }

@@ -22,8 +22,13 @@ public class Sala implements Serializable {
 
 
 
-    @Column(nullable = false,length = 50)
+    @Column(nullable = false,length = 50, unique = true)
     private String nombre;
+
+
+
+    @Enumerated(EnumType.STRING)
+    EstadoSala estadoSala;
 
 
 
@@ -43,9 +48,11 @@ public class Sala implements Serializable {
     private Teatro teatro;
 
 
-    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro) {
+    @Builder
+    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro, EstadoSala estadoSala) {
         this.nombre = nombre;
         this.distribucionSilla = distribucionSilla;
         this.teatro = teatro;
+        this.estadoSala = estadoSala;
     }
 }

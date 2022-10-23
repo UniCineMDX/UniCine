@@ -36,7 +36,7 @@ public class TeatroTest {
         AdministradorTeatro admiGuardado = administradorTeatroRepo.findById("98822").get();
         Ciudad ciudad = ciudadRepo.findById(1).get();
 
-        Teatro teatro = new Teatro("Calle sexta #12", "3125679834", EstadoTeatro.HABILITADO, admiGuardado, ciudad);
+        Teatro teatro = new Teatro("Calle sexta #12", "3125679834", admiGuardado, ciudad);
         Teatro teatroGuardado = teatroRepo.save(teatro);
 
         System.out.println(teatroGuardado);
