@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,14 +26,17 @@ public class DistribucionSilla implements Serializable {
 
 
 
+    @PositiveOrZero
     private Integer totalSillas;
 
 
 
+    @PositiveOrZero
     private Integer filas;
 
 
 
+    @PositiveOrZero
     private Integer columnas;
 
 
@@ -43,6 +47,7 @@ public class DistribucionSilla implements Serializable {
 
 
 
+    @Builder
     public DistribucionSilla(String esquema, Integer totalSillas, Integer filas, Integer columnas) {
         this.esquema = esquema;
         this.totalSillas = totalSillas;

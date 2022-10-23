@@ -34,11 +34,11 @@ insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", 
 
 
 
-insert into teatro values (1, "Calle sexta #12", "HABILITADO", "3125679834", "1", 1);
-insert into teatro values (2, "Calle novena #18", "HABILITADO", "3125679834", "1", 1);
-insert into teatro values (3, "Calle diagonal #34", "HABILITADO", "3125679834", "2", 2);
-insert into teatro values (4, "Calle norte #3", "HABILITADO", "3125679834", "2", 2);
-insert into teatro values (5, "Calle #9", "HABILITADO", "3125679834", "3", 2);
+insert into teatro values (1, "Calle sexta #12", "3125679834", "98822", 1);
+insert into teatro values (2, "Calle novena #18", "3125679834", "98822", 1);
+insert into teatro values (3, "Calle diagonal #34", "3125679834", "0836544", 2);
+insert into teatro values (4, "Calle norte #3", "3125679834", "0836544", 2);
+insert into teatro values (5, "Calle #9", "3125679834", "0836544", 2);
 
 
 
@@ -50,11 +50,11 @@ insert into distribucion_silla values (5, 10, "eegege", 10, 90);
 
 
 
-insert into sala values (1, "sala1", 1, 1);
-insert into sala values (2, "sala2", 1, 1);
-insert into sala values (3, "sala3", 1, 1);
-insert into sala values (4, "sala4", 1, 1);
-insert into sala values (5, "sala5", 1, 1);
+insert into sala values (1,"HABILITADA", "sala1", 1, 1);
+insert into sala values (2,"HABILITADA", "sala2", 1, 1);
+insert into sala values (3,"HABILITADA", "sala3", 1, 1);
+insert into sala values (4,"HABILITADA", "sala4", 1, 1);
+insert into sala values (5,"HABILITADA", "sala5", 1, 2);
 
 
 
@@ -103,7 +103,6 @@ insert into compra values (2, "2022/06/09", "TARJETA_CREDITO", 20000, "344", 2, 
 insert into compra values (3, "2022/06/09", "TARJETA_CREDITO", 20000, "123", 3, 1 );
 insert into compra values (4, "2022/06/09", "TARJETA_CREDITO", 20000, "123", 4, 1 );
 insert into compra values (5, "2022/06/09", "TARJETA_CREDITO", 20000, "123", 5, 1 );
-
 
 
 
