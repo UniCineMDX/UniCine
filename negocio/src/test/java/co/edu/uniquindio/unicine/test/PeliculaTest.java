@@ -26,9 +26,19 @@ public class PeliculaTest {
 
     @Test
     @Sql("classpath:dataset.sql")
+
     public void obtenerPeliculasPorEstado() {
         List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasPorEstado(EstadoPelicula.PREVENTA);
         peliculas.forEach(System.out::println);
+    }
+
+    public void registrar(){
+
+        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr","Preventa", "Creada");
+        Pelicula guardado = peliculaRepo.save(pelicula);
+
+        System.out.println(guardado);
+
     }
 
     @Test
@@ -60,5 +70,23 @@ public class PeliculaTest {
         System.out.println(listaPeliculas);
     }
 
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaNombre(){
+
+        Pelicula pelicula = peliculaRepo.findByNombre("Corre");
+
+        Assertions.assertNotNull(pelicula);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaCodigo(){
+
+        Pelicula pelicula = peliculaRepo.findByCodigo(5);
+
+        Assertions.assertNotNull(pelicula);
+    }
 
 }

@@ -14,6 +14,5 @@ import lombok.ToString;
 public class HorarioSalaDTO {
 
     private Horario horario;
-
     private Sala sala;
 }

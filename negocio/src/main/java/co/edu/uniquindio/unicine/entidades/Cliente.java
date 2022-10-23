@@ -8,32 +8,43 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Getter // Genera los getters de todos los atributos sin necesidad de crearlos gracias Lombok
-@Setter // Genera los setters de todos los atributos sin necesidad de crearlos gracias Lombok
-@NoArgsConstructor // Genera el constructor vacio
+@Getter
+@Setter
+@NoArgsConstructor
 @ToString(callSuper = true)
+/**
+ * Esta es la clase Cliente
+ */
 public class Cliente extends Persona implements Serializable {
 
+    //Atributos de la clase Cliente
     @Enumerated(EnumType.STRING)
     private EstadoCliente estado;
 
     @ElementCollection
     private Map<String, String > telefonos;
 
+    //Relaciones de la clase Cliente
 
-    @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
+    @OneToMany(mappedBy = "cliente")
     private List<CuponCliente> cupones;
 
-
-    @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
+    @OneToMany(mappedBy = "cliente")
     private List<Compra> compras;
 
-
+    /**
+     * Este es el emtodo constructor de la clase Cliente
+     * @param cedula
+     * @param nombre
+     * @param correo
+     * @param password
+     * @param fotoUrl
+     */
     @Builder
-    public Cliente(String cedula, String nombre, String correo, String password, String fotoUrl, EstadoCliente estado) {
+    public Cliente(String cedula, String nombre, String correo, String password, String fotoUrl) {
         super(cedula, nombre, correo, password, fotoUrl);
-        this.estado = estado;
+        this.estado = EstadoCliente.REGISTRADO;
     }
 }

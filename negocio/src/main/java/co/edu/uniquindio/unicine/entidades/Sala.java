@@ -20,10 +20,12 @@ public class Sala implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
-
-    @Column(nullable = false,length = 50)
+    @Column(nullable = false,length = 50, unique = true)
     private String nombre;
 
+
+    @Enumerated(EnumType.STRING)
+    EstadoSala estadoSala;
 
 
     @ManyToOne
@@ -35,20 +37,19 @@ public class Sala implements Serializable {
     @ToString.Exclude
     private List<Funcion>funciones;
 
-
-    @Enumerated(EnumType.STRING)
-    private EstadoSala estadoSala;
-
-
     @ManyToOne
     @ToString.Exclude
     private Teatro teatro;
 
-    public Sala(String nombre, DistribucionSilla distribucionSilla, EstadoSala estadoSala, Teatro teatro) {
+
+    @Builder
+    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro, EstadoSala estadoSala) {
+
         this.nombre = nombre;
         this.distribucionSilla = distribucionSilla;
         this.estadoSala = estadoSala;
         this.teatro = teatro;
+
     }
 
 }

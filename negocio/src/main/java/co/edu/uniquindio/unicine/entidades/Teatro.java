@@ -26,11 +26,9 @@ public class Teatro implements Serializable {
     @Column(nullable = false, length = 10)
     private String telefono;
 
-
     @ManyToOne
     @ToString.Exclude
     private AdministradorTeatro admiTeatro;
-
 
     @ManyToOne
     @ToString.Exclude
@@ -41,6 +39,7 @@ public class Teatro implements Serializable {
     @ToString.Exclude
     private List<Sala>salas;
 
+    @Builder
     public Teatro(String direccion, String telefono, AdministradorTeatro admiTeatro, Ciudad ciudad) {
         this.direccion = direccion;
         this.telefono = telefono;

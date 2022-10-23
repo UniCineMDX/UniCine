@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConfiteriaRepo extends JpaRepository<Confiteria, Integer>{
+
+    Confiteria findByCodigo(Integer codigo);
+
+    Confiteria findByNombre(String nombre);
 }

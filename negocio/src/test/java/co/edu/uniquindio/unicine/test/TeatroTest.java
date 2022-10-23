@@ -20,13 +20,27 @@ public class TeatroTest {
 
     @Autowired
     private TeatroRepo teatroRepo;
+    private CiudadRepo ciudadRepo;
+    private AdministradorTeatroRepo administradorTeatroRepo;
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerTeatroCiudad(){
+    public void obtenerTeatroCiudad() {
         List<Teatro> listaTeatrosCiudad = teatroRepo.listaTeatros("Pereira");
         Assertions.assertEquals(3, listaTeatrosCiudad.size());
         System.out.println(listaTeatrosCiudad);
+    }
+    public void registrar(){
+
+        //Es mejor obtener el admin y la ciudad desde el dataset
+        AdministradorTeatro admiGuardado = administradorTeatroRepo.findById("98822").get();
+        Ciudad ciudad = ciudadRepo.findById(1).get();
+
+        Teatro teatro = new Teatro("Calle sexta #12", "3125679834", admiGuardado, ciudad);
+        Teatro teatroGuardado = teatroRepo.save(teatro);
+
+        System.out.println(teatroGuardado);
+
     }
     @Test
     @Sql("classpath:dataset.sql")

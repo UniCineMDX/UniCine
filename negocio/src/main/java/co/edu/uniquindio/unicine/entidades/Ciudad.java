@@ -7,25 +7,34 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Getter // Genera los getters de todos los atributos sin necesidad de crearlos gracias Lombok
-@Setter // Genera los setters de todos los atributos sin necesidad de crearlos gracias Lombok
-@NoArgsConstructor // Genera el constructor vacio
+@Getter
+@Setter
+@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+/**
+ * Esta es la clase Ciudad
+ */
 public class Ciudad implements Serializable {
 
+    //Atributos de la clase Ciudad
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
-
     @Column(unique = true, nullable = false, length = 50)
-    private String nombre; //Este atributo esta marcado como unico, no se puede repetir el nombre
+    private String nombre;
 
-    @OneToMany(mappedBy = "ciudad")
+    //Relaciones de la clase Ciudad
     @ToString.Exclude
+    @OneToMany(mappedBy = "ciudad")
     private List<Teatro> teatros;
 
+    /**
+     * Este es el metodo constructor de la clase Ciudad
+     * @param nombre
+     */
+    @Builder
     public Ciudad(String nombre) {
         this.nombre = nombre;
     }

@@ -9,6 +9,10 @@ import java.util.List;
 
 @Repository
 public interface CuponRepo extends JpaRepository<Cupon, Integer>{
+
     @Query("select c from Cliente c where c.cedula = :cedula")
     List<Cupon> obtenerCuponesCliente(String cedula);
+
+    Cupon findByCodigo(Integer codigo);
+
 }

@@ -19,4 +19,13 @@ public interface SalaRepo extends JpaRepository<Sala,Integer>{
     //List<Sala> listarSalas(EstadoSala estadoSala);
 
 
+    @Query("select s.teatro from Sala s where s.codigo = :codigo")
+    Teatro obtenerTeatroSala (Integer codigo);
+
+    @Query("select s.distribucionSilla from Sala s where s.codigo = :codigo")
+    DistribucionSilla obtenerDistribucionSillaSala(Integer codigo);
+
+    @Query("select fun from Sala s join s.funciones fun where s.codigo = :codigo")
+    List<Funcion> obtenerFuncionesSala(Integer codigo);
+
 }

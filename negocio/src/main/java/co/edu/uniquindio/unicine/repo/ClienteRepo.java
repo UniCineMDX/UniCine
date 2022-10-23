@@ -10,14 +10,31 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+/**
+ * Esta es la interface ClienteRepo
+ */
 public interface ClienteRepo extends JpaRepository<Cliente, String>{
 
     @Query("select c from Cliente c where c.correo = ?1")
     Cliente obtener(String email);
+
+    /**
+     * Este metodo permite obtener un cliente por medio de su correo
+     * @param correo
+     * @return el cliente o null
+     */
+
     Cliente findByCorreo(String correo);
 
-    @Query("select c from Cliente c where c.correo = :correo and c.password = :password")
-    Cliente comprobarAutenticacion (String correo, String password);
+    /**
+     * Este metodo permite obtener un cliente por medio de su correo y contraseña
+     * @param correo
+     * @param password
+     * @return el cliente o null
+     */
+    Cliente findByCorreoAndPassword (String correo, String password);
+
+    Cliente findByCedula(String cedula);
 
     //Lista de compras por medio del correo del cliente(Metodo in)
     @Query("select comp from Cliente cli, in (cli.compras) comp where cli.correo = :correo")

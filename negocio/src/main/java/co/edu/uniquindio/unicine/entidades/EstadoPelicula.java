@@ -4,5 +4,6 @@ public enum EstadoPelicula {
     PREVENTA,
     ESTRENO,
     CARTELERA,
-    PROXIMAMENTE
+    PROXIMAMENTE,
+    CREADA
 }

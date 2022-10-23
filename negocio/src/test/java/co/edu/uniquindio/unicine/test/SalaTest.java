@@ -23,6 +23,34 @@ public class SalaTest {
 
 /*
    // @Test
+=======
+
+    @Autowired
+    private DistribucionSillaRepo distribucionSillaRepo;
+
+
+    @Autowired
+    private TeatroRepo teatroRepo;
+
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void registrar(){
+
+        DistribucionSilla distribucionSilla = distribucionSillaRepo.findById(1).get();
+
+        Teatro teatro = teatroRepo.findById(1).get();
+
+        Sala sala = new Sala("sala1",distribucionSilla,teatro, EstadoSala.HABILITADA );
+        Sala guardado = salaRepo.save(sala);
+
+        System.out.println(guardado);
+
+    }
+
+
+    @Test
     @Sql("classpath:dataset.sql")
     public void obtenerSalaPorNombre(){
         Optional<Sala> buscado = salaRepo.;
@@ -35,8 +63,6 @@ public class SalaTest {
         List<Sala> listaSalas = salaRepo.listarSalas(EstadoSala.HABILITADA);
         System.out.println(listaSalas);
     }
-
-
 
  */
 

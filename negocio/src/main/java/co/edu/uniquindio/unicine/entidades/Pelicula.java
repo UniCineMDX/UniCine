@@ -20,7 +20,7 @@ public class Pelicula implements Serializable {
     private Integer codigo;
 
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50,unique = true)
     private String nombre;
 
 
@@ -55,13 +55,50 @@ public class Pelicula implements Serializable {
 
 
 
-    public Pelicula(String nombre, String sipnosis, String urlTrailer, String urlImagen, EstadoPelicula estadoPelicula, String reparto, Genero genero) {
+    public Pelicula(String nombre, String sipnosis, String urlTrailer, String urlImagen, String reparto, String genero) {
         this.nombre = nombre;
         this.sipnosis = sipnosis;
         this.urlTrailer = urlTrailer;
         this.urlImagen = urlImagen;
-        this.estadoPelicula = estadoPelicula;
+        this.estadoPelicula = EstadoPelicula.CREADA;
         this.Reparto = reparto;
-        this.genero = genero;
+        this.genero = obtenerGenero(genero);
+    }
+
+    private Genero obtenerGenero(String genero) {
+
+        if(genero.equals("Terror")){
+            return Genero.TERROR;
+        }else{
+            if(genero.equals("Drama")){
+                return Genero.DRAMA;
+            }else{
+                if(genero.equals("Comedia")){
+                    return Genero.COMEDIA;
+                }else {
+                    if (genero.equals("Romance")) {
+                        return Genero.ROMANCE;
+                    }else{
+                        return Genero.CIENCIA_FICCIÓN;
+                    }
+                }
+            }
+        }
+    }
+
+    private EstadoPelicula obtenerEstado(String estadoPelicula) {
+        if(estadoPelicula.equals("Preventa")){
+            return EstadoPelicula.PREVENTA;
+        }else{
+            if(estadoPelicula.equals("Estreno")){
+                return EstadoPelicula.ESTRENO;
+            }else{
+                if(estadoPelicula.equals("Cartelera")){
+                    return EstadoPelicula.CARTELERA;
+                }else {
+                    return EstadoPelicula.PROXIMAMENTE;
+                }
+            }
+        }
     }
 }
