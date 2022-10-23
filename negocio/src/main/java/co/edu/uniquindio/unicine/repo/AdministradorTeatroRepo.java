@@ -2,10 +2,13 @@ package co.edu.uniquindio.unicine.repo;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorSuper;
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
+import co.edu.uniquindio.unicine.entidades.Teatro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 /**
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Repository;
  */
 public interface AdministradorTeatroRepo extends JpaRepository<AdministradorTeatro, String>{
 
+
+    AdministradorTeatro findByCedula(String cedula);
 
     /**
      * Este metodo permite obtener un AdministradorTeatro por medio de su correo
@@ -28,4 +33,7 @@ public interface AdministradorTeatroRepo extends JpaRepository<AdministradorTeat
      * @return El administrador o null
      */
     AdministradorTeatro findByCorreoAndPassword(String correo, String password);
+
+    @Query("select d from AdministradorTeatro a, IN (a.teatros) d where a.cedula = :cedula")
+    List<Teatro> obtenerTeatrosAdmin(String cedula);
 }

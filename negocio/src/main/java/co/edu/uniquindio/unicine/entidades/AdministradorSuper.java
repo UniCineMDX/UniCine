@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -26,6 +23,7 @@ public class AdministradorSuper extends Persona implements Serializable {
      * @param password
      * @param fotoUrl
      */
+    @Builder
     public AdministradorSuper(String cedula, String nombre, String correo, String password, String fotoUrl) {
         super(cedula, nombre, correo, password, fotoUrl);
     }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CuponRepo extends JpaRepository<Cupon, Integer>{
+
+    Cupon findByCodigo(Integer codigo);
 }

@@ -30,6 +30,8 @@ public interface ClienteRepo extends JpaRepository<Cliente, String>{
      */
     Cliente findByCorreoAndPassword (String correo, String password);
 
+    Cliente findByCedula(String cedula);
+
     //Lista de compras por medio del correo del cliente(Metodo in)
     @Query("select comp from Cliente cli, in (cli.compras) comp where cli.correo = :correo")
     List<Compra> obtenerCompras(String correo);

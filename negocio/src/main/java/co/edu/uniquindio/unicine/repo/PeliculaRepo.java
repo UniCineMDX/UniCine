@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
 
+    Pelicula findByNombre(String nombre);
+
     @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estadoPelicula ")
     List<Pelicula> buscarPeliculas(String nombre, EstadoPelicula estadoPelicula);
 

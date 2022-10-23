@@ -20,7 +20,7 @@ public class CuponTest {
 
 
 
-
+    /*
     @Test
     @Sql("classpath:dataset.sql")
     public void registrar(){
@@ -31,4 +31,6 @@ public class CuponTest {
         System.out.println(guardado);
 
     }
+    */
+
 }

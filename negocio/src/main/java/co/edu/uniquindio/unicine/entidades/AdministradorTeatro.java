@@ -22,7 +22,7 @@ public class AdministradorTeatro extends Persona implements Serializable {
     //Relaciones de la calse AdministradorTeatro
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "adminTeatro")
+    @OneToMany(mappedBy = "admiTeatro")
     private List<Teatro> teatros;
 
     /**

@@ -28,12 +28,8 @@ public class AdministradorSuperTest {
     /**
      * Este metodo test permite registrar un nuevo administradorSuper
      */
-    public void registrar() {
-        AdministradorSuper administradorSuper = new AdministradorSuper("12344", "Javier", "javier@gmail.com", "3ggd", "sst44ffhgegs5");
-        AdministradorSuper admiGuardado = administradorSuperRepo.save(administradorSuper);
+    public void listarAdministradores() {
 
-        Assertions.assertEquals("Javier", admiGuardado.getNombre());
-        System.out.println(admiGuardado);
     }
 
     @Test
@@ -41,7 +37,7 @@ public class AdministradorSuperTest {
     /**
      * Este metodo test permite eliminar un administradorSuper por medio de su ID
      */
-    public void eliminar(){
+    public void eliminar() {
         AdministradorSuper buscado = administradorSuperRepo.findById("12344").orElse(null);
         administradorSuperRepo.delete(buscado);
 
@@ -53,7 +49,7 @@ public class AdministradorSuperTest {
     /**
      * Este metodo test permite actualizar los datos de un administradorSuper por medio de su ID
      */
-    public void actualizar(){
+    public void actualizar() {
         AdministradorSuper guardado = administradorSuperRepo.findById("12344").orElse(null);
         guardado.setCorreo("lala@gmail.com");
 
@@ -67,7 +63,7 @@ public class AdministradorSuperTest {
     /**
      * Este metodo test permite obtener un administradorSuper por medio de su ID
      */
-    public void obtener(){
+    public void obtener() {
         Optional<AdministradorSuper> buscado = administradorSuperRepo.findById("12344");
 
         Assertions.assertNotNull(buscado.orElse(null));
@@ -79,7 +75,7 @@ public class AdministradorSuperTest {
      * Este metodo test permite obtener todos los administradorSuper que estan registrados en la base de datos
      */
     public void listar() {
-        List<AdministradorSuper> lista = administradorSuperRepo.findAll();
+        List<AdministradorSuper> lista = administradorSuperRepo.findAllOrderByNombre();
         lista.forEach(System.out::println);
     }
 
@@ -88,7 +84,7 @@ public class AdministradorSuperTest {
     /**
      * Este test metodo permite obtener un administradorSuper por medio de su correo
      */
-    public void obtenerPorCorreo(){
+    public void obtenerPorCorreo() {
         AdministradorSuper admiSuper = administradorSuperRepo.findByCorreo("pepito@gmail.com");
         Assertions.assertNotNull(admiSuper);
         System.out.println(admiSuper);
@@ -99,24 +95,39 @@ public class AdministradorSuperTest {
     /**
      * Este metodo test permite comprobar la autenticacion de un administradorSuper por su correo y contraseña
      */
-    public void comprobarAutenticacion(){
-        AdministradorSuper admiSuper = administradorSuperRepo.findByCorreoAndPassword("pedro@gmail.com","dvd335");
+    public void comprobarAutenticacion() {
+        AdministradorSuper admiSuper = administradorSuperRepo.findByCorreoAndPassword("pedro@gmail.com", "bcbdbdb");
         Assertions.assertNotNull(admiSuper);
         System.out.println(admiSuper);
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void paginador(){
-       List<AdministradorSuper>lista = administradorSuperRepo.findAll(PageRequest.of(0, 2)).toList();
-       lista.forEach(System.out::println);
+    public void paginador() {
+        List<AdministradorSuper> lista = administradorSuperRepo.findAll(PageRequest.of(0, 2)).toList();
+        lista.forEach(System.out::println);
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void ordenarRegistrosPorNombre(){
-        List<AdministradorSuper>lista = administradorSuperRepo.findAll(Sort.by("nombre"));
-        List<AdministradorSuper>lista2 = administradorSuperRepo.findAll(PageRequest.of(0, 2, Sort.by("nombre"))).toList();
+    public void ordenarRegistrosPorNombre() {
+        List<AdministradorSuper> lista = administradorSuperRepo.findAll(Sort.by("nombre"));
+        List<AdministradorSuper> lista2 = administradorSuperRepo.findAll(PageRequest.of(0, 2, Sort.by("nombre"))).toList();
         lista.forEach(System.out::println);
     }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerURL() {
+        List<AdministradorSuper> lista = administradorSuperRepo.obtenerUrl("dggs35353",PageRequest.of(0, 2, Sort.by("nombre")));
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCedula() {
+        String string = administradorSuperRepo.obtenerCodioAdmin("ana");
+        System.out.println(string);
+    }
+
 }

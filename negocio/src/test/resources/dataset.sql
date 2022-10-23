@@ -4,15 +4,11 @@ insert into administrador_super values ("3", "ana@gmail.com", "dggs35353", "ana"
 insert into administrador_super values ("4", "laura@gmail.com", "dggs35353", "laura", "bcbdbdb");
 insert into administrador_super values ("5", "man@gmail.com", "dggs35353", "manuel", "bcbdbdb");
 
-
-
-insert into administrador_teatro values ("98822", "juan@gmail.com", "dgdvgdgs35353", "Juan", "344");
-insert into administrador_teatro values ("0836544", "jose", "jose@gmail.com", "dvdvdv335", "dgdvgdgs35353");
-insert into administrador_teatro values ("475665", "manuel", "man@gmail.com", "dvdvdv335", "dgdvgdgs35353");
-insert into administrador_teatro values ("09333", "roberto", "ro@gmail.com", "dvdvdv335", "dgdvgdgs35353");
-insert into administrador_teatro values ("98444", "julian", "j33@gmail.com", "dvdvdv335", "dgdvgdgs35353");
-
-
+insert into administrador_teatro values ("1", "juan1@gmail.com", "url1", "Juan1", "341");
+insert into administrador_teatro values ("2", "juan2@gmail.com", "url2", "Juan2", "342");
+insert into administrador_teatro values ("3", "juan3@gmail.com", "url3", "Juan3", "343");
+insert into administrador_teatro values ("4", "juan4@gmail.com", "url4", "Juan4", "344");
+insert into administrador_teatro values ("5", "juan5@gmail.com", "url5", "Juan5", "345");
 
 insert into ciudad values (1, "Armenia");
 insert into ciudad values (2, "Pereira");
@@ -31,18 +27,18 @@ insert into horario values (5, "Viernes", "2021/12/31", "2021/01/01", "20:00");
 
 
 insert into pelicula values (1, "andrea, juan, roberto", "PREVENTA","COMEDIA", "Corre", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
-insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
+insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batmn", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
 insert into pelicula values (3, "andrea, juan, roberto", "PREVENTA","TERROR", "Harry potter y la piedra filosofal", "Pelicula de suspenso", "gfbfbfb", "fgbegegege");
-insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Harry potter y el caliz de fuego", "gfbfbfb", "fgbegegege");
-insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
+insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Btman", "Harry potter y el caliz de fuego", "gfbfbfb", "fgbegegege");
+insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "atman", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
 
 
 
-insert into teatro values (1, "Calle sexta #12", "HABILITADO", "3125679834", "98822", 1);
-insert into teatro values (2, "Calle novena #18", "HABILITADO", "3125679834", "98822", 1);
-insert into teatro values (3, "Calle diagonal #34", "HABILITADO", "3125679834", "0836544", 2);
-insert into teatro values (4, "Calle norte #3", "HABILITADO", "3125679834", "0836544", 2);
-insert into teatro values (5, "Calle #9", "HABILITADO", "3125679834", "0836544", 2);
+insert into teatro values (1, "Calle sexta #12", "HABILITADO", "3125679834", "1", 1);
+insert into teatro values (2, "Calle novena #18", "HABILITADO", "3125679834", "1", 1);
+insert into teatro values (3, "Calle diagonal #34", "HABILITADO", "3125679834", "2", 2);
+insert into teatro values (4, "Calle norte #3", "HABILITADO", "3125679834", "2", 2);
+insert into teatro values (5, "Calle #9", "HABILITADO", "3125679834", "3", 2);
 
 
 

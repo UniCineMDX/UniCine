@@ -28,7 +28,7 @@ public class PeliculaTest {
     @Sql("classpath:dataset.sql")
     public void registrar(){
 
-        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr",EstadoPelicula.PREVENTA, "andres,juan roberto", Genero.COMEDIA);
+        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr","Preventa", "Creada");
         Pelicula guardado = peliculaRepo.save(pelicula);
 
         System.out.println(guardado);
@@ -91,6 +91,24 @@ public class PeliculaTest {
         //for each para que no aparezcan todos pegados
         lista.forEach(System.out::println);
 
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaNombre(){
+
+        Pelicula pelicula = peliculaRepo.findByNombre("Corre");
+
+        Assertions.assertNotNull(pelicula);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaCodigo(){
+
+        Pelicula pelicula = peliculaRepo.findByCodigo(5);
+
+        Assertions.assertNotNull(pelicula);
     }
 
 }

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
+import co.edu.uniquindio.unicine.entidades.Teatro;
 import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,9 +65,9 @@ public class AdministradorTeatroTest {
      * Este metodo test permite obtener un AdministradorTeatro por medio de su ID
      */
     public void obtener(){
-        Optional<AdministradorTeatro> buscado = administradorTeatroRepo.findById("98822");
-
-        Assertions.assertNotNull(buscado.orElse(null));
+        AdministradorTeatro buscado = administradorTeatroRepo.findByCorreo("juan1@gmail.com");
+        System.out.println(buscado);
+        Assertions.assertNotNull(buscado);
     }
 
     @Test
@@ -76,6 +77,13 @@ public class AdministradorTeatroTest {
      */
     public void listar() {
         List<AdministradorTeatro> lista = administradorTeatroRepo.findAll();
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarTeatros() {
+        List<Teatro> lista = administradorTeatroRepo.obtenerTeatrosAdmin("98822");
         lista.forEach(System.out::println);
     }
 }
