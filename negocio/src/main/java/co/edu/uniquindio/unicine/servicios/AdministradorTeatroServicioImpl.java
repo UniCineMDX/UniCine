@@ -391,9 +391,19 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
     public Funcion registrarFuncion(Funcion funcion) throws Exception {
 
         Funcion funcionExistenteCodigo = funcionRepo.findByCodigo(funcion.getCodigo());
+        Sala salaFuncion = funcionRepo.obtenerSalaFuncion(funcion.getCodigo());
+        Horario horarioFuncion = funcionRepo.obtenerHorarioFuncion(funcion.getCodigo());
 
         if(funcionExistenteCodigo != null){
             throw new Exception("La funcion con ese codigo ya existe");
+        }
+
+        if(salaFuncion != null){
+            throw new Exception("La sala ya esta ocupada");
+        }
+
+        if(salaFuncion != null && horarioFuncion != null){
+            throw new Exception("La salaa en ese horario ya no se encuentra disponible");
         }
 
         return funcionRepo.save(funcion);
