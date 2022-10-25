@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
+import co.edu.uniquindio.unicine.dto.HorarioSalaDTO;
 import co.edu.uniquindio.unicine.entidades.AdministradorSuper;
 import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
 import co.edu.uniquindio.unicine.entidades.Genero;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
@@ -22,75 +24,69 @@ public class PeliculaTest {
     @Autowired
     private PeliculaRepo peliculaRepo;
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
-    public void registrar(){
 
-        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr",EstadoPelicula.PREVENTA, "andres,juan roberto", Genero.COMEDIA);
-        Pelicula guardado = peliculaRepo.save(pelicula);
-
-        System.out.println(guardado);
-    }
-
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void buscarPeliculas(){
-
-        List<Pelicula> peliculas = peliculaRepo.buscarPeliculas("Harry", EstadoPelicula.PREVENTA);
-
+    public void obtenerPeliculasPorEstado() {
+        List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasPorEstado(EstadoPelicula.PREVENTA);
         peliculas.forEach(System.out::println);
     }
 
+    public void registrar(){
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void eliminar(){
+        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr","Preventa", "Creada");
+        Pelicula guardado = peliculaRepo.save(pelicula);
 
-        Pelicula buscado = peliculaRepo.findById(1).orElse(null);
-        peliculaRepo.delete(buscado);
-
-        Assertions.assertNull(peliculaRepo.findById(1).orElse(null));
-
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar(){
-
-        Pelicula guardado = peliculaRepo.findById(1).orElse(null);
-        guardado.setNombre("After");
-
-        Pelicula nuevo = peliculaRepo.save(guardado);
-
-        Assertions.assertEquals("After", nuevo.getNombre());
-
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener(){
-
-        Optional<Pelicula> buscado = peliculaRepo.findById(1);
-
-        Assertions.assertNotNull(buscado.orElse(null));
+        System.out.println(guardado);
 
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void listar() {
+    public void obtenerPeliculasPorGenero() {
+        List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasPorGenero(Genero.TERROR);
+        peliculas.forEach(System.out::println);
+    }
 
-        List<Pelicula> lista = peliculaRepo.findAll();
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPelicula(){
+        List<Pelicula> peliculas = peliculaRepo.buscarPelicula("batman", EstadoPelicula.PREVENTA);
+        peliculas.forEach(System.out::println);
+    }
 
-        //for each para que no aparezcan todos pegados
-        lista.forEach(System.out::println);
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listasHorario(){
+        List<HorarioSalaDTO> listaHoraraio = peliculaRepo.listarHorario(1, 1);
+        System.out.println(listaHoraraio);
+    }
 
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarPeliculas(){
+        List<Pelicula> listaPeliculas = peliculaRepo.listarPeliculas(Genero.TERROR);
+        System.out.println(listaPeliculas);
+    }
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaNombre(){
+
+        Pelicula pelicula = peliculaRepo.findByNombre("Corre");
+
+        Assertions.assertNotNull(pelicula);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaCodigo(){
+
+        Pelicula pelicula = peliculaRepo.findByCodigo(5);
+
+        Assertions.assertNotNull(pelicula);
     }
 
 }

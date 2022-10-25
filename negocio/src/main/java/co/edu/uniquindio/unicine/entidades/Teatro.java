@@ -19,7 +19,6 @@ public class Teatro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
-
     @Column(nullable = false, length = 50)
     private String direccion;
 
@@ -27,12 +26,9 @@ public class Teatro implements Serializable {
     @Column(nullable = false, length = 10)
     private String telefono;
 
-
-
     @ManyToOne
     @ToString.Exclude
     private AdministradorTeatro admiTeatro;
-
 
     @ManyToOne
     @ToString.Exclude
@@ -42,7 +38,6 @@ public class Teatro implements Serializable {
     @OneToMany(mappedBy = "teatro")
     @ToString.Exclude
     private List<Sala>salas;
-
 
     @Builder
     public Teatro(String direccion, String telefono, AdministradorTeatro admiTeatro, Ciudad ciudad) {

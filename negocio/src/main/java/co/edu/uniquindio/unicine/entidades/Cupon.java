@@ -32,18 +32,13 @@ public class Cupon implements Serializable {
     @Column(nullable = false)
     private LocalDate vencimiento;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EstadoCupon estadoCupon;
-
     @OneToMany(mappedBy = "cupon")
     @ToString.Exclude
     private List<CuponCliente> cuponesCliente;
 
-    public Cupon( Double descuento, String criterio, LocalDate vencimiento, EstadoCupon estadoCupon) {
+    public Cupon( Double descuento, String criterio, LocalDate vencimiento) {
         this.descuento = descuento;
         this.criterio = criterio;
         this.vencimiento = vencimiento;
-        this.estadoCupon = estadoCupon;
     }
 }

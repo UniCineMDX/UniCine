@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.repo;
 import co.edu.uniquindio.unicine.dto.HorarioSalaDTO;
 import co.edu.uniquindio.unicine.entidades.AdministradorSuper;
 import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
+import co.edu.uniquindio.unicine.entidades.Genero;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,18 +11,39 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
 
-    @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estadoPelicula ")
-    List<Pelicula> buscarPeliculas(String nombre, EstadoPelicula estadoPelicula);
+    List<Pelicula> findByNombrePelicula(String nombrePelicula);
 
-    @Query("select new co.edu.uniquindio.unicine.dto.HorarioSalaDTO (f.horario, f.sala) from Pelicula p join p.funciones f where p.codigo = :codigoPelicula and f.sala.teatro.codigo = :codigoTeatro")
-    List<HorarioSalaDTO>listarHorarios(Integer codigoPelicula, Integer codigoTeatro);
+    @Query("select p from Pelicula p where p.nombre = :nombrePelicula")
+    Pelicula buscarPeliculaPorNombre(String nombrePelicula);
 
-    @Query("select p from Pelicula p where p.codigo = :codigo")
-    Pelicula obtener(@Param("codigo") Integer codigo);
+    @Query("select p from Pelicula p where p.estadoPelicula = :estado")
+    List<Pelicula> obtenerPeliculasPorEstado(EstadoPelicula estado);
+
+    @Query("select p from Pelicula p where p.genero = :genero")
+    List<Pelicula> obtenerPeliculasPorGenero(Genero genero);
+
+    @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estado")
+    List<Pelicula> buscarPelicula(String nombre, EstadoPelicula estado);
+
+    @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estado")
+    Optional<Pelicula> buscarPeliculaEstado(String nombre, Boolean estado);
+
+    @Query("select new co.edu.uniquindio.unicine.dto.HorarioSalaDTO(funcion.horario, funcion.sala) from Pelicula p join p.funciones funcion where p.codigo = :codigoPelicula and funcion.sala.teatro.codigo = :codigoTeatro")
+    List<HorarioSalaDTO> listarHorario(Integer codigoPelicula, Integer codigoTeatro);
+
+    @Query("select p from Pelicula p where p.genero =:genero  order by p.nombre asc")
+    List<Pelicula> listarPeliculas(Genero genero);
+
+    Pelicula findByNombre(String nombre);
     Pelicula findByCodigo(Integer codigo);
+
+
+
+
 
 }

@@ -21,6 +21,9 @@ public class SalaTest {
     @Autowired
     private SalaRepo salaRepo;
 
+/*
+   // @Test
+=======
 
     @Autowired
     private DistribucionSillaRepo distribucionSillaRepo;
@@ -49,47 +52,18 @@ public class SalaTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminar(){
-
-        Sala buscado = salaRepo.findById(1).orElse(null);
-        salaRepo.delete(buscado);
-
-        Assertions.assertNull(salaRepo.findById(1).orElse(null));
-
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar(){
-
-        Sala guardado = salaRepo.findById(1).orElse(null);
-        guardado.setNombre("lucia");
-
-        Sala nuevo = salaRepo.save(guardado);
-
-        Assertions.assertEquals("lucia", nuevo.getNombre());
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener(){
-
-        Optional<Sala> buscado = salaRepo.findById(1);
-
+    public void obtenerSalaPorNombre(){
+        Optional<Sala> buscado = salaRepo.;
         Assertions.assertNotNull(buscado.orElse(null));
-
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void listar() {
-
-        List<Sala> lista = salaRepo.findAll();
-
-        //for each para que no aparezcan todos pegados
-        lista.forEach(System.out::println);
-
+    public void listarSalas(){
+        List<Sala> listaSalas = salaRepo.listarSalas(EstadoSala.HABILITADA);
+        System.out.println(listaSalas);
     }
+
+ */
+
 }

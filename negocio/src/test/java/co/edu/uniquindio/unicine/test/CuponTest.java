@@ -18,9 +18,7 @@ public class CuponTest {
     @Autowired
     private CuponRepo cuponRepo;
 
-
-
-
+    /*
     @Test
     @Sql("classpath:dataset.sql")
     public void registrar(){
@@ -31,4 +29,12 @@ public class CuponTest {
         System.out.println(guardado);
 
     }
+
+    public CuponTest(CuponRepo cuponRepo) {
+        this.cuponRepo = cuponRepo;
+    }
+
+    */
+
+
 }

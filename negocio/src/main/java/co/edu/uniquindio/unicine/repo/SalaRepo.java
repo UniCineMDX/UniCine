@@ -10,9 +10,14 @@ import java.util.List;
 
 @Repository
 public interface SalaRepo extends JpaRepository<Sala,Integer>{
-    @Query("select s from Sala s where s.codigo = :codigo")
-    Sala obtener(@Param("codigo") Integer codigo);
-    Sala findByCodigo(Integer codigo);
+
+    //@Query("select s from Sala h where s.nombre = :nombre")
+    //Sala obtenerSalaPorNombre(@Param("nombre") String nombre);
+    //Sala findByCodigo(Integer codigo);
+
+    //@Query("select s from Sala s where s.estadoSala =:estadoSala ")
+    //List<Sala> listarSalas(EstadoSala estadoSala);
+
 
     @Query("select s.teatro from Sala s where s.codigo = :codigo")
     Teatro obtenerTeatroSala (Integer codigo);
