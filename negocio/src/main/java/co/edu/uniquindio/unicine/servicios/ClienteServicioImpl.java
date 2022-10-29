@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClienteServicioImpl {
+public class ClienteServicioImpl implements ClienteServicio{
 
     @Autowired
     private ClienteRepo clienteRepo;
@@ -35,9 +35,10 @@ public class ClienteServicioImpl {
         this.entradaRepo = entradaRepo;
         this.compraConfiteriaRepo = compraConfiteriaRepo;
     }
-/*
+
     @Override
     public Cliente login(String correo, String password) throws Exception{
+        /*
         Cliente cliente = clienteRepo.comprobarAutenticacion(correo, password);
 
         if(cliente == null){
@@ -50,8 +51,11 @@ public class ClienteServicioImpl {
         }
 
         return cliente;
+
+         */
+        return  null;
     }
-    */
+
 
     //Metodo para buscar una pelicula por el genero
 
@@ -63,6 +67,43 @@ public class ClienteServicioImpl {
         }
 
         return peliculaGuardada;
+    }
+
+    @Override
+    public Cliente registrarCliente(Cliente cliente) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Cliente obtenerClientePorCedula(Integer cedula) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void eliminarCliente(String cedulaCliente) throws Exception {
+
+        Cliente clientebuscadoCedula = clienteRepo.findByCedula(cedulaCliente);
+
+        if(clientebuscadoCedula == null){
+            throw new Exception("No existe un cliente con este numero de cedula "+cedulaCliente);
+        }
+        clienteRepo.delete(clientebuscadoCedula);
+        System.out.println("El cliente fue eliminado");
+    }
+
+    @Override
+    public List<Cliente> listarClientes() {
+        return null;
+    }
+
+    @Override
+    public void HistorialCompra(Integer codigoCliente) {
+
     }
 
 
@@ -159,10 +200,15 @@ public class ClienteServicioImpl {
         return true;
     }
 
+    @Override
+    public boolean cambiarContraseña(String correo, String passwordNueva) throws Exception {
+        return false;
+    }
+
     //Metodo para buscar una pelicula por el nombre
 
-    public List<Pelicula> buscarPeliculaPorNombre(String nombre) throws Exception {
-        List<Pelicula> peliculaGuardada = peliculaRepo.findByNombrePelicula(nombre);
+    public List<Pelicula> buscarPeliculaNombre(String nombre) throws Exception {
+        List<Pelicula> peliculaGuardada = peliculaRepo.buscarPeliculaNombre(nombre);
 
         if (peliculaGuardada.isEmpty()) {
             throw new Exception("La pelicula NO EXISTE");
@@ -170,5 +216,19 @@ public class ClienteServicioImpl {
 
         return (List<Pelicula>) peliculaGuardada.get(3);
     }
+
+
+
+    public List<Pelicula> buscarPeliculaEstado(String nombre, EstadoPelicula estadoPelicula) throws Exception {
+        List<Pelicula> peliculaGuardada = peliculaRepo.buscarPeliculaEstado(nombre, estadoPelicula);
+
+        if (peliculaGuardada.isEmpty()) {
+            throw new Exception("La pelicula NO EXISTE");
+        }
+
+        return (List<Pelicula>) peliculaGuardada.get(3);
+    }
+
+
 }
 

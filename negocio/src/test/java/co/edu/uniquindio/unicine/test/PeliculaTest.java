@@ -50,8 +50,15 @@ public class PeliculaTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void buscarPelicula(){
-        List<Pelicula> peliculas = peliculaRepo.buscarPelicula("batman", EstadoPelicula.PREVENTA);
+    public void buscarPeliculaNombre(){
+        List<Pelicula> peliculas = peliculaRepo.buscarPeliculaNombre("batman");
+        peliculas.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaEstado(){
+        List<Pelicula> peliculas = peliculaRepo.buscarPeliculaEstado("batman", EstadoPelicula.PREVENTA);
         peliculas.forEach(System.out::println);
     }
 
@@ -71,14 +78,6 @@ public class PeliculaTest {
     }
 
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void buscarPeliculaNombre(){
-
-        Pelicula pelicula = peliculaRepo.findByNombre("Corre");
-
-        Assertions.assertNotNull(pelicula);
-    }
 
     @Test
     @Sql("classpath:dataset.sql")

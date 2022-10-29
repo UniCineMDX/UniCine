@@ -5,6 +5,8 @@ import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.CuponCliente;
 import co.edu.uniquindio.unicine.entidades.EstadoCliente;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
+import co.edu.uniquindio.unicine.servicios.ClienteServicio;
+import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class ClienteTest {
     @Autowired
     private ClienteRepo clienteRepo;
+    private ClienteServicioImpl clienteServicio;
 
     @Test
     @Sql("classpath:dataset.sql")/**
@@ -34,7 +37,6 @@ public class ClienteTest {
         System.out.println(guardado);
 
     }
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -69,14 +71,17 @@ public class ClienteTest {
                 System.out.println(o[0] + "," + o[1])
         );
     }
-/*
+
     @Test
-    public void eliminar(){
-        Cliente clienteBuscado = clienteRepo.findById("344").orElse(null);
-        clienteRepo.delete(clienteBuscado);
-        Assertions.assertNull(clienteRepo.findById("344").orElse(null));
+    public void eliminar()  {
+        try {
+            clienteServicio.eliminarCliente("123");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Assertions.assertNull(clienteRepo.findById("123").orElse(null));
     }
-*/
+
 
     @Test
     @Sql("classpath:dataset.sql")

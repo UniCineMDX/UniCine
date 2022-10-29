@@ -10,7 +10,8 @@ public interface ClienteServicio {
     Cliente login(String correo, String password) throws Exception;
 
 
-    List<Pelicula> buscarPeliculaPorNombre (String nombre) throws Exception;
+    List<Pelicula> buscarPeliculaEstado(String nombre, EstadoPelicula estadoPelicula) throws Exception;
+    List<Pelicula> buscarPeliculaNombre (String nombre) throws Exception;
 
     List<Pelicula> buscarPeliculaPorGenero (Genero genero) throws Exception;
 
@@ -20,12 +21,12 @@ public interface ClienteServicio {
     Cliente obtenerClientePorCedula(Integer cedula) throws Exception;
     Cliente actualizarCliente(Cliente cliente) throws Exception;
 
-    void eliminarCliente(Integer codigoCliente) throws Exception;
+    void eliminarCliente(String codigoCliente) throws Exception;
 
     List<Cliente> listarClientes();
 
 
-    void HitorialCompra(Integer codigoCliente);
+    void HistorialCompra(Integer codigoCliente);
 
 
     Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Cupon cupon, Funcion funcion) throws Exception;
