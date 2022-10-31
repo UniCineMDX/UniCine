@@ -1,10 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.dto.HorarioSalaDTO;
-import co.edu.uniquindio.unicine.entidades.AdministradorSuper;
-import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
-import co.edu.uniquindio.unicine.entidades.Genero;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.PeliculaRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -60,6 +57,20 @@ public class PeliculaTest {
     public void buscarPeliculaEstado(){
         List<Pelicula> peliculas = peliculaRepo.buscarPeliculaEstado("batman", EstadoPelicula.PREVENTA);
         peliculas.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculaCiudad(){
+        List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasCiudad(2);
+        peliculas.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesDia(){
+        List<Funcion> funciones = peliculaRepo.listarFuncionesDiaPelicula(1,"Lunes");
+        funciones.forEach(System.out::println);
     }
 
     @Test

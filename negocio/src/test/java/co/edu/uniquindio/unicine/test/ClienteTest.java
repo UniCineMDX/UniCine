@@ -27,17 +27,17 @@ public class ClienteTest {
     private ClienteRepo clienteRepo;
     private ClienteServicioImpl clienteServicio;
 
+    /*
     @Test
     @Sql("classpath:dataset.sql")/**
      * Este metodo test permite registrar un nuevo Cliente
-     */
+
     public void registrar(){
         Cliente cliente = new Cliente("123", "Laura", "lala@gmail.com", "efef", "gegegege");
         Cliente guardado = clienteRepo.save(cliente);
         System.out.println(guardado);
 
     }
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtener(){
@@ -49,7 +49,7 @@ public class ClienteTest {
     @Sql("classpath:dataset.sql")
     /**
      * Este metodo test permite obtener todos los Clientes que estan registrados en la base de datos
-     */
+
     public void obtenerCompras(){
         List<Compra>compras = clienteRepo.obtenerCompras("lala@gmail.com");
         compras.forEach(System.out::println);
@@ -91,5 +91,5 @@ public class ClienteTest {
         Cliente clienteNuevo = clienteRepo.save(guardado);
         Assertions.assertEquals("Camilo", clienteNuevo.getNombre());
     }
-
+  */
 }
