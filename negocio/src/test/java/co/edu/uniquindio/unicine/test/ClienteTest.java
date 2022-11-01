@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.CuponCliente;
-import co.edu.uniquindio.unicine.entidades.EstadoCliente;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
@@ -26,6 +23,167 @@ public class ClienteTest {
     @Autowired
     private ClienteRepo clienteRepo;
     private ClienteServicioImpl clienteServicio;
+
+
+    /**
+     * Este metodo permite registrar un cliente
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void registrarCliente(){
+
+        Cliente cliente = Cliente.builder().cedula("129").nombre("Lina").correo("lina@gmail.com").password("1234").fotoUrl("grgrgr").build();
+
+        try {
+            Cliente clienteNuevo = clienteServicio.registrarCliente(cliente);
+
+            System.out.println(cliente);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Este metodo permite obtener un cliente atraves de su cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerClientePorCedula() {
+
+        try {
+            Cliente cliente = clienteServicio.obtenerClientePorCedula("344");
+            System.out.println(cliente);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Este metodo permite actualizar el nombre del cliente atraves de su cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void actualizarCliente(){
+
+        try {
+            Cliente cliente = clienteServicio.obtenerClientePorCedula("344");
+            cliente.setNombre("Carmen");
+
+            Cliente clienteNuevo = clienteServicio.actualizarCliente(cliente);
+            System.out.println(clienteNuevo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Este metodo permite eliminar un cliente atraves de su cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void eliminarCliente(){
+
+        try {
+            clienteServicio.eliminarCliente("344");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Este metodo permite listar los clientes
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarClientes()  {
+
+        List<Cliente> clientes = null;
+        try {
+            clientes = clienteServicio.listarClientes();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        clientes.forEach(System.out::println);
+
+    }
+
+    /**
+     * Este metodo permite listar los cupones de un cliente atraves de la cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarCuponesClientes()  {
+
+        List<CuponCliente> cuponClientes = null;
+        try {
+            cuponClientes = clienteServicio.listarCuponesCliente("344");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cuponClientes.forEach(System.out::println);
+
+    }
+
+    /**
+     * Este metodo permite ver el historial de compras de un cliente atraves de la cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void historialCompras()  {
+
+        List<Compra> historialCompras = null;
+        try {
+          historialCompras = clienteServicio.historialCompras("344");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        historialCompras.forEach(System.out::println);
+
+    }
+
+    /**
+     * Este metodo permite ver el historial de compras redimidas de un cliente atraves de la cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void historialComprasRedimidas()  {
+
+        List<Compra> historialComprasRedimidas = null;
+        try {
+            historialComprasRedimidas = clienteServicio.historialComprasRedimidas("344");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        historialComprasRedimidas.forEach(System.out::println);
+
+    }
+
+
+    /**
+     * Este metodo permite ver el historial de compras no redimidas de un cliente atraves de la cedula
+     */
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void historialCompraNoRedimidas()  {
+
+        List<Compra> historialCompraNoRedimidas = null;
+        try {
+            historialCompraNoRedimidas = clienteServicio.historialCompraNoRedimidas("344");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        historialCompraNoRedimidas.forEach(System.out::println);
+
+    }
 
     /*
     @Test

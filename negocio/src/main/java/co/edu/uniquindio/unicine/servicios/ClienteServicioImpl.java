@@ -53,6 +53,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteEncontrado;
     }
 
+    /**
+     * Este metodo permite registrar un cliente
+     */
     @Override
     public Cliente registrarCliente(Cliente cliente) throws Exception {
 
@@ -70,7 +73,9 @@ public class ClienteServicioImpl implements ClienteServicio{
 
         return clienteGuardado;
     }
-
+    /**
+     * Este metodo permite obtener un cliente atraves de su cedula
+     */
     @Override
     public Cliente obtenerClientePorCedula(String cedula) throws Exception {
 
@@ -83,6 +88,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteEncontrado;
     }
 
+    /**
+     * Este metodo permite actualizar el nombre del cliente atraves de su cedula
+     */
     @Override
     public Cliente actualizarCliente(Cliente cliente) throws Exception {
 
@@ -101,6 +109,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteGuardado;
     }
 
+    /**
+     * Este metodo permite eliminar un cliente atraves de su cedula
+     */
     @Override
     public void eliminarCliente(String cedulaCliente) throws Exception {
 
@@ -113,6 +124,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         clienteRepo.delete(clienteEncontrado);
     }
 
+    /**
+     * Este metodo permite listar los clientes
+     */
     @Override
     public List<Cliente> listarClientes()throws Exception {
 
@@ -124,6 +138,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return lisaClientes;
     }
 
+    /**
+     * Este metodo permite listar los cupones de un cliente atraves de la cedula
+     */
     @Override
     public List<CuponCliente> listarCuponesCliente(String cedulaCliente)throws Exception {
 
@@ -139,6 +156,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteEncontrado.getCupones();
     }
 
+    /**
+     * Este metodo permite ver el historial de compras de un cliente atraves de la cedula
+     */
     @Override
     public List<Compra> historialCompras(String cedulaCliente)throws Exception {
 
@@ -154,6 +174,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteEncontrado.getCompras();
     }
 
+    /**
+     * Este metodo permite ver el historial de compras redimidas de un cliente atraves de la cedula
+     */
     @Override
     public List<Compra> historialComprasRedimidas(String cedulaCliente) throws Exception {
 
@@ -174,6 +197,9 @@ public class ClienteServicioImpl implements ClienteServicio{
         return listaComprasRedimidas;
     }
 
+    /**
+     * Este metodo permite ver el historial de compras no redimidas de un cliente atraves de la cedula
+     */
     @Override
     public List<Compra> historialCompraNoRedimidas(String cedulaCliente) throws Exception {
         List<Compra> listaComprasNoRedimidas = null;
