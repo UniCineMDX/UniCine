@@ -24,7 +24,8 @@ public class Pelicula implements Serializable {
     private String nombre;
 
 
-    @Column(length = 200)
+    @Lob
+    @Column(nullable = false)
     private String sipnosis;
 
 
@@ -45,7 +46,8 @@ public class Pelicula implements Serializable {
     private Genero genero;
 
 
-    @Column(length = 100)
+    @Lob
+    @Column(nullable = false)
     private String Reparto;
 
 

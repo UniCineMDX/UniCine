@@ -19,7 +19,7 @@ public class Cliente extends Persona implements Serializable {
 
     //Atributos de la clase Cliente
     @Enumerated(EnumType.STRING)
-    private EstadoCliente estado;
+    private EstadoCliente estado = EstadoCliente.REGISTRADO;
 
     @ElementCollection
     private Map<String, String > telefonos;
@@ -45,6 +45,6 @@ public class Cliente extends Persona implements Serializable {
     @Builder
     public Cliente(String cedula, String nombre, String correo, String password, String fotoUrl) {
         super(cedula, nombre, correo, password, fotoUrl);
-        this.estado = EstadoCliente.REGISTRADO;
+        this.estado = EstadoCliente.INACTIVO;
     }
 }

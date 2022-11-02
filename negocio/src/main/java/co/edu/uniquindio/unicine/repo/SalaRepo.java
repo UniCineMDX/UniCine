@@ -13,7 +13,6 @@ public interface SalaRepo extends JpaRepository<Sala,Integer>{
 
     @Query("select s from Sala s where s.nombre = :nombre")
     Sala obtenerSalaPorNombre(@Param("nombre") String nombre);
-    Sala findByCodigo(Integer codigo);
 
     @Query("select s from Sala s where s.estadoSala =:estadoSala ")
     List<Sala> listarSalas(EstadoSala estadoSala);
@@ -27,5 +26,7 @@ public interface SalaRepo extends JpaRepository<Sala,Integer>{
 
     @Query("select fun from Sala s join s.funciones fun where s.codigo = :codigo")
     List<Funcion> obtenerFuncionesSala(Integer codigo);
+
+    Sala findByCodigo(Integer codigo);
 
 }

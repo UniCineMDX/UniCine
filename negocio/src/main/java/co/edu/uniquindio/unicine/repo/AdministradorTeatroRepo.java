@@ -43,4 +43,6 @@ public interface AdministradorTeatroRepo extends JpaRepository<AdministradorTeat
     List<Teatro> obtenerListaTeatros (String cedulaAdmiTeatro);
 
 
+
+
 }

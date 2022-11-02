@@ -27,7 +27,12 @@ public class ClienteServicioImpl implements ClienteServicio{
     private CiudadRepo ciudadRepo;
     private TeatroRepo teatroRepo;
 
-    public ClienteServicioImpl(CiudadRepo ciudadRepo,TeatroRepo teatroRepo,ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo, CuponClienteRepo cuponClienteRepo, ConfiteriaRepo confiteriaRepo, CompraRepo compraRepo, EntradaRepo entradaRepo, CompraConfiteriaRepo compraConfiteriaRepo) {
+
+    private EmailServicio emailServicio;
+
+
+    public ClienteServicioImpl(CiudadRepo ciudadRepo,TeatroRepo teatroRepo,ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo, CuponClienteRepo cuponClienteRepo, ConfiteriaRepo confiteriaRepo, CompraRepo compraRepo, EntradaRepo entradaRepo, CompraConfiteriaRepo compraConfiteriaRepo, EmailServicio emailServicio) {
+
         this.clienteRepo = clienteRepo;
         this.peliculaRepo = peliculaRepo;
         this.funcionRepo = funcionRepo;
@@ -37,8 +42,10 @@ public class ClienteServicioImpl implements ClienteServicio{
         this.compraRepo = compraRepo;
         this.entradaRepo = entradaRepo;
         this.compraConfiteriaRepo = compraConfiteriaRepo;
-        this.clienteRepo = clienteRepo;
+        this.emailServicio = emailServicio;
         this.ciudadRepo = ciudadRepo;
+        this.teatroRepo = teatroRepo;
+
     }
 
 
@@ -51,6 +58,20 @@ public class ClienteServicioImpl implements ClienteServicio{
         }
 
         return clienteEncontrado;
+    }
+
+
+    //Metodo para buscar una pelicula por el genero
+
+    public List<Pelicula> buscarPeliculaPorGenero(Genero genero) throws Exception {
+        List<Pelicula> peliculaGuardada = peliculaRepo.obtenerPeliculasPorGenero(genero);
+
+        if (peliculaGuardada.isEmpty()) {
+            throw new Exception("La pelicula NO EXISTE");
+        }
+
+        return peliculaGuardada;
+
     }
 
     /**
@@ -70,6 +91,7 @@ public class ClienteServicioImpl implements ClienteServicio{
         }
 
         Cliente clienteGuardado = clienteRepo.save(cliente);
+        //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", cliente.getCorreo());
 
         return clienteGuardado;
     }
@@ -229,10 +251,22 @@ public class ClienteServicioImpl implements ClienteServicio{
         return false;
     }
 
+
+    //Metodo para buscar una pelicula por el nombre
+
+
+    public List<Pelicula> buscarPeliculaPorNombre(String nombre) throws Exception {
+         List<Pelicula> peliculaGuardada = (List<Pelicula>) peliculaRepo.findByNombre(nombre);
+
+         return peliculaGuardada;
+    }
+
+
     @Override
     public Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Cupon cupon, Funcion funcion) throws Exception {
         return null;
     }
+
 
     @Override
     public boolean validarPago() {
@@ -289,19 +323,6 @@ public class ClienteServicioImpl implements ClienteServicio{
             throw new Exception("No existe peliculas creadas con estado "+estadoPelicula.toString());
         }
         return listarPeliculasEstado;
-    }
-
-    @Override
-    public List<Pelicula> buscarPeliculaPorGenero(Genero genero) throws Exception {
-
-
-        List<Pelicula> listarPeliculasGenero = peliculaRepo.obtenerPeliculasPorGenero(genero);
-
-
-        if(listarPeliculasGenero.isEmpty()){
-            throw new Exception("No existe peliculas creadas con genero "+genero);
-        }
-        return listarPeliculasGenero;
     }
 
     @Override
@@ -368,6 +389,7 @@ public class ClienteServicioImpl implements ClienteServicio{
     public DistribucionSilla distribucion(Integer codigoTeatro, Integer codigoSala) throws Exception {
         return null;
     }
+
 
 
 }

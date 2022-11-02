@@ -13,6 +13,12 @@ import java.util.Optional;
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
 
+
+    //List<Pelicula> findByNombre(String nombrePelicula);
+
+    @Query("select p from Pelicula p where p.nombre = :nombrePelicula")
+    Pelicula buscarPeliculaPorNombre(String nombrePelicula);
+
     @Query("select p from Pelicula p where p.estadoPelicula = :estado")
     List<Pelicula> obtenerPeliculasPorEstado(EstadoPelicula estado);
 
