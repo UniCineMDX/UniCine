@@ -25,7 +25,7 @@ public class AdminSuperServicioTest {
     public void listarAdministradoresSuper() {
         try {
             List<AdministradorSuper> listaAdmin = adminSuperServicio.listarAdministradores();
-            // listaAdmin.forEach(System.out::println);
+            listaAdmin.forEach(System.out::println);
             Assertions.assertNotNull(listaAdmin);
         } catch (Exception e) {
             e.printStackTrace();

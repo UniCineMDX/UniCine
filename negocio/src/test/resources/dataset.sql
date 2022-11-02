@@ -21,19 +21,19 @@ insert into horario values (2, "Martes", "2021/12/31", "2021/01/01", "11:00");
 insert into horario values (3, "Miercoles", "2021/12/31", "2021/01/01", "1:00");
 insert into horario values (4, "Jueves", "2021/12/31", "2021/01/01", "12:00");
 insert into horario values (5, "Viernes", "2021/12/31", "2021/01/01", "20:00");
-insert into teatro values (1, "Calle sexta #12",  "3125679834", "98822", 1);
 
+insert into pelicula values (1, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
 insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batmn", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
 insert into pelicula values (3, "andrea, juan, roberto", "PREVENTA","TERROR", "Harry potter y la piedra filosofal", "Pelicula de suspenso", "gfbfbfb", "fgbegegege");
 insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Btman", "Harry potter y el caliz de fuego", "gfbfbfb", "fgbegegege");
 insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "atman", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
 
 
-insert into teatro values (1, "Calle sexta #12", "3125679834", "98822", 1);
-insert into teatro values (2, "Calle novena #18", "3125679834", "98822", 1);
-insert into teatro values (3, "Calle diagonal #34", "3125679834", "0836544", 2);
-insert into teatro values (4, "Calle norte #3", "3125679834", "0836544", 2);
-insert into teatro values (5, "Calle #9", "3125679834", "0836544", 2);
+insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);
+insert into teatro values (2, "Calle novena #18", "3125679834", "1", 2);
+insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 2);
+insert into teatro values (4, "Calle norte #3", "3125679834", "2", 4);
+insert into teatro values (5, "Calle #9", "3125679834", "3", 5);
 
 
 insert into distribucion_silla values (1, 10, "eegege", 10, 90);
@@ -43,17 +43,17 @@ insert into distribucion_silla values (4, 10, "eegege", 10, 90);
 insert into distribucion_silla values (5, 10, "eegege", 10, 90);
 
 insert into sala values (1,"HABILITADA", "sala1", 1, 1);
-insert into sala values (2,"HABILITADA", "sala2", 1, 1);
-insert into sala values (3,"HABILITADA", "sala3", 1, 1);
-insert into sala values (4,"HABILITADA", "sala4", 1, 1);
-insert into sala values (5,"HABILITADA", "sala5", 1, 2);
+insert into sala values (2,"HABILITADA", "sala2", 1, 2);
+insert into sala values (3,"HABILITADA", "sala3", 1, 3);
+insert into sala values (4,"HABILITADA", "sala4", 1, 4);
+insert into sala values (5,"HABILITADA", "sala5", 1, 5);
 
 
 insert into funcion values (1, 6.500, 1, 1, 1);
-insert into funcion values (2, 6500, 1, 2, 1);
-insert into funcion values (3, 7000, 1, 2, 1);
-insert into funcion values (4, 5000, 1, 2, 1);
-insert into funcion values (5, 6.500, 1, 2, 1);
+insert into funcion values (2, 6500, 1, 2, 2);
+insert into funcion values (3, 7000, 1, 3, 3);
+insert into funcion values (4, 5000, 1, 4, 4);
+insert into funcion values (5, 6.500, 1, 5, 5);
 
 
 insert into cliente values ("123", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");
@@ -72,11 +72,11 @@ insert into cliente_telefonos values ("922", "3123456757", "local");
 
 
 
-insert into cupon values (1, "cupon de bienvenida", "cupon a nuevos clientes del mes", 25, "SIN_USAR", "2022/12/30");
-insert into cupon values (2, "cupon del mes", "san valentin", 25, "SIN_USAR", "2022/12/30");
-insert into cupon values (3, "cupon del mes", "navidad", 25, "SIN_USAR", "2022/12/30");
-insert into cupon values (4, "cupon del mes", "hallowen", 25, "SIN_USAR", "2022/12/30");
-insert into cupon values (5, "cupon del mes", "pascua", 25, "SIN_USAR", "2022/12/30");
+insert into cupon values (1, "cupon de bienvenida", "cupon a nuevos clientes del mes", 25, "2022/12/30");
+insert into cupon values (2, "cupon del mes", "san valentin", 25, "2022/12/30");
+insert into cupon values (3, "cupon del mes", "navidad", 25, "2022/12/30");
+insert into cupon values (4, "cupon del mes", "hallowen", 25, "2022/12/30");
+insert into cupon values (5, "cupon del mes", "pascua", 25, "2022/12/30");
 
 
 
