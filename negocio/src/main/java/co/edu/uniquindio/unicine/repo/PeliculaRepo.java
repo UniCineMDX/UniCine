@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,27 +38,26 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
     @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estado")
     List<Pelicula> buscarPeliculaEstado(String nombre, EstadoPelicula estado);
 
-    @Query("select new co.edu.uniquindio.unicine.dto.HorarioSalaDTO(funcion.horario, funcion.sala) from Pelicula p join p.funciones funcion where p.codigo = :codigoPelicula and funcion.sala.teatro.codigo = :codigoTeatro")
-    List<HorarioSalaDTO> listarHorario(Integer codigoPelicula, Integer codigoTeatro);
-
     @Query("select p from Pelicula p where p.genero =:genero  order by p.nombre asc")
     List<Pelicula> listarPeliculas(Genero genero);
 
     @Query("select f from Pelicula p join p.funciones f where p.codigo = :codigoPelicula and f.horario.dia = :dia")
     List<Funcion> listarFuncionesDiaPelicula(Integer codigoPelicula, String dia);
 
-    @Query("select f from Funcion f order by f.horario.fechaInicio")
-    List<Funcion> listarFuncionHorarioAsendente();
+    @Query("select distinct  f.horario.fechaInicio from Funcion f where f.pelicula.codigo = :codigoPelicula and f.sala.teatro.codigo = :codigoTeatro")
+    List<LocalDate> listarFechaFuncion(Integer codigoPelicula,Integer codigoTeatro);
 
-    @Query("select f from Funcion f order by f.horario.fechaInicio desc ")
-    List<Funcion> listarFuncionHorarioDesedente();
+    @Query("select f.horario.hora from Funcion f where f.pelicula.codigo = :codigoPelicula and f.horario.fechaInicio = :fechaPelicula and f.sala.teatro.codigo = :codigoTeatro")
+    List<String> listarHorasFuncion(Integer codigoPelicula, LocalDate fechaPelicula, Integer codigoTeatro);
+
+    @Query("select f from Funcion f where f.horario.fechaFin = :fecha and f.horario.hora = :hora and f.sala.teatro.codigo = :codigoTeatro")
+    Funcion obtenerFuncionHorario(String hora,LocalDate fecha, Integer codigoTeatro);
 
     Pelicula findByNombre(String nombre);
 
     Pelicula findByCodigo(Integer codigo);
 
 
-
-
-
+    @Query("select c.entradas from Funcion f join f.compras c where f.codigo = :codigo")
+    List<Entrada> obtenerEntradasFuncion(Integer codigo);
 }
