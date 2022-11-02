@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface EntradaRepo extends JpaRepository<Entrada, Integer>{
 
     Entrada findByCodigo(Integer codigo);
+
 }

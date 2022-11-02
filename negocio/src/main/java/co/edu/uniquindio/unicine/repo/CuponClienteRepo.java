@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface CuponClienteRepo extends JpaRepository<CuponCliente, Integer>{
 
+
+    CuponCliente findByCodigo(Integer codigo);
     //alreves
     @Query("select cup from Cliente cli join cli.cupones cup where cli.correo = :correo")
     List<CuponCliente>obtenerCupones (String correo);

@@ -45,9 +45,10 @@ public class CompraConfiteria implements Serializable {
      * @param confiteria
      * @param compra
      */
-    public CompraConfiteria(Double precio, Integer unidades, Confiteria confiteria, Compra compra) {
+
+    @Builder
+    public CompraConfiteria(Double precio, Integer unidades, Confiteria confiteria) {
         this.precio     = precio;
-        this.compra     = compra;
         this.unidades   = unidades;
         this.confiteria = confiteria;
     }

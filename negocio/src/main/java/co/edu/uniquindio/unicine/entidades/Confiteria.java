@@ -38,6 +38,7 @@ public class Confiteria implements Serializable {
     private List<CompraConfiteria> comprasConfiterias;
 
 
+    @Builder
     public Confiteria(String nombre, Double precio, String urlImagen) {
         this.nombre = nombre;
         this.precio = precio;

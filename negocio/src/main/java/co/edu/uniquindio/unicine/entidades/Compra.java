@@ -22,8 +22,10 @@ public class Compra implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MedioPago medioPago;
+
     @Column(nullable = false)
-    private LocalDate fechaCompra;
+    private LocalDate fechaCompra = LocalDate.now();
+
     @Column(nullable = false)
     private Double valorTotal;
 
@@ -43,12 +45,12 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private Funcion funcion;
 
-    public Compra(List<Entrada> entradas,MedioPago medioPago, LocalDate fechaCompra, Double valorTotal, Cliente cliente, CuponCliente cuponCliente, Funcion funcion) {
+    @Builder
+    public Compra(MedioPago medioPago, Cliente cliente, CuponCliente cuponCliente, Funcion funcion, Double valorTotal) {
         this.cliente     = cliente;
-        this.entradas    = entradas;
         this.funcion     = funcion;
         this.medioPago   = medioPago;
-        this.valorTotal  = valorTotal;
-        this.fechaCompra = fechaCompra;
+        this.valorTotal = valorTotal;
     }
+
 }

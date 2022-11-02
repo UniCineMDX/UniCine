@@ -31,7 +31,7 @@ insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", 
 
 insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);
 insert into teatro values (2, "Calle novena #18", "3125679834", "1", 2);
-insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 2);
+insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 3);
 insert into teatro values (4, "Calle norte #3", "3125679834", "2", 4);
 insert into teatro values (5, "Calle #9", "3125679834", "3", 5);
 
@@ -100,3 +100,17 @@ insert into entrada values (2, 1, "ASISTIO", 2, 6000, 1);
 insert into entrada values (3, 1, "ASISTIO", 3, 6000, 2);
 insert into entrada values (4, 1, "ASISTIO", 4, 6000, 2);
 insert into entrada values (5, 1, "ASISTIO", 5, 6000, 2);
+
+
+insert into confiteria values (1, "Combo 1", 15000, "fbrhrhr");
+insert into confiteria values (2, "Combo 2", 10000, "fbrhrhr");
+insert into confiteria values (3, "Combo 3", 20000, "fbrhrhr");
+insert into confiteria values (4, "Combo 4", 35000, "fbrhrhr");
+insert into confiteria values (5, "Combo 5", 6000, "fbrhrhr");
+
+
+insert into compra_confiteria values (1, 30000, 2, 1, 1);
+insert into compra_confiteria values (2, 30000, 2, 1, 1);
+insert into compra_confiteria values (3, 30000, 2, 1, 1);
+insert into compra_confiteria values (4, 30000, 2, 1, 1);
+insert into compra_confiteria values (5, 30000, 2, 1, 1);

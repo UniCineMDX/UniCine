@@ -36,6 +36,7 @@ public class Cupon implements Serializable {
     @ToString.Exclude
     private List<CuponCliente> cuponesCliente;
 
+    @Builder
     public Cupon( Double descuento, String criterio, LocalDate vencimiento) {
         this.descuento = descuento;
         this.criterio = criterio;
