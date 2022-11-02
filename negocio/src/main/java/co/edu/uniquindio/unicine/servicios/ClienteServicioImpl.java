@@ -249,15 +249,24 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Cupon obtenerCuponSeleccionado(Integer codigo) throws Exception {
+    public CuponCliente obtenerCuponSeleccionado(String cedula,Integer codigo) throws Exception {
 
-        Cupon cupon = cuponRepo.findByCodigo(codigo);
+        Cliente cliente = clienteRepo.findByCedula(cedula);
 
-        if(cupon == null){
-            throw new Exception("No existe un cupon con codigo "+codigo);
+        if(cliente == null){
+            throw new Exception("No existe un cliente con codigo "+cedula);
         }
 
-        return cupon;
+        if(cliente.getCupones().isEmpty()){
+            throw new Exception("La lista de cupones esta vacia "+codigo);
+        }
+        for (CuponCliente cupon: cliente.getCupones()) {
+            if(cupon.getCodigo() == codigo){
+                return cupon;
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -296,17 +305,11 @@ public class ClienteServicioImpl implements ClienteServicio {
 
 
     @Override
-    public Compra realizarCompra(Compra compra ,Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception {
+    public Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception {
 
-        Compra compraCodigo = compraRepo.findByCodigo(compra.getCodigo());
         Cliente clienteCedula = clienteRepo.findByCedula(cliente.getCedula());
         Funcion funcionCodigo = funcionRepo.findByCodigo(funcion.getCodigo());
         CuponCliente cuponCodigo = cuponClienteRepo.buscarCuponClientePorCodigoCupon(cupon.getCodigo());
-
-
-        if (compraCodigo != null) {
-            throw new Exception("La compra con el codigo" + compra.getCodigo() + "ya existe");
-        }
 
         if (clienteCedula == null) {
             throw new Exception("El cliente con la cedula" + cliente.getCedula() + "no existe");
@@ -323,35 +326,37 @@ public class ClienteServicioImpl implements ClienteServicio {
         if (medioPago == null) {
             throw new Exception("Elija un medio de pago disponible");
         }
+        if(entradas.isEmpty()){
+            throw new Exception("La lista de entradas esta vacia");
+        }
 
-        Compra compraGuardada = compraRepo.save(compra);
-        System.out.println(compra);
+        Compra compra = new Compra();
 
         double valorConfiterias = 0;
 
         if(!compraConfiterias.isEmpty()) {
             compraConfiterias.forEach(c -> {
-                c.setCompra(compraGuardada);
+                c.setCompra(compra);
                 compraConfiteriaRepo.save(c);
             });
 
 
-            for (int i = 0; i < compraGuardada.getCompraConfiterias().size(); i++) {
+            for (int i = 0; i < compra.getCompraConfiterias().size(); i++) {
 
-                valorConfiterias = (compraGuardada.getCompraConfiterias().get(i).getPrecio()) + valorConfiterias;
+                valorConfiterias = (compra.getCompraConfiterias().get(i).getPrecio()) + valorConfiterias;
             }
         }
 
 
         entradas.forEach(e -> {
-            e.setCompra(compraGuardada);
+            e.setCompra(compra);
             entradaRepo.save(e);
         });
 
 
 
         if (cuponCodigo != null) {
-            compraGuardada.setCuponCliente(cuponCodigo);
+            compra.setCuponCliente(cuponCodigo);
             cuponCodigo.setEstado(EstadoCupon.USADO);
             cuponClienteRepo.save(cuponCodigo);
         }
@@ -370,9 +375,9 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         double valorEntradas = 0;
 
-        for (int i = 0; i < compraGuardada.getEntradas().size(); i++) {
+        for (int i = 0; i < compra.getEntradas().size(); i++) {
 
-            valorEntradas = (compraGuardada.getEntradas().get(i).getPrecio()) + valorEntradas;
+            valorEntradas = (compra.getEntradas().get(i).getPrecio()) + valorEntradas;
         }
 
         double porcentajeDescuento = (cuponCodigo.getCupon().getDescuento()/100);
@@ -380,21 +385,21 @@ public class ClienteServicioImpl implements ClienteServicio {
         double valorTotal = (valorConfiterias + valorEntradas)- descuento;
 
 
-        compraGuardada.setCliente(clienteCedula);
-        compraGuardada.setCuponCliente(cuponCodigo);
-        compraGuardada.setFechaCompra(LocalDate.now());
-        compraGuardada.setCompraConfiterias(compraGuardada.getCompraConfiterias());
-        compraGuardada.setEntradas(compraGuardada.getEntradas());
-        compraGuardada.setFuncion(funcion);
-        compraGuardada.setMedioPago(medioPago);
-        compraCodigo.setValorTotal(valorTotal);
+        compra.setCliente(clienteCedula);
+        compra.setCuponCliente(cuponCodigo);
+        compra.setFechaCompra(LocalDate.now());
+        compra.setCompraConfiterias(compra.getCompraConfiterias());
+        compra.setEntradas(compra.getEntradas());
+        compra.setFuncion(funcion);
+        compra.setMedioPago(medioPago);
+        compra.setValorTotal(valorTotal);
 
-        Compra compraNueva = compraRepo.save(compraGuardada);
-        clienteCedula.getCompras().add(compraNueva);
+        Compra compraGuardada = compraRepo.save(compra);
+        clienteCedula.getCompras().add(compraGuardada);
 
-        emailServicio.enviarEmail("Compra unicine", "Hola" + clienteCedula.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraNueva.getCompraConfiterias() +"\n" + compraNueva.getEntradas()+ " \n"+ compraNueva.getFuncion()+"todo por un valor de $"+valorTotal, clienteCedula.getCorreo());
+        emailServicio.enviarEmail("Compra unicine", "Hola" + clienteCedula.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraGuardada.getCompraConfiterias() +"\n" + compraGuardada.getEntradas()+ " \n"+ compraGuardada.getFuncion()+"todo por un valor de $"+valorTotal, clienteCedula.getCorreo());
 
-        return compraNueva;
+        return compraGuardada;
     }
 
 

@@ -69,7 +69,33 @@ public class ClienteTest {
 
         try {
             Cliente cliente = clienteServicio.obtenerClientePorCedula("344");
-            System.out.println(cliente);
+            Assertions.assertNotNull(cliente);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void login() {
+
+        try {
+            Cliente cliente = clienteServicio.login("lala@gmail.com","123");
+            Assertions.assertNotNull(cliente);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCuponSeleccionado() {
+
+        try {
+            CuponCliente cupon = clienteServicio.obtenerCuponSeleccionado("123",1);
+            Assertions.assertNotNull(cupon);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -271,35 +297,19 @@ public class ClienteTest {
     @Sql("classpath:dataset.sql")
     public void realizarCompra()  {
 
-      Cliente cliente = clienteRepo.findByCedula("123");
+      Cliente cliente = clienteRepo.findByCedula("1253");
       Funcion funcion = funcionRepo.findByCodigo(1);
       CuponCliente cuponCliente = cuponClienteRepo.findByCodigo(1);
       MedioPago medioPago = MedioPago.TARJETA_CREDITO;
-
-      CompraConfiteria compraConfiteria= compraConfiteriaRepo.findByCodigo(1);
-      CompraConfiteria compraConfiteria1= compraConfiteriaRepo.findByCodigo(2);
       List<CompraConfiteria> compraConfiterias = new ArrayList<>();
-      compraConfiterias.add(compraConfiteria);
-      compraConfiterias.add(compraConfiteria1);
-
-      Entrada entrada = entradaRepo.findByCodigo(1);
-      Entrada entrada1 = entradaRepo.findByCodigo(2);
       List<Entrada>entradas = new ArrayList<>();
-      entradas.add(entrada);
-      entradas.add(entrada1);
-
 
         try {
-            Compra compra = Compra.builder().cliente(cliente).funcion(funcion).cuponCliente(cuponCliente).medioPago(medioPago).valorTotal(20000.0).build();
-            Compra nueva =compraRepo.save(compra);
-
-            Compra compraNueva = clienteServicio.realizarCompra(nueva, cliente,entradas,compraConfiterias,medioPago,cuponCliente,funcion );
+            Compra compraNueva = clienteServicio.realizarCompra(cliente, entradas, compraConfiterias, medioPago, cuponCliente, funcion);
             System.out.println(compraNueva);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
