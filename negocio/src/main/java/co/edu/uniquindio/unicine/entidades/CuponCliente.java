@@ -37,6 +37,7 @@ public class CuponCliente implements Serializable {
     private Compra compra;
 
 
+    @Builder
     public CuponCliente(EstadoCupon estado, Cliente cliente, Cupon cupon) {
         this.estado = estado;
         this.cliente = cliente;

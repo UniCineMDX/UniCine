@@ -1,7 +1,9 @@
 package co.edu.uniquindio.unicine.test;
 
+import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.Entrada;
+import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import co.edu.uniquindio.unicine.repo.CompraRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,9 @@ public class CompraTest {
 
     @Autowired
     private CompraRepo compraRepo;
+
+    @Autowired
+    private ClienteRepo clienteRepo;
 
 
     @Test
@@ -54,6 +59,16 @@ public class CompraTest {
         cupones.forEach(o ->
                 System.out.println(o[0] + "," + o[1])
         );
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void contarComprasCliente(){
+
+        System.out.println("hola");
+        Integer numCompras = compraRepo.contarComprasCliente("123");
+        System.out.println(numCompras);
 
     }
 

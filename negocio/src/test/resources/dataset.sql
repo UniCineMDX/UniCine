@@ -16,8 +16,8 @@ insert into ciudad values (3, "Medellin");
 insert into ciudad values (4, "Bogota");
 insert into ciudad values (5, "Manizales");
 
-insert into horario values (1, "Lunes","2021/01/06", "2021/01/06", "13:00");
-insert into horario values (2, "Martes","2021/01/06", "2021/01/10", "11:00");
+insert into horario values (1, "Lunes","2021/01/01", "2021/01/01", "13:00");
+insert into horario values (2, "Martes","2021/01/06", "2021/01/02", "11:00");
 insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
 insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
 insert into horario values (5, "Viernes","2021/01/06", "2021/01/05", "20:00");
@@ -31,7 +31,7 @@ insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", 
 
 insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);
 insert into teatro values (2, "Calle novena #18", "3125679834", "1", 2);
-insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 2);
+insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 3);
 insert into teatro values (4, "Calle norte #3", "3125679834", "2", 4);
 insert into teatro values (5, "Calle #9", "3125679834", "3", 5);
 
@@ -43,17 +43,17 @@ insert into distribucion_silla values (4, 10, "eegege", 10, 90);
 insert into distribucion_silla values (5, 10, "eegege", 10, 90);
 
 insert into sala values (1,"HABILITADA", "sala1", 1, 1);
-insert into sala values (2,"HABILITADA", "sala2", 1, 2);
+insert into sala values (2,"HABILITADA", "sala2", 1, 1);
 insert into sala values (3,"HABILITADA", "sala3", 1, 3);
 insert into sala values (4,"HABILITADA", "sala4", 1, 4);
 insert into sala values (5,"HABILITADA", "sala5", 1, 5);
 
 
 insert into funcion values (1, 6.500, 1, 1, 1);
-insert into funcion values (2, 6500, 2, 2, 2);
-insert into funcion values (3, 7000, 3, 3, 3);
-insert into funcion values (4, 5000, 4, 4, 4);
-insert into funcion values (5, 6.500,5, 5, 5);
+insert into funcion values (2, 6500, 2, 1, 2);
+insert into funcion values (3, 7000, 3, 1, 3);
+insert into funcion values (4, 5000, 4, 1, 4);
+insert into funcion values (5, 6.500,5, 1, 5);
 
 
 insert into cliente values ("123", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");
@@ -100,3 +100,17 @@ insert into entrada values (2, 1, "ASISTIO", 2, 6000, 1);
 insert into entrada values (3, 1, "ASISTIO", 3, 6000, 2);
 insert into entrada values (4, 1, "ASISTIO", 4, 6000, 2);
 insert into entrada values (5, 1, "ASISTIO", 5, 6000, 2);
+
+
+insert into confiteria values (1, "Combo 1", 15000, "fbrhrhr");
+insert into confiteria values (2, "Combo 2", 10000, "fbrhrhr");
+insert into confiteria values (3, "Combo 3", 20000, "fbrhrhr");
+insert into confiteria values (4, "Combo 4", 35000, "fbrhrhr");
+insert into confiteria values (5, "Combo 5", 6000, "fbrhrhr");
+
+
+insert into compra_confiteria values (1, 30000, 2, 1, 1);
+insert into compra_confiteria values (2, 30000, 2, 1, 1);
+insert into compra_confiteria values (3, 30000, 2, 1, 1);
+insert into compra_confiteria values (4, 30000, 2, 1, 1);
+insert into compra_confiteria values (5, 30000, 2, 1, 1);

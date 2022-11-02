@@ -18,7 +18,6 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     private  ConfiteriaRepo confiteriaRepo;
     private  CuponRepo cuponRepo;
     private  FuncionRepo funcionRepo;
-
     private ClienteRepo clienteRepo;
     private CuponClienteRepo cuponClienteRepo;
     private CompraConfiteriaRepo compraConfiteriaRepo;

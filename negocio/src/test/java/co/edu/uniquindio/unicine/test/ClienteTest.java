@@ -1,7 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.*;
-import co.edu.uniquindio.unicine.repo.ClienteRepo;
+import co.edu.uniquindio.unicine.repo.*;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,21 @@ import java.util.Optional;
 public class ClienteTest {
     @Autowired
     private ClienteRepo clienteRepo;
+    @Autowired
+    private FuncionRepo funcionRepo;
+
+    @Autowired
+    private CompraRepo compraRepo;
+    @Autowired
+    private CuponClienteRepo cuponClienteRepo;
+    @Autowired
+    ConfiteriaRepo confiteriaRepo;
+    @Autowired
+    private CompraConfiteriaRepo compraConfiteriaRepo;
+
+    @Autowired
+    private EntradaRepo entradaRepo;
+
     private ClienteServicioImpl clienteServicio;
 
 
@@ -250,5 +266,72 @@ public class ClienteTest {
         Assertions.assertEquals("Camilo", clienteNuevo.getNombre());
     }
   */
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void realizarCompra()  {
+
+      Cliente cliente = clienteRepo.findByCedula("123");
+      Funcion funcion = funcionRepo.findByCodigo(1);
+      CuponCliente cuponCliente = cuponClienteRepo.findByCodigo(1);
+      MedioPago medioPago = MedioPago.TARJETA_CREDITO;
+
+      CompraConfiteria compraConfiteria= compraConfiteriaRepo.findByCodigo(1);
+      CompraConfiteria compraConfiteria1= compraConfiteriaRepo.findByCodigo(2);
+      List<CompraConfiteria> compraConfiterias = new ArrayList<>();
+      compraConfiterias.add(compraConfiteria);
+      compraConfiterias.add(compraConfiteria1);
+
+      Entrada entrada = entradaRepo.findByCodigo(1);
+      Entrada entrada1 = entradaRepo.findByCodigo(2);
+      List<Entrada>entradas = new ArrayList<>();
+      entradas.add(entrada);
+      entradas.add(entrada1);
+
+
+        try {
+            Compra compra = Compra.builder().cliente(cliente).funcion(funcion).cuponCliente(cuponCliente).medioPago(medioPago).valorTotal(20000.0).build();
+            Compra nueva =compraRepo.save(compra);
+
+            Compra compraNueva = clienteServicio.realizarCompra(nueva, cliente,entradas,compraConfiterias,medioPago,cuponCliente,funcion );
+            System.out.println(compraNueva);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void realizarCompraConfiteria()  {
+
+        Cliente cliente = clienteRepo.findByCedula("123");
+        CuponCliente cuponCliente = cuponClienteRepo.findByCodigo(1);
+        MedioPago medioPago = MedioPago.TARJETA_CREDITO;
+
+        CompraConfiteria compraConfiteria= compraConfiteriaRepo.findByCodigo(1);
+        CompraConfiteria compraConfiteria1= compraConfiteriaRepo.findByCodigo(2);
+        List<List<Integer>> compraConfiterias = new ArrayList<>();
+        compraConfiterias.add((List<Integer>) compraConfiteria);
+        compraConfiterias.add((List<Integer>) compraConfiteria1);
+
+
+
+        try {
+            Compra compra = Compra.builder().cliente(cliente).funcion(null).cuponCliente(cuponCliente).medioPago(medioPago).valorTotal(20000.0).build();
+            Compra nueva =compraRepo.save(compra);
+
+            Compra compraNueva = clienteServicio.realizarCompraConfiteria(cliente,compraConfiterias,medioPago,cuponCliente);
+            System.out.println(compraNueva);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
 
 }

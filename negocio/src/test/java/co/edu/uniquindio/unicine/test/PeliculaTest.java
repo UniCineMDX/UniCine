@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,21 +69,6 @@ public class PeliculaTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerFuncionesDia(){
-        List<Funcion> funciones = peliculaRepo.listarFuncionesDiaPelicula(1,"Lunes");
-        funciones.forEach(System.out::println);
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listasHorario(){
-        List<HorarioSalaDTO> listaHoraraio = peliculaRepo.listarHorario(1, 1);
-        System.out.println(listaHoraraio);
-    }
-
-
-    @Test
-    @Sql("classpath:dataset.sql")
     public void listarPeliculas(){
         List<Pelicula> listaPeliculas = peliculaRepo.listarPeliculas(Genero.TERROR);
         System.out.println(listaPeliculas);
@@ -92,18 +78,41 @@ public class PeliculaTest {
     @Sql("classpath:dataset.sql")
     public void obtenerFuncionesFechaAscendente(){
 
-        List<Funcion> listaFunciones = peliculaRepo.listarFuncionHorarioAsendente();
+        List<LocalDate> listaFechaFuncion = peliculaRepo.listarFechaFuncion(1,1);
+
+        listaFechaFuncion.forEach(System.out::println);
+    }
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesFechaDesendente(){
+
+        LocalDate local = LocalDate.parse("2021-01-01");
+
+        List<String> listaFunciones = peliculaRepo.listarHorasFuncion(1,local,1);
 
         listaFunciones.forEach(System.out::println);
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerFuncionesFechaDesendente(){
+    public void obtenerFuncionFechaHora(){
 
-        List<Funcion> listaFunciones = peliculaRepo.listarFuncionHorarioDesedente();
+        LocalDate local = LocalDate.parse("2021-01-01");
 
-        listaFunciones.forEach(System.out::println);
+        Funcion funcion = peliculaRepo.obtenerFuncionHorario("13:00",local,1);
+
+        System.out.println(funcion);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerEntradasFuncion(){
+
+        List<Entrada> entradas = peliculaRepo.obtenerEntradasFuncion(1);
+
+        entradas.forEach(System.out::println);
     }
 
     @Test
