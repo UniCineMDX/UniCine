@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 public interface CompraConfiteriaRepo extends JpaRepository<CompraConfiteria, Integer> {
 
+    CompraConfiteria findByCodigo(Integer codigo);
+
 
 }

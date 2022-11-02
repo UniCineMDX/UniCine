@@ -21,5 +21,8 @@ public interface CompraRepo extends JpaRepository<Compra, Integer>{
     @Query("select c.cliente.cedula, count(c) from Compra c where c.cuponCliente is not null group by c.cliente")
     List<Object[]> contarCuponesRedimidos();
 
+    @Query("select count(c) from Compra c where c.cliente.cedula = :cedulaCliente")
+    Integer contarComprasCliente(String cedulaCliente);
+
 
 }

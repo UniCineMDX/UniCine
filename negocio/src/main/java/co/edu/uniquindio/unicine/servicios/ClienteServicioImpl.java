@@ -93,6 +93,11 @@ public class ClienteServicioImpl implements ClienteServicio{
         Cliente clienteGuardado = clienteRepo.save(cliente);
         //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", cliente.getCorreo());
 
+        Cupon cuponRegistro = Cupon.builder().descuento(15.0).criterio("Cupon de descuento para clientes en su registro").vencimiento(LocalDate.of(2022,12,31)).build();
+        CuponCliente cuponCliente = CuponCliente.builder().cupon(cuponRegistro).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
+        cuponClienteRepo.save(cuponCliente);
+        clienteCedula.getCupones().add(cuponCliente);
+        //emailServicio.enviarEmail("Cupon bienvenida", "Hola, has recibido un cupon con el 15% por realizar tu registro, para obtenerlo ve al siguiente enlace: ....", clienteCedula.getCorreo());
         return clienteGuardado;
     }
     /**
@@ -271,6 +276,7 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
 
+
     //Metodo para buscar una pelicula por el nombre
 
 
@@ -282,8 +288,105 @@ public class ClienteServicioImpl implements ClienteServicio{
 
 
     @Override
-    public Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Cupon cupon, Funcion funcion) throws Exception {
-        return null;
+    public Compra realizarCompra(Compra compra ,Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception {
+
+        Compra compraCodigo = compraRepo.findByCodigo(compra.getCodigo());
+        Cliente clienteCedula = clienteRepo.findByCedula(cliente.getCedula());
+        Funcion funcionCodigo = funcionRepo.findByCodigo(funcion.getCodigo());
+        CuponCliente cuponCodigo = cuponClienteRepo.buscarCuponClientePorCodigoCupon(cupon.getCodigo());
+
+
+        if (compraCodigo != null) {
+            throw new Exception("La compra con el codigo" + compra.getCodigo() + "ya existe");
+        }
+
+        if (clienteCedula == null) {
+            throw new Exception("El cliente con la cedula" + cliente.getCedula() + "no existe");
+        }
+
+        if (funcionCodigo == null) {
+            throw new Exception("La funcion con el codigo" + funcion.getCodigo() + "no existe");
+        }
+
+        if (cuponCodigo == null) {
+            throw new Exception("El cupon ingresado no existe");
+        }
+
+        if (medioPago == null) {
+            throw new Exception("Elija un medio de pago disponible");
+        }
+
+        Compra compraGuardada = compraRepo.save(compra);
+        System.out.println(compra);
+
+        double valorConfiterias = 0;
+
+        if(!compraConfiterias.isEmpty()) {
+            compraConfiterias.forEach(c -> {
+                c.setCompra(compraGuardada);
+                compraConfiteriaRepo.save(c);
+            });
+
+
+            for (int i = 0; i < compraGuardada.getCompraConfiterias().size(); i++) {
+
+                valorConfiterias = (compraGuardada.getCompraConfiterias().get(i).getPrecio()) + valorConfiterias;
+            }
+        }
+
+
+        entradas.forEach(e -> {
+            e.setCompra(compraGuardada);
+            entradaRepo.save(e);
+        });
+
+
+
+        if (cuponCodigo != null) {
+            compraGuardada.setCuponCliente(cuponCodigo);
+            cuponCodigo.setEstado(EstadoCupon.USADO);
+            cuponClienteRepo.save(cuponCodigo);
+        }
+        int numComprasCliente = compraRepo.contarComprasCliente(clienteCedula.getCedula());
+
+        CuponCliente cuponCliente;
+        if (numComprasCliente == 0) {
+            Cupon cuponPrimerCompra = Cupon.builder().descuento(10.0).criterio("Cupon de descuento para clientes en su primer compra").vencimiento(LocalDate.of(2022, 12, 31)).build();
+            cuponCliente = CuponCliente.builder().cupon(cuponPrimerCompra).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
+            cuponRepo.save(cuponPrimerCompra);
+            cuponClienteRepo.save(cuponCliente);
+            clienteCedula.getCupones().add(cuponCliente);
+            emailServicio.enviarEmail("Cupon primer compra", "Hola, has recibido un cupon del 10% por realizar tu primer compra, para obtenerlo ve al aiguiente enlace: ....", clienteCedula.getCorreo());
+
+        }
+
+        double valorEntradas = 0;
+
+        for (int i = 0; i < compraGuardada.getEntradas().size(); i++) {
+
+            valorEntradas = (compraGuardada.getEntradas().get(i).getPrecio()) + valorEntradas;
+        }
+
+        double porcentajeDescuento = (cuponCodigo.getCupon().getDescuento()/100);
+        double descuento = (valorConfiterias + valorEntradas)*porcentajeDescuento;
+        double valorTotal = (valorConfiterias + valorEntradas)- descuento;
+
+
+        compraGuardada.setCliente(clienteCedula);
+        compraGuardada.setCuponCliente(cuponCodigo);
+        compraGuardada.setFechaCompra(LocalDate.now());
+        compraGuardada.setCompraConfiterias(compraGuardada.getCompraConfiterias());
+        compraGuardada.setEntradas(compraGuardada.getEntradas());
+        compraGuardada.setFuncion(funcion);
+        compraGuardada.setMedioPago(medioPago);
+        compraCodigo.setValorTotal(valorTotal);
+
+        Compra compraNueva = compraRepo.save(compraGuardada);
+        clienteCedula.getCompras().add(compraNueva);
+
+        emailServicio.enviarEmail("Compra unicine", "Hola" + clienteCedula.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraNueva.getCompraConfiterias() +"\n" + compraNueva.getEntradas()+ " \n"+ compraNueva.getFuncion()+"todo por un valor de $"+valorTotal, clienteCedula.getCorreo());
+
+        return compraNueva;
     }
 
 

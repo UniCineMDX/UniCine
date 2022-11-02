@@ -22,7 +22,7 @@ public interface ClienteServicio {
     boolean redimirCupon(Integer codigo) throws Exception;
     boolean cambiarContraseña(String correo, String passwordNueva)throws Exception;
     void solicitarCambiarContraseña(String correo) throws Exception;
-    Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Cupon cupon, Funcion funcion) throws Exception;
+    Compra realizarCompra(Compra compra ,Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception;
     boolean validarPago();
 
     Compra realizarCompraConfiteria();
