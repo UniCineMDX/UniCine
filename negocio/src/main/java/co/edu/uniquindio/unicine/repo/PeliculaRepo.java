@@ -40,6 +40,12 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
     @Query("select f from Pelicula p join p.funciones f where p.codigo = :codigoPelicula and f.horario.dia = :dia")
     List<Funcion> listarFuncionesDiaPelicula(Integer codigoPelicula, String dia);
 
+    @Query("select f from Funcion f order by f.horario.fechaInicio")
+    List<Funcion> listarFuncionHorarioAsendente();
+
+    @Query("select f from Funcion f order by f.horario.fechaInicio desc ")
+    List<Funcion> listarFuncionHorarioDesedente();
+
     Pelicula findByNombre(String nombre);
 
     Pelicula findByCodigo(Integer codigo);

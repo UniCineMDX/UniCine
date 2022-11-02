@@ -3,3 +3,5 @@
 *.class
 /.gradle/
 /src/
+/web/src/main/resources/application.properties
+

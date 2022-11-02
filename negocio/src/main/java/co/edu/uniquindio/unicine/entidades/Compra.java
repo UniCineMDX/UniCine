@@ -19,53 +19,36 @@ public class Compra implements Serializable {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
-
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MedioPago medioPago;
-
-
     @Column(nullable = false)
     private LocalDate fechaCompra;
-
-
     @Column(nullable = false)
     private Double valorTotal;
-
 
     @OneToMany(mappedBy = "compra")
     @ToString.Exclude
     private List<CompraConfiteria> compraConfiterias;
-
-
     @ManyToOne
     @ToString.Exclude
     private Cliente cliente;
-
-
     @OneToOne
     @ToString.Exclude
     private CuponCliente cuponCliente;
-
-
     @OneToMany(mappedBy = "compra")
     @ToString.Exclude
     private List<Entrada> entradas;
-
-
-
     @ManyToOne
     @ToString.Exclude
     private Funcion funcion;
 
-
-    public Compra(MedioPago medioPago, LocalDate fechaCompra, Double valorTotal, Cliente cliente, CuponCliente cuponCliente, Funcion funcion) {
-        this.medioPago = medioPago;
+    public Compra(List<Entrada> entradas,MedioPago medioPago, LocalDate fechaCompra, Double valorTotal, Cliente cliente, CuponCliente cuponCliente, Funcion funcion) {
+        this.cliente     = cliente;
+        this.entradas    = entradas;
+        this.funcion     = funcion;
+        this.medioPago   = medioPago;
+        this.valorTotal  = valorTotal;
         this.fechaCompra = fechaCompra;
-        this.valorTotal = valorTotal;
-        this.cliente = cliente;
-        this.cuponCliente = cuponCliente;
-        this.funcion = funcion;
     }
 }
