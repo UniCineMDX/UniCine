@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.repo;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
+import co.edu.uniquindio.unicine.entidades.Confiteria;
 import co.edu.uniquindio.unicine.entidades.CuponCliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -49,6 +50,8 @@ public interface ClienteRepo extends JpaRepository<Cliente, String>{
 
     @Query("select cli.nombre, comp from Cliente cli left join cli.compras comp")
     List<Object[]>obtenerComprasTodos();
+
+
 
 
 }

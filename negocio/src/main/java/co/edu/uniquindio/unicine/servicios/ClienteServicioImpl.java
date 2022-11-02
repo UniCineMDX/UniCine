@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClienteServicioImpl {
+public class ClienteServicioImpl implements ClienteServicio{
 
     @Autowired
     private ClienteRepo clienteRepo;
@@ -24,7 +24,9 @@ public class ClienteServicioImpl {
     private EntradaRepo entradaRepo;
     private CompraConfiteriaRepo compraConfiteriaRepo;
 
-    public ClienteServicioImpl(ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo, CuponClienteRepo cuponClienteRepo, ConfiteriaRepo confiteriaRepo, CompraRepo compraRepo, EntradaRepo entradaRepo, CompraConfiteriaRepo compraConfiteriaRepo) {
+    private EmailServicio emailServicio;
+
+    public ClienteServicioImpl(ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo, CuponClienteRepo cuponClienteRepo, ConfiteriaRepo confiteriaRepo, CompraRepo compraRepo, EntradaRepo entradaRepo, CompraConfiteriaRepo compraConfiteriaRepo, EmailServicio emailServicio) {
         this.clienteRepo = clienteRepo;
         this.peliculaRepo = peliculaRepo;
         this.funcionRepo = funcionRepo;
@@ -34,6 +36,7 @@ public class ClienteServicioImpl {
         this.compraRepo = compraRepo;
         this.entradaRepo = entradaRepo;
         this.compraConfiteriaRepo = compraConfiteriaRepo;
+        this.emailServicio = emailServicio;
     }
 /*
     @Override
@@ -52,6 +55,50 @@ public class ClienteServicioImpl {
         return cliente;
     }
     */
+
+    public Cliente registrarCliente(Cliente cliente)throws Exception{
+        Cliente correoExiste = clienteRepo.findByCorreo(cliente.getCorreo());
+        Cliente cedulaExiste = clienteRepo.findByCedula(cliente.getCedula());
+
+        if(correoExiste != null){
+            throw new Exception("El cliente con ese correo ya existe");
+        }
+
+        if(cedulaExiste != null){
+            throw new Exception("El cliente con esa cedula ya existe");
+        }
+
+
+        Cliente registro = clienteRepo.save(cliente);
+        //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", cliente.getCorreo());
+        return registro;
+    }
+
+    @Override
+    public Cliente obtenerClientePorCedula(Integer cedula) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void eliminarCliente(Integer codigoCliente) throws Exception {
+
+    }
+
+    @Override
+    public List<Cliente> listarClientes() {
+        return null;
+    }
+
+    @Override
+    public void HitorialCompra(Integer codigoCliente) {
+
+    }
+
 
     //Metodo para buscar una pelicula por el genero
 
@@ -159,10 +206,20 @@ public class ClienteServicioImpl {
         return true;
     }
 
+    @Override
+    public boolean cambiarContraseña(String correo, String passwordNueva) throws Exception {
+        return false;
+    }
+
     //Metodo para buscar una pelicula por el nombre
 
+    @Override
+    public Cliente login(String correo, String password) throws Exception {
+        return null;
+    }
+
     public List<Pelicula> buscarPeliculaPorNombre(String nombre) throws Exception {
-        List<Pelicula> peliculaGuardada = peliculaRepo.findByNombrePelicula(nombre);
+        List<Pelicula> peliculaGuardada = (List<Pelicula>) peliculaRepo.findByNombre(nombre);
 
         if (peliculaGuardada.isEmpty()) {
             throw new Exception("La pelicula NO EXISTE");
@@ -170,5 +227,9 @@ public class ClienteServicioImpl {
 
         return (List<Pelicula>) peliculaGuardada.get(3);
     }
+
+
+
+
 }
 

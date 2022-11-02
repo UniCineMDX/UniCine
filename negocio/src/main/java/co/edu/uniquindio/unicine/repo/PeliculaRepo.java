@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
 
-    List<Pelicula> findByNombrePelicula(String nombrePelicula);
+    //List<Pelicula> findByNombre(String nombrePelicula);
 
     @Query("select p from Pelicula p where p.nombre = :nombrePelicula")
     Pelicula buscarPeliculaPorNombre(String nombrePelicula);

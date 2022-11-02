@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.test;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.CuponCliente;
-import co.edu.uniquindio.unicine.entidades.EstadoCliente;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -86,5 +83,7 @@ public class ClienteTest {
         Cliente clienteNuevo = clienteRepo.save(guardado);
         Assertions.assertEquals("Camilo", clienteNuevo.getNombre());
     }
+
+
 
 }
