@@ -88,7 +88,23 @@ public class PeliculaTest {
         System.out.println(listaPeliculas);
     }
 
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesFechaAscendente(){
 
+        List<Funcion> listaFunciones = peliculaRepo.listarFuncionHorarioAsendente();
+
+        listaFunciones.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFuncionesFechaDesendente(){
+
+        List<Funcion> listaFunciones = peliculaRepo.listarFuncionHorarioDesedente();
+
+        listaFunciones.forEach(System.out::println);
+    }
 
     @Test
     @Sql("classpath:dataset.sql")

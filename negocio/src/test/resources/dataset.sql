@@ -16,11 +16,11 @@ insert into ciudad values (3, "Medellin");
 insert into ciudad values (4, "Bogota");
 insert into ciudad values (5, "Manizales");
 
-insert into horario values (1, "Lunes", "2021/12/31", "2021/01/01", "13:00");
-insert into horario values (2, "Martes", "2021/12/31", "2021/01/01", "11:00");
-insert into horario values (3, "Miercoles", "2021/12/31", "2021/01/01", "1:00");
-insert into horario values (4, "Jueves", "2021/12/31", "2021/01/01", "12:00");
-insert into horario values (5, "Viernes", "2021/12/31", "2021/01/01", "20:00");
+insert into horario values (1, "Lunes","2021/01/06", "2021/01/06", "13:00");
+insert into horario values (2, "Martes","2021/01/06", "2021/01/10", "11:00");
+insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
+insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
+insert into horario values (5, "Viernes","2021/01/06", "2021/01/05", "20:00");
 
 insert into pelicula values (1, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
 insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batmn", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
@@ -50,10 +50,10 @@ insert into sala values (5,"HABILITADA", "sala5", 1, 5);
 
 
 insert into funcion values (1, 6.500, 1, 1, 1);
-insert into funcion values (2, 6500, 1, 2, 2);
-insert into funcion values (3, 7000, 1, 3, 3);
-insert into funcion values (4, 5000, 1, 4, 4);
-insert into funcion values (5, 6.500, 1, 5, 5);
+insert into funcion values (2, 6500, 2, 2, 2);
+insert into funcion values (3, 7000, 3, 3, 3);
+insert into funcion values (4, 5000, 4, 4, 4);
+insert into funcion values (5, 6.500,5, 5, 5);
 
 
 insert into cliente values ("123", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");
