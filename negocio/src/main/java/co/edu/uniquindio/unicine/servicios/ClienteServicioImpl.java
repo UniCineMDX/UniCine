@@ -423,8 +423,55 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Compra realizarCompraConfiteria() {
-        return null;
+    public Compra realizarCompraConfiteria( Cliente cliente, List<List<Integer>>confiterias, MedioPago medioPago, CuponCliente cuponCliente) throws Exception{
+
+        Cliente clienteCedula = clienteRepo.findByCedula(cliente.getCedula());
+        CuponCliente cuponCliente1 = cuponClienteRepo.findByCodigo(cuponCliente.getCodigo());
+        Compra compra = new Compra();
+
+        List<CompraConfiteria>compraConfiterias = crearComprasConfiteria(confiterias);
+
+        if(clienteCedula == null){
+            throw new Exception("El cliente con la cedula" +cliente.getCedula()+ "no existe");
+        }
+
+        if(cuponCliente1 == null){
+            throw new Exception("El cupon seleccionado no existe");
+        }
+
+        if(compraConfiterias.isEmpty()){
+            throw new Exception("La lista de confiteria esta vacia");
+        }
+
+        if(cuponCliente1 != null){
+
+            compra.setCuponCliente(cuponCliente1);
+            cuponCliente1.setEstado(EstadoCupon.USADO);
+            cuponClienteRepo.save(cuponCliente1);
+        }
+
+        double valorConfiterias=0;
+        for (int i=0; i<compraConfiterias.size();i++){
+            valorConfiterias = valorConfiterias+compraConfiterias.get(i).getPrecio();
+        }
+
+        double porcentajeDescuento = (cuponCliente1.getCupon().getDescuento()/100);
+        double descuento = valorConfiterias*porcentajeDescuento;
+        double valorTotal = valorConfiterias - descuento;
+
+
+        compra.setCliente(clienteCedula);
+        compra.setFechaCompra(LocalDate.now());
+        compra.setCompraConfiterias(compraConfiterias);
+        compra.setCuponCliente(cuponCliente1);
+        compra.setMedioPago(medioPago);
+        compra.setValorTotal(valorTotal);
+        compra.setFuncion(null);
+        compra.setEntradas(null);
+
+        Compra compraGuardada = compraRepo.save(compra);
+
+        return compraGuardada;
     }
 
     @Override
@@ -433,7 +480,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         List<CompraConfiteria> compraConfiterias = null;
 
         if(confiterias.isEmpty()){
-           return null;
+            throw new Exception("La lista de confiterias no existe");
         }
 
         for (List<Integer> confi: confiterias) {
