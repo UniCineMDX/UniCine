@@ -17,14 +17,16 @@ import java.util.List;
 @Transactional
 public class AdministradorTeatroServicioTest {
 
-    //Atributos de la clase
-
+    /**
+     *  Atributos de la clase
+     */
     @Autowired
     private AdministradorTeatroServicio admiTeatroServicio;
 
 
-    //Test de servicios de administrador de teatro
-
+    /**
+     *  Metodos Test de servicios de administrador de teatro
+     */
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -39,7 +41,6 @@ public class AdministradorTeatroServicioTest {
 
 
     }
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -56,8 +57,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -77,8 +76,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarAdministradorTeatro(){
@@ -93,8 +90,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarAdministradoresTeatros(){
@@ -104,8 +99,6 @@ public class AdministradorTeatroServicioTest {
         admiTeatros.forEach(System.out::println);
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -118,10 +111,9 @@ public class AdministradorTeatroServicioTest {
     }
 
 
-
-
-    //Test de servicios de teatro
-
+    /**
+     *  Metodos Test de servicios de teatro
+     */
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -135,8 +127,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -154,8 +144,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarTeatro(){
@@ -172,8 +160,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarTeatro(){
@@ -186,8 +172,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarTeatros(){
@@ -197,8 +181,6 @@ public class AdministradorTeatroServicioTest {
        teatros.forEach(System.out::println);
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -213,8 +195,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerAdmiTeatro() {
@@ -228,8 +208,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarSalasTeatro() {
@@ -240,9 +218,23 @@ public class AdministradorTeatroServicioTest {
     }
 
 
+    /**
+     *  Metodos Test de servicios de Horario
+     */
 
-
-    //Test de servicios de horario
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void asignarHorarioFuncion() throws Exception {
+        try {
+            Funcion funcionObtenida =admiTeatroServicio.obtenerFuncion(1);
+            Horario horarioObtenido =admiTeatroServicio.obtenerHorario(1);
+            funcionObtenida.setHorario(horarioObtenido);
+            Funcion funcionAsignada= admiTeatroServicio.asignarHorarioFuncion(funcionObtenida,horarioObtenido);
+            System.out.println(funcionAsignada);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Test
@@ -256,8 +248,6 @@ public class AdministradorTeatroServicioTest {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -273,8 +263,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -292,8 +280,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarHorario() {
@@ -306,8 +292,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarHorarios() {
@@ -317,8 +301,6 @@ public class AdministradorTeatroServicioTest {
         horarios.forEach(System.out::println);
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -331,10 +313,9 @@ public class AdministradorTeatroServicioTest {
     }
 
 
-
-    //Test de servicios de funcion
-
-
+    /**
+     *  Metodos Test de servicios de administrador de funcion
+     */
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -347,8 +328,6 @@ public class AdministradorTeatroServicioTest {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -369,8 +348,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarFuncion() {
@@ -387,8 +364,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarFuncion() {
@@ -402,8 +377,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarFunciones() {
@@ -413,8 +386,6 @@ public class AdministradorTeatroServicioTest {
         funciones.forEach(System.out::println);
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -430,8 +401,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerHorarioFuncion() {
@@ -446,8 +415,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerSalaFuncion() {
@@ -461,8 +428,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarComprasFuncion() {
@@ -474,10 +439,9 @@ public class AdministradorTeatroServicioTest {
     }
 
 
-
-
-    //Test de servicios de sala
-
+    /**
+     *  Metodos Test de servicios de sala
+     */
 
 
     @Test
@@ -492,8 +456,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -513,8 +475,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarSala() {
@@ -531,8 +491,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarSala() {
@@ -545,8 +503,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarSalas() {
@@ -555,8 +511,6 @@ public class AdministradorTeatroServicioTest {
 
         salas.forEach(System.out::println);
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -571,8 +525,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerDistribucionSillasSala() {
@@ -586,8 +538,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarFuncionesSala() {
@@ -599,10 +549,9 @@ public class AdministradorTeatroServicioTest {
     }
 
 
-
-    //Test de servicios de distribucion de sillas
-
-
+    /**
+     *  Metodos Test de servicios de distribucion de sillas
+     */
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -617,8 +566,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -635,8 +582,6 @@ public class AdministradorTeatroServicioTest {
         }
 
     }
-
-
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -657,8 +602,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarDistribucionesSillas() {
@@ -671,8 +614,6 @@ public class AdministradorTeatroServicioTest {
         }
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarDistribucionesSillas() {
@@ -683,8 +624,6 @@ public class AdministradorTeatroServicioTest {
 
     }
 
-
-
     @Test
     @Sql("classpath:dataset.sql")
     public void listarSalasDistribucionesSillas() {
@@ -694,9 +633,5 @@ public class AdministradorTeatroServicioTest {
         salas.forEach(System.out::println);
 
     }
-
-
-
-
 
 }

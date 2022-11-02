@@ -36,9 +36,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
 
     //Implementación de servicios de administrador teatro
 
-    /*
-    Metodo que permite obtener un administrador de teatro por medio de la cedula
-    @Param cedula
+    /**
+     * Metodo que permite obtener un administrador de teatro por medio de la cedula
+     * @Param cedula
      */
     @Override
     public AdministradorTeatro obtenerAdmiTeatro(String cedula) throws Exception {
@@ -52,10 +52,10 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admi;
     }
 
-    /*
-    Metodo que permite loguearse en la plataforma por medio del correo y contraseña de la persona
-    @Param correo
-    @Param password
+    /**
+     * Metodo que permite loguearse en la plataforma por medio del correo y contraseña de la persona
+     * @Param correo
+     * @Param password
      */
 
     @Override
@@ -69,9 +69,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admi;
     }
 
-    /*
-    Metodo que permite resgitrar un administrador de teatro en la plataforma
-    @Param administradorTeatro
+    /**
+     * Metodo que permite resgitrar un administrador de teatro en la plataforma
+     * @Param administradorTeatro
      */
 
     @Override
@@ -91,9 +91,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admiTeatroRepo.save(administradorTeatro);
     }
 
-    /*
-    Metodo que permite actualizar los datos de un administrador de teatro
-    @Param administradorTeatro
+    /**
+     * Metodo que permite actualizar los datos de un administrador de teatro
+     * @Param administradorTeatro
      */
 
     @Override
@@ -107,9 +107,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admiTeatroRepo.save(administradorTeatro);
     }
 
-    /*
-    Metodo que permite eliminar un administrador de teatro de la plataforma por medio de su cedula
-    @Param cedula
+    /**
+     * Metodo que permite eliminar un administrador de teatro de la plataforma por medio de su cedula
+     * @Param cedula
      */
 
     @Override
@@ -124,8 +124,8 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         admiTeatroRepo.delete(admiGuardado.get());
     }
 
-    /*
-    Metodo que permite listar todos los administradores de teatro registrados en la plataforma
+    /**
+     *  Metodo que permite listar todos los administradores de teatro registrados en la plataforma
      */
 
     @Override
@@ -133,9 +133,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admiTeatroRepo.findAll();
     }
 
-    /*
-    Metodo que permite listar los teatros de la ciudad administrados por el administrador de teatro
-    @Param cedulaAdmiTeatro
+    /**
+     * Metodo que permite listar los teatros de la ciudad administrados por el administrador de teatro
+     * @Param cedulaAdmiTeatro
      */
 
     @Override
@@ -150,9 +150,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
 
     //Implementacion de servicios de teatro
 
-    /*
-    Metodo que permite obtener un teatro por medio de su codigo
-    @Param codigo
+    /**
+     * Metodo que permite obtener un teatro por medio de su codigo
+     * @Param codigo
      */
     @Override
     public Teatro obtenerTeatro(Integer codigo) throws Exception {
@@ -166,9 +166,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return teatro;
     }
 
-    /*
-    Metodo que permite registrar un teatro en la plataforma
-    @Param teatro
+    /**
+     * Metodo que permite registrar un teatro en la plataforma
+     * @Param teatro
      */
 
     @Override
@@ -183,9 +183,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return teatroRepo.save(teatro);
     }
 
-    /*
-    Metodo que permite actualizar los datos de un teatro
-    @teatro
+    /**
+     * Metodo que permite actualizar los datos de un teatro
+     * @teatro
      */
 
     @Override
@@ -199,9 +199,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return teatroRepo.save(teatro);
     }
 
-    /*
-    Metodo que permite eliminar un teatro por medio de su codigo
-    @Param codigo
+    /**
+     * Metodo que permite eliminar un teatro por medio de su codigo
+     * @Param codigo
      */
 
     @Override
@@ -215,8 +215,8 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         teatroRepo.delete(guardado.get());
     }
 
-    /*
-    Metodo que permite listar todos los teatros registrados
+    /**
+     * Metodo que permite listar todos los teatros registrados
      */
 
     @Override
@@ -224,9 +224,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return teatroRepo.findAll();
     }
 
-    /*
-    Metodo que permite obtener la ciudad a la que el teatro pertenece por medio del codigo del teatro
-    @Param codigoTeatro
+    /**
+     * Metodo que permite obtener la ciudad a la que el teatro pertenece por medio del codigo del teatro
+     * @Param codigoTeatro
      */
 
     @Override
@@ -240,9 +240,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return ciudad;
     }
 
-    /*
-    Metodo que permite obtener el administrador encargado del teatro por medio del codigo del teatro
-    @Param codigoTeatro
+    /**
+     * Metodo que permite obtener el administrador encargado del teatro por medio del codigo del teatro
+     * @Param codigoTeatro
      */
 
     @Override
@@ -256,9 +256,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return admiTeatro;
     }
 
-    /*
-    Metodo que permite obtener las salas pertenecientes al teatro por medio del codigo del teatro
-    @Param codigoTeatro
+    /**
+     * Metodo que permite obtener las salas pertenecientes al teatro por medio del codigo del teatro
+     * @Param codigoTeatro
      */
 
     @Override
@@ -269,13 +269,11 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
     }
 
 
-
-
     //Implementación de servicios de horario
 
-    /*
-    Metodo que permite obtener un horario por medio de su codigo
-    @Param codigo
+    /**
+     * Metodo que permite obtener un horario por medio de su codigo
+     * @Param codigo
      */
 
     @Override
@@ -289,9 +287,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return horario;
     }
 
-    /*
-    Metodo que permite registrar un horario en la plataforma
-    @Param horario
+    /**
+     * Metodo que permite registrar un horario en la plataforma
+     * @Param horario
      */
 
     @Override
@@ -306,9 +304,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return horarioRepo.save(horario);
     }
 
-    /*
-    Metodo que permite actualizar los datos de un horario
-    @Param horario
+    /**
+     * Metodo que permite actualizar los datos de un horario
+     * @Param horario
      */
 
     @Override
@@ -323,9 +321,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return horarioRepo.save(horario);
     }
 
-    /*
-    Metodo que permite eliminar un horario por medio de su codigo
-    @Param codigo
+    /**
+     *Metodo que permite eliminar un horario por medio de su codigo
+     *@Param codigo
      */
 
     @Override
@@ -361,7 +359,15 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return funciones;
     }
 
+    @Override
+    public Funcion asignarHorarioFuncion(Funcion funcion, Horario horario) throws Exception {
+       Optional<Funcion> funcionModif =funcionRepo.findById(funcion.getCodigo());
 
+        if(funcionModif.isEmpty()){
+            throw new Exception("La funcion con ese codigo no existe");
+        }
+        return funcionRepo.save(funcion);
+    }
 
 
     //Implementación de servicios de funcion
@@ -409,9 +415,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return funcionRepo.save(funcion);
     }
 
-    /*
-    Metodo que permite actualizar los datos de una funcion
-    @Param funcion
+    /**
+     * Metodo que permite actualizar los datos de una funcion
+     * @Param funcion
      */
 
     @Override
@@ -425,9 +431,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return funcionRepo.save(funcion);
     }
 
-    /*
-    Metodo que permite eliminar una funcion por medio de su codigo
-    @Param codigo
+    /**
+     * Metodo que permite eliminar una funcion por medio de su codigo
+     * @Param codigo
      */
 
     @Override
@@ -443,8 +449,8 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
 
     }
 
-    /*
-    Metodo que permite obtener todas las funciones registradas en la plataforma
+    /**
+     *  Metodo que permite obtener todas las funciones registradas en la plataforma
      */
 
     @Override
@@ -452,9 +458,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return funcionRepo.findAll();
     }
 
-    /*
-    Metodo que permite obtener la pelicula asociada a la funcion por medio del codigo de la funcion
-    @Param codigoFuncion
+    /**
+        Metodo que permite obtener la pelicula asociada a la funcion por medio del codigo de la funcion
+        @Param codigoFuncion
      */
 
     @Override
@@ -469,9 +475,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return pelicula;
     }
 
-    /*
-    Metodo que permite obtener el horario asociado a la funcion por medio del codigo de la funcion
-    @Param codigoFuncion
+    /**
+        Metodo que permite obtener el horario asociado a la funcion por medio del codigo de la funcion
+        @Param codigoFuncion
      */
 
     @Override
@@ -485,9 +491,9 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
         return horario;
     }
 
-    /*
-    Metodo que permite obtener la sala asociada a la funcion por medio del codigo de la funcion
-    @Param codigoFuncion
+    /**
+        Metodo que permite obtener la sala asociada a la funcion por medio del codigo de la funcion
+        @Param codigoFuncion
      */
 
     @Override
