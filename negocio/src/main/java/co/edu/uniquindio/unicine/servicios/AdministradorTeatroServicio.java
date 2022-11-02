@@ -47,6 +47,7 @@ public interface AdministradorTeatroServicio {
 
     //Servicios de gestión de horarios por el administrador de teatro
 
+
     Horario obtenerHorario (Integer codigo) throws Exception;
 
     Horario registrarHorario (Horario horario) throws Exception;
@@ -62,6 +63,7 @@ public interface AdministradorTeatroServicio {
 
 
     //Servicios de gestión de funciones por el administrador de teatro
+    Funcion asignarHorarioFuncion (Funcion funcion, Horario horario) throws Exception;
 
     Funcion obtenerFuncion (Integer codigo) throws Exception;
 

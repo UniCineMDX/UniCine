@@ -45,7 +45,7 @@ public class FuncionTest {
     @Sql("classpath:dataset.sql")
     public void obtenerPeliculas(){
         List<Pelicula> listaPelicula = funcionRepo.obtenerPelicula();
-        listaPelicula.forEach(System.out::println);
+            listaPelicula.forEach(System.out::println);
     }
 
     @Test

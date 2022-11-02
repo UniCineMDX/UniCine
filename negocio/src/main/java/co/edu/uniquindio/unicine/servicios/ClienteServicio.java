@@ -28,7 +28,7 @@ public interface ClienteServicio {
     boolean validarPago();
     List<Entrada> crearEntradas(List<String > filasColumnas) throws Exception;
 
-    Compra realizarCompraConfiteria()throws Exception;
+    Compra realizarCompraConfiteria(Cliente cliente, List<List<Integer>>confiterias, MedioPago medioPago, CuponCliente cuponCliente)throws Exception;
 
     List<CompraConfiteria> crearComprasConfiteria(List<List<Integer>> confiterias)throws Exception;
     List<Pelicula> listarPeliculas() throws Exception;
