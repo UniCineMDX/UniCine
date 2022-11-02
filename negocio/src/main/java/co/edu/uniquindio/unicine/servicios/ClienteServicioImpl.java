@@ -248,7 +248,26 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     @Override
     public boolean cambiarContraseña(String correo, String passwordNueva) throws Exception {
-        return false;
+
+        Cliente clienteCorreo = clienteRepo.findByCorreo(correo);
+        boolean centinela = false;
+
+        if(clienteCorreo == null){
+            throw new Exception("El cliente con el correo "+correo+" no existe");
+        }
+        else{
+            clienteCorreo.setPassword(passwordNueva);
+            clienteRepo.save(clienteCorreo);
+            centinela = true;
+        }
+        return centinela;
+    }
+
+    @Override
+    public void solicitarCambiarContraseña(String correo) throws Exception {
+
+            emailServicio.enviarEmail("Cambio de contraseña", "Hola, debe ir al siguiente enlace para cambiar la contraseña: ....", correo);
+
     }
 
 

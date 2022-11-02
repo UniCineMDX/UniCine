@@ -21,6 +21,7 @@ public interface ClienteServicio {
     List<Compra> historialCompraNoRedimidas(String cedulaCliente)throws Exception;
     boolean redimirCupon(Integer codigo) throws Exception;
     boolean cambiarContraseña(String correo, String passwordNueva)throws Exception;
+    void solicitarCambiarContraseña(String correo) throws Exception;
     Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Cupon cupon, Funcion funcion) throws Exception;
     boolean validarPago();
 
@@ -34,4 +35,6 @@ public interface ClienteServicio {
     List<Pelicula> buscarPeliculaEstado(EstadoPelicula estadoPelicula) throws Exception;
     List<Pelicula> buscarPeliculaPorGenero (Genero genero) throws Exception;
     DistribucionSilla distribucion(Integer codigoTeatro, Integer codigoSala) throws Exception;
+
+
 }
