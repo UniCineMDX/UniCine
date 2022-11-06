@@ -49,18 +49,6 @@ public class CompraTest {
 
 
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void contarCuponesRedimidosPorCliente(){
-
-
-        List<Object[]>cupones = compraRepo.contarCuponesRedimidos();
-
-        cupones.forEach(o ->
-                System.out.println(o[0] + "," + o[1])
-        );
-
-    }
 
     @Test
     @Sql("classpath:dataset.sql")

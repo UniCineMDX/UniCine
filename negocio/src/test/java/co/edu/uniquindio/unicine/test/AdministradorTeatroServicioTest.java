@@ -56,6 +56,19 @@ public class AdministradorTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
+    public void asignarPrecioFuncion(){
+        try {
+            Funcion funcion = admiTeatroServicio.asignarPrecioFuncion(1,2000.0);
+            System.out.println(funcion);
+            Assertions.assertNotNull(funcion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    @Sql("classpath:dataset.sql")
     public void registrarTeatro(){
         try {
             AdministradorTeatro admiTeatro = admiTeatroServicio.obtenerAdmiTeatro("98822");

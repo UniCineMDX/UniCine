@@ -43,7 +43,6 @@ public class CompraConfiteria implements Serializable {
      * @param precio
      * @param unidades
      * @param confiteria
-     * @param compra
      */
 
     @Builder

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.servicios.AdminSuperServicioImpl;
 import co.edu.uniquindio.unicine.servicios.AdministradorTeatroServicioImpl;
 import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +23,7 @@ public class ClienteServicioTest {
     @Autowired
     private ClienteServicioImpl clienteServicio;
     @Autowired
-    private AdministradorTeatroServicioImpl funTeatroServicio;
+    private AdminSuperServicioImpl adminSuperServicio;
     @Autowired
     private AdministradorTeatroServicioImpl administradorTeatro;
 
@@ -78,7 +79,8 @@ public class ClienteServicioTest {
     public void eliminarCliente(){
         try {
             clienteServicio.eliminarCliente("344");
-            Assertions.assertNull(clienteServicio.obtenerClientePorCedula("344"));
+            Cliente cliente = clienteServicio.obtenerClientePorCedula("344");
+            Assertions.assertNull(cliente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -181,7 +183,8 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void obtenerCuponSeleccionado() {
         try {
-            CuponCliente cupon = clienteServicio.obtenerCuponSeleccionado("123", 1);
+            Cliente cliente = clienteServicio.obtenerClientePorCedula("123");
+            CuponCliente cupon = clienteServicio.obtenerCuponSeleccionado(cliente, 1);
             Assertions.assertNotNull(cupon);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -219,16 +222,34 @@ public class ClienteServicioTest {
         lista.add("21");
 
         try {
+            Confiteria confiteria = adminSuperServicio.obtenerConfiteria(1);
             Cliente cliente = clienteServicio.obtenerClientePorCedula("123");
-            Funcion funcion = administradorTeatro.obtenerFuncion(1);
+            CuponCliente cuponCliente = cliente.getCupones().get(1);
             MedioPago medioPago = MedioPago.TARJETA_CREDITO;
             List<Entrada> entradas = clienteServicio.crearEntradas(lista);
             List<CompraConfiteria> compraConfiterias = new ArrayList<>();
+            compraConfiterias.add(new CompraConfiteria(500.0,5,confiteria));
 
-            Compra compraNueva = clienteServicio.realizarCompra(cliente, entradas,compraConfiterias, medioPago, null, funcion);
-            for (Entrada entrada:compraNueva.getEntradas()) {
-                System.out.println(entrada.getCompra().getCodigo());
-            }
+            Compra compraNueva = clienteServicio.realizarCompra("123", entradas,compraConfiterias, medioPago, cuponCliente.getCodigo(), 1);
+            Assertions.assertNotNull(compraNueva);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void realizarCompraConfiteria()  {
+        try {
+            MedioPago medioPago = MedioPago.TARJETA_CREDITO;
+            List<List<Integer>> compras = new ArrayList<>();
+            List<Integer> confi = new ArrayList<>();
+            confi.add(1);
+            confi.add(5);
+            compras.add(confi);
+
+            Compra compraNueva = clienteServicio.realizarCompraConfiteria("123",compras,medioPago,1);
+            Assertions.assertNotNull(compraNueva);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -250,7 +271,7 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarSillasFuncion(){
         try {
-            Funcion funcion = funTeatroServicio.obtenerFuncion(1);
+            Funcion funcion = administradorTeatro.obtenerFuncion(1);
             HashMap<String,Boolean> listaSillas = clienteServicio.listaSillasFuncion(1);
             listaSillas.forEach((s, aBoolean) -> System.out.println(s+" "+aBoolean));
             Assertions.assertEquals(listaSillas.size(),(funcion.getSala().getDistribucionSilla().getTotalSillas()));

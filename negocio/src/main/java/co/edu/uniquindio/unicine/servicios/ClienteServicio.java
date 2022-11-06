@@ -21,13 +21,13 @@ public interface ClienteServicio {
     List<Compra> historialCompras(String cedulaCliente)throws Exception;
     List<Compra> historialComprasRedimidas(String cedulaCliente)throws Exception;
     List<Compra> historialCompraNoRedimidas(String cedulaCliente)throws Exception;
-    CuponCliente obtenerCuponSeleccionado(String cedula,Integer codigo) throws Exception;
+    CuponCliente obtenerCuponSeleccionado(Cliente cliente,Integer codigo) throws Exception;
     boolean cambiarPassword(String correo, String passwordNueva)throws Exception;
     void solicitarCambiarPassword(String correo) throws Exception;
-    Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception;
+    Compra realizarCompra(String cedulaCliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Integer cuponCodigo,Integer funcionCodigo) throws Exception;
     List<Entrada> crearEntradas(List<String > filasColumnas) throws Exception;
 
-    Compra realizarCompraConfiteria(Cliente cliente, List<List<Integer>>confiterias, MedioPago medioPago, CuponCliente cuponCliente)throws Exception;
+    Compra realizarCompraConfiteria(String cedulaCliente, List<List<Integer>>confiterias, MedioPago medioPago, Integer codigoCuponCliente)throws Exception;
     List<CompraConfiteria> crearComprasConfiteria(List<List<Integer>> confiterias)throws Exception;
     List<Pelicula> listarPeliculas() throws Exception;
     HashMap<String,Boolean> listaSillasFuncion(Integer codigoFuncion) throws Exception;

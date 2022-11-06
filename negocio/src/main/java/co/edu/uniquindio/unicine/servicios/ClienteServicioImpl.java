@@ -96,6 +96,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public Cliente obtenerClientePorCedula(String cedula) throws Exception {
 
+        System.out.println(clienteRepo.findByCedula(cedula));
         Cliente clienteEncontrado = clienteRepo.findByCedula(cedula);
 
         if (clienteEncontrado == null) {
@@ -239,13 +240,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public CuponCliente obtenerCuponSeleccionado(String cedula,Integer codigo) throws Exception {
-
-        Cliente cliente = clienteRepo.findByCedula(cedula);
-
-        if(cliente == null){
-            throw new Exception("No existe un cliente con codigo "+cedula);
-        }
+    public CuponCliente obtenerCuponSeleccionado(Cliente cliente,Integer codigo) throws Exception {
 
         if(cliente.getCupones().isEmpty()){
             throw new Exception("La lista de cupones esta vacia "+codigo);
@@ -299,78 +294,88 @@ public class ClienteServicioImpl implements ClienteServicio {
 
 
     @Override
-    public Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception {
+    public Compra realizarCompra(String cedulaCliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, Integer cuponCodigo,Integer funcionCodigo) throws Exception {
 
-        CuponCliente cuponCodigo;
-        Double valorEntradas     = 0.0;
-        Double valorConfiterias  = 0.0;
-        Double descuentoCompra   = 0.0;
-        Compra compra            = new Compra();
-        Cliente clienteCedula    = clienteRepo.findByCedula(cliente.getCedula());
-        Funcion funcionCodigo    = funcionRepo.findByCodigo(funcion.getCodigo());
 
-        if (clienteCedula == null) {
+        Compra compra = new Compra();
+        Cliente cliente = clienteRepo.findByCedula(cedulaCliente);
+        Funcion funcion = funcionRepo.findByCodigo(funcionCodigo);
+        Double valorEntradas = 0.0;
+        Double valorConfiterias = 0.0;
+        Double descuentoCompra = 0.0;
+
+        if (cliente == null) {
             throw new Exception("El cliente con la cedula" + cliente.getCedula() + "no existe");
         }
-        if (funcionCodigo == null) {
+        if (funcion == null) {
             throw new Exception("La funcion con el codigo" + funcion.getCodigo() + "no existe");
         }
         if (medioPago == null) {
             throw new Exception("Elija un medio de pago disponible");
         }
-        if(entradas.isEmpty()){
+        if (entradas.isEmpty()) {
             throw new Exception("La lista de entradas esta vacia");
         }
-        entradas.forEach(c -> {entradaRepo.save(c);});
 
+        entradas.forEach(entrada ->
+            entrada.setCompra(compra)
+        );
+        compra.setEntradas(entradas);
+        entradaRepo.saveAll(entradas);
 
-        if(!compraConfiterias.isEmpty()) {
-            compraConfiterias.forEach(c -> {
-                c.setCompra(compra);
-                compraConfiteriaRepo.save(c);
-            });
-
-            for (int i = 0; i < compra.getCompraConfiterias().size(); i++) {
-                valorConfiterias = (compra.getCompraConfiterias().get(i).getPrecio()) + valorConfiterias;
+        if (!compraConfiterias.isEmpty()) {
+            for (int i = 0; i < compraConfiterias.size(); i++) {
+                compraConfiterias.get(i).setCompra(compra);
+                valorConfiterias += (compraConfiterias.get(i).getPrecio());
             }
-            compra.setCompraConfiterias(compra.getCompraConfiterias());
+            compra.setCompraConfiterias(compraConfiterias);
+            compraConfiteriaRepo.saveAll(compraConfiterias);
         }
 
-        if(cupon != null){
-            cuponCodigo = cuponClienteRepo.buscarCuponClientePorCodigoCupon(cupon.getCodigo());
-            if (cuponCodigo != null) {
-                compra.setCuponCliente(cuponCodigo);
-                cuponCodigo.setEstado(EstadoCupon.USADO);
-                cuponClienteRepo.save(cuponCodigo);
-            }
-            Double porcentajeDescuento = (cuponCodigo.getCupon().getDescuento()/100);
-            descuentoCompra            = (valorConfiterias + valorEntradas)*porcentajeDescuento;
-        }
+        if (cuponCodigo != null) {
+            CuponCliente cupon = obtenerCuponSeleccionado(cliente, cuponCodigo);
+            if (cupon != null) {
+                cupon.setCompra(compra);
+                compra.setCuponCliente(cupon);
+                cupon.setEstado(EstadoCupon.USADO);
+                cuponClienteRepo.save(cupon);
 
-        if (compraRepo.contarComprasCliente("123") == 0) {
-            Cupon cuponPrimerCompra =cuponRepo.findByCodigo(2);
-            CuponCliente cuponCliente = CuponCliente.builder().cupon(cuponPrimerCompra).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
-            cuponClienteRepo.save(cuponCliente);
-            emailServicio.enviarEmail("Cupon primer compra", "Hola, has recibido un cupon del 10% por realizar tu primer compra, para obtenerlo ve al aiguiente enlace: ....", clienteCedula.getCorreo());
+                Double porcentajeDescuento = (cupon.getCupon().getDescuento() / 100);
+                descuentoCompra = (valorConfiterias + valorEntradas) * porcentajeDescuento;
+            } else {
+                throw new Exception("El cliente no posee un cupon con codigo " + cuponCodigo);
+            }
         }
 
 
         for (int i = 0; i < entradas.size(); i++) {
             valorEntradas = (entradas.get(i).getPrecio()) + valorEntradas;
         }
-        double valorTotal = (valorConfiterias + valorEntradas)- descuentoCompra;
+        double valorTotal = (valorConfiterias + valorEntradas) - descuentoCompra;
 
+        funcion.getCompras().add(compra);
         compra.setFuncion(funcion);
         compra.setMedioPago(medioPago);
         compra.setValorTotal(valorTotal);
-        compra.setCliente(clienteCedula);
+        cliente.getCompras().add(compra);
+        compra.setCliente(cliente);
         compra.setFechaCompra(LocalDate.now());
         compra.setEntradas(entradas);
 
+        clienteRepo.save(cliente);
+        funcionRepo.save(funcion);
+        entradaRepo.saveAll(entradas);
+        compraConfiteriaRepo.saveAll(compraConfiterias);
         Compra compraGuardada = compraRepo.save(compra);
-        entradas.forEach(c -> {entradaRepo.save(c);});
 
-        emailServicio.enviarEmail("Compra unicine", "Hola" + clienteCedula.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraGuardada.getCompraConfiterias() +"\n" + compraGuardada.getEntradas()+ " \n"+ compraGuardada.getFuncion()+"todo por un valor de $"+valorTotal, clienteCedula.getCorreo());
+        if (compraRepo.contarComprasCliente(cedulaCliente) == 0) {
+            Cupon cuponPrimerCompra = cuponRepo.findByCodigo(2);
+            CuponCliente cuponCliente = CuponCliente.builder().cupon(cuponPrimerCompra).cliente(cliente).estado(EstadoCupon.SIN_USAR).build();
+            cuponClienteRepo.save(cuponCliente);
+            //emailServicio.enviarEmail("Cupon primer compra", "Hola, has recibido un cupon del 10% por realizar tu primer compra, para obtenerlo ve al aiguiente enlace: ....", clienteCedula.getCorreo());
+        }
+
+        //emailServicio.enviarEmail("Compra unicine", "Hola" + cliente.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraGuardada.getCompraConfiterias() + "\n" + compraGuardada.getEntradas() + " \n" + compraGuardada.getFuncion() + "todo por un valor de $" + valorTotal, cliente.getCorreo());
 
         return compraGuardada;
     }
@@ -395,47 +400,41 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Compra realizarCompraConfiteria( Cliente cliente, List<List<Integer>>confiterias, MedioPago medioPago, CuponCliente cuponCliente) throws Exception{
+    public Compra realizarCompraConfiteria(String cedulaCliente, List<List<Integer>>confiterias, MedioPago medioPago, Integer codigoCuponCliente) throws Exception{
 
-        Cliente clienteCedula = clienteRepo.findByCedula(cliente.getCedula());
-        CuponCliente cuponCliente1 = cuponClienteRepo.findByCodigo(cuponCliente.getCodigo());
-        Compra compra = new Compra();
+        double descuento = 0.0;
+        Compra  compra   = new Compra();
+        Cliente cliente  = clienteRepo.findByCedula(cedulaCliente);
 
+        if(cliente == null){
+            throw new Exception("El cliente con la cedula "+cedulaCliente+" no existe");
+        }
+        if(confiterias.isEmpty()){
+            throw new Exception("La lista de confiterias esta vacia");
+        }
+        CuponCliente cuponCliente = obtenerCuponSeleccionado(cliente,codigoCuponCliente);
         List<CompraConfiteria>compraConfiterias = crearComprasConfiteria(confiterias);
 
-        if(clienteCedula == null){
-            throw new Exception("El cliente con la cedula" +cliente.getCedula()+ "no existe");
-        }
-
-        if(cuponCliente1 == null){
-            throw new Exception("El cupon seleccionado no existe");
-        }
-
-        if(compraConfiterias.isEmpty()){
-            throw new Exception("La lista de confiteria esta vacia");
-        }
-
-        if(cuponCliente1 != null){
-
-            compra.setCuponCliente(cuponCliente1);
-            cuponCliente1.setEstado(EstadoCupon.USADO);
-            cuponClienteRepo.save(cuponCliente1);
-        }
-
         double valorConfiterias=0;
+
         for (int i=0; i<compraConfiterias.size();i++){
-            valorConfiterias = valorConfiterias+compraConfiterias.get(i).getPrecio();
+            valorConfiterias += valorConfiterias+compraConfiterias.get(i).getPrecio();
         }
 
-        double porcentajeDescuento = (cuponCliente1.getCupon().getDescuento()/100);
-        double descuento = valorConfiterias*porcentajeDescuento;
+        if(cuponCliente != null){
+            compra.setCuponCliente(cuponCliente);
+            cuponCliente.setEstado(EstadoCupon.USADO);
+            cuponClienteRepo.save(cuponCliente);
+            double porcentajeDescuento = (cuponCliente.getCupon().getDescuento()/100);
+            descuento = valorConfiterias*porcentajeDescuento;
+        }
+
         double valorTotal = valorConfiterias - descuento;
 
-
-        compra.setCliente(clienteCedula);
+        compra.setCliente(cliente);
         compra.setFechaCompra(LocalDate.now());
         compra.setCompraConfiterias(compraConfiterias);
-        compra.setCuponCliente(cuponCliente1);
+        compra.setCuponCliente(cuponCliente);
         compra.setMedioPago(medioPago);
         compra.setValorTotal(valorTotal);
         compra.setFuncion(null);
@@ -449,7 +448,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public List<CompraConfiteria> crearComprasConfiteria(List<List<Integer>> confiterias) throws Exception {
 
-        List<CompraConfiteria> compraConfiterias = null;
+        List<CompraConfiteria> compraConfiterias = new ArrayList<>();
 
         if(confiterias.isEmpty()){
             throw new Exception("La lista de confiterias no existe");
@@ -457,7 +456,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         for (List<Integer> confi: confiterias) {
 
-            CompraConfiteria compraConfiteria = null;
+            CompraConfiteria compraConfiteria = new CompraConfiteria();
             Confiteria confiteria = confiteriaRepo.findByCodigo(confi.get(0));
             if(confiteria == null){
                 throw new Exception("No existe una confiteria concodigo "+confi.get(0));

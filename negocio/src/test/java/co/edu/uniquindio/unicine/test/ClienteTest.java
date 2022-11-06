@@ -149,34 +149,7 @@ public class ClienteTest {
 
 
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void realizarCompraConfiteria()  {
 
-        Cliente cliente = clienteRepo.findByCedula("123");
-        CuponCliente cuponCliente = cuponClienteRepo.findByCodigo(1);
-        MedioPago medioPago = MedioPago.TARJETA_CREDITO;
-
-        CompraConfiteria compraConfiteria= compraConfiteriaRepo.findByCodigo(1);
-        CompraConfiteria compraConfiteria1= compraConfiteriaRepo.findByCodigo(2);
-        List<List<Integer>> compraConfiterias = new ArrayList<>();
-        compraConfiterias.add((List<Integer>) compraConfiteria);
-        compraConfiterias.add((List<Integer>) compraConfiteria1);
-
-
-
-        try {
-            Compra compra = Compra.builder().cliente(cliente).funcion(null).cuponCliente(cuponCliente).medioPago(medioPago).valorTotal(20000.0).build();
-            Compra nueva =compraRepo.save(compra);
-
-            Compra compraNueva = clienteServicio.realizarCompraConfiteria(cliente,compraConfiterias,medioPago,cuponCliente);
-            System.out.println(compraNueva);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 
 
 
