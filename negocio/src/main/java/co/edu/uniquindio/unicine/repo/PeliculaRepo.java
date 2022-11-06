@@ -26,10 +26,10 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
     @Query("select p from Pelicula p where p.genero = :genero")
     List<Pelicula> obtenerPeliculasPorGenero(Genero genero);
 
-    @Query("select p from Pelicula p join p.funciones f where f.sala.teatro.ciudad.codigo = :codigoCiudad")
+    @Query("select distinct p from Pelicula p join p.funciones f where f.sala.teatro.ciudad.codigo = :codigoCiudad")
     List<Pelicula> obtenerPeliculasCiudad(Integer codigoCiudad);
 
-    @Query("select p from Pelicula p join p.funciones f where f.sala.teatro.ciudad.codigo = :codigoCiudad and f.sala.teatro.codigo = :codigoTeatro")
+    @Query("select distinct p from Pelicula p join p.funciones f where f.sala.teatro.ciudad.codigo = :codigoCiudad and f.sala.teatro.codigo = :codigoTeatro")
     List<Pelicula> obtenerPeliculasCiudadTeatro(Integer codigoCiudad, Integer codigoTeatro);
 
     @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%')")
@@ -60,4 +60,7 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
 
     @Query("select c.entradas from Funcion f join f.compras c where f.codigo = :codigo")
     List<Entrada> obtenerEntradasFuncion(Integer codigo);
+
+    @Query("select p from Pelicula  p where p.nombre = :nombre")
+    List<Pelicula> obtenerPeliculasNombre(String nombre);
 }

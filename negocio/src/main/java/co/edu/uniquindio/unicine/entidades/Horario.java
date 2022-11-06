@@ -21,23 +21,14 @@ public class Horario implements Serializable {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
-
-
     @Column(nullable = false, length = 50)
     private String dia;
-
-
     @Column(nullable = false)
     private String hora;
-
-
     @Column(nullable = false)
     private LocalDate fechaInicio;
-
-
     @Column(nullable = false)
     private LocalDate fechaFin;
-
 
     @OneToMany(mappedBy = "horario")
     @ToString.Exclude

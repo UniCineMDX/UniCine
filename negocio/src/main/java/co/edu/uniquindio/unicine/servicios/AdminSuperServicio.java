@@ -7,11 +7,10 @@ import java.util.List;
 
 public interface AdminSuperServicio {
 
-    //Loguearse
+    //listar superAdministradores
 
     List<AdministradorSuper> listarAdministradores() throws Exception;
     List<AdministradorSuper> listarAdministradoresOrdenados() throws Exception;
-    AdministradorSuper       verificarRegistroAdminSuper(String correo, String password) throws Exception;
 
     //Gestion de Teatros
 
@@ -21,9 +20,9 @@ public interface AdminSuperServicio {
     AdministradorTeatro obtenerAdminTeatroCorreo(String correo) throws Exception;
     void                eliminarAdminTeatro(String cedula) throws Exception; ;
     List<AdministradorTeatro>  listarAdminTeatros() throws Exception;
+    AdministradorTeatro asignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception;
+    Teatro              desasignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception;
 
-    Teatro asignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception;
-    Teatro   desasignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception;
 
     //Gestion de peliculas
 
@@ -32,9 +31,9 @@ public interface AdminSuperServicio {
     Pelicula obtenerPeliculaCodigo(Integer codigoPelicula) throws Exception;
     Pelicula obtenerPeliculaNombre(String nombrePelicula) throws Exception;
     void     eliminarPelicula(Integer codigoPelicula) throws Exception;
+    Pelicula cambiarEstadoPelicula(Integer codigoPelicula, EstadoPelicula estadoPelicula) throws Exception;
     List<Pelicula>  listarPeliculas() throws Exception;
 
-    Pelicula cambiarEstadoPelicula(Integer codigoPelicula, EstadoPelicula estadoPelicula) throws Exception;
 
     //Gestion de Confiteria
 
@@ -50,6 +49,6 @@ public interface AdminSuperServicio {
     Cupon actualizarCupon(Cupon cupon) throws Exception;
     Cupon obtenerCupon(Integer codigoCupon) throws Exception;
     void  eliminarCupon(Integer codigoCupon) throws Exception;
-    List<Cupon> listarCupones() throws Exception;
+    List<Cupon>  listarCupones() throws Exception;
     CuponCliente asignarCuponCliente(Integer codigo, String cedulaCliente) throws Exception;
 }

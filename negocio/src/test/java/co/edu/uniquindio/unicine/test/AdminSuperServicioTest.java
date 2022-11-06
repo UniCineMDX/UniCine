@@ -1,7 +1,6 @@
 package co.edu.uniquindio.unicine.test;
-
-
 import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.repo.TeatroRepo;
 import co.edu.uniquindio.unicine.servicios.AdminSuperServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
-
 
 @SpringBootTest
 @Transactional
@@ -19,6 +18,8 @@ public class AdminSuperServicioTest {
 
     @Autowired
     private AdminSuperServicio adminSuperServicio;
+    @Autowired
+    private TeatroRepo teatroRepo;
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -37,20 +38,8 @@ public class AdminSuperServicioTest {
     public void listarAdministradoresOrdenadosNombre() {
         try {
             List<AdministradorSuper> listaAdminOrden = adminSuperServicio.listarAdministradoresOrdenados();
-            //listaAdmin.forEach(System.out::println);
+            listaAdminOrden.forEach(System.out::println);
             Assertions.assertNotNull(listaAdminOrden);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void verificarRegistroAdminSuper() {
-        try {
-            AdministradorSuper adminSuper = adminSuperServicio.verificarRegistroAdminSuper("pedro@gmail.com", "bcbdbdb");
-            //System.out.println(adminSuper);
-            Assertions.assertNotNull(adminSuper);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,7 +118,7 @@ public class AdminSuperServicioTest {
     public void listarAdministradoresTeatro() {
         try {
             List<AdministradorTeatro> listarAdminTeatros = adminSuperServicio.listarAdminTeatros();
-            // listaAdmin.forEach(System.out::println);
+            listarAdminTeatros.forEach(System.out::println);
             Assertions.assertNotNull(listarAdminTeatros);
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,10 +129,10 @@ public class AdminSuperServicioTest {
     @Sql("classpath:dataset.sql")
     public void asignarAdminTeatro() {
         try {
-            AdministradorTeatro admin = adminSuperServicio.obtenerAdminTeatroCedula("1");
-            Teatro teatroAsignado =  adminSuperServicio.asignarAdministradorTeatro(1,"1");
-            System.out.println(teatroAsignado.getAdmiTeatro().getCedula());
-            Assertions.assertEquals(admin,teatroAsignado.getAdmiTeatro());
+            Teatro teatro = teatroRepo.findByCodigo(5);
+            AdministradorTeatro administradorTeatro =  adminSuperServicio.asignarAdministradorTeatro(5,"1");
+            administradorTeatro.getTeatros().forEach(System.out::println);
+            Assertions.assertEquals(administradorTeatro,teatro.getAdmiTeatro());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,7 +142,9 @@ public class AdminSuperServicioTest {
     @Sql("classpath:dataset.sql")
     public void desasignarAdminTeatro() {
         try {
-            Teatro teatroDesasignado =  adminSuperServicio.desasignarAdministradorTeatro(1,"1");
+            Teatro teatroDesasignado  =  adminSuperServicio.desasignarAdministradorTeatro(1,"1");
+            AdministradorTeatro admin = adminSuperServicio.obtenerAdminTeatroCedula("1");
+            admin.getTeatros().forEach(System.out::println);
             Assertions.assertNull(teatroDesasignado.getAdmiTeatro());
         } catch (Exception e) {
             e.printStackTrace();
@@ -233,7 +224,7 @@ public class AdminSuperServicioTest {
     public void listarPeliculas() {
         try {
             List<Pelicula> listaPeliculas = adminSuperServicio.listarPeliculas();
-            //listaPeliculas.forEach(System.out::println);
+            listaPeliculas.forEach(System.out::println);
             Assertions.assertNotNull(listaPeliculas);
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,31 +247,116 @@ public class AdminSuperServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearConfiteria() {
 
-        Confiteria confiteria = new Confiteria();
+        Confiteria confiteria = new Confiteria("Combo 1", 1500.0,"urlImagen");
 
         try {
-            Pelicula peliculaEstado = adminSuperServicio.cambiarEstadoPelicula(1,EstadoPelicula.PREVENTA);
-            System.out.println(peliculaEstado);
-            Assertions.assertEquals(EstadoPelicula.PREVENTA,peliculaEstado.getEstadoPelicula());
+            Confiteria confiServicio = adminSuperServicio.crearConfiteria(confiteria);
+            System.out.println(confiteria);
+            Assertions.assertNotNull(confiServicio);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-  /**
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearTeatro() {
-
-        Teatro teatroAux = new Teatro(new Ciudad("Armenia"),"Calle sexta #11","3125679835");
-
+    public void actualizarConfiteria() {
         try {
-            Teatro teatro = adminSuperServicio.crearTeatro(teatroAux);
-            System.out.println(teatro);
-            Assertions.assertNotNull(teatro);
+            Confiteria confiteria = adminSuperServicio.obtenerConfiteria(1);
+            confiteria.setPrecio(80000.0);
+            Confiteria confiServicio = adminSuperServicio.actualizarDatosConfiteria(confiteria);
+            System.out.println(confiteria);
+            Assertions.assertEquals(80000.0,confiServicio.getPrecio());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    **/
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void eliminarConfiteria() {
+        try {
+            adminSuperServicio.eliminarConfiteria(1);
+            Confiteria confiteria = adminSuperServicio.obtenerConfiteria(1);
+            Assertions.assertNull(confiteria);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarConfiteria() {
+        try {
+            List<Confiteria> listaConfiterias = adminSuperServicio.listarConfiterias();
+            listaConfiterias.forEach(System.out::println);
+            Assertions.assertNotNull(listaConfiterias);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void crearCupon() {
+
+        LocalDate local = LocalDate.parse("2021-01-01");
+        Cupon cupon = new Cupon(10.0,"por que si",local);
+
+        try {
+            Cupon cuponService = adminSuperServicio.crearCupon(cupon);
+            Assertions.assertNotNull(cuponService);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void actualizarCupon() {
+        try {
+            Cupon cupon = adminSuperServicio.obtenerCupon(1);
+            cupon.setDescuento(80.0);
+            Cupon cuponServicio = adminSuperServicio.actualizarCupon(cupon);
+            System.out.println(cuponServicio);
+            Assertions.assertEquals(80.0,cuponServicio.getDescuento());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void eliminarCupon() {
+        try {
+            adminSuperServicio.eliminarCupon(1);
+            Cupon cupon = adminSuperServicio.obtenerCupon(1);
+            Assertions.assertNull(cupon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarCupon() {
+        try {
+            List<Cupon> listaCupones = adminSuperServicio.listarCupones();
+            listaCupones.forEach(System.out::println);
+            Assertions.assertNotNull(listaCupones);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void asignarCuponCliente() {
+        try {
+            CuponCliente cuponCliente = adminSuperServicio.asignarCuponCliente(1,"123");
+            Assertions.assertNotNull(cuponCliente);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,7 +2,6 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,18 +10,18 @@ import java.util.List;
 @Service
 public class AdminSuperServicioImpl implements AdminSuperServicio{
 
-    private  AdministradorSuperRepo adminSuperRepo;
-    private  AdministradorTeatroRepo adminTeatroRepo;
-    private TeatroRepo teatroRepo;
-    private  PeliculaRepo peliculaRepo;
-    private  ConfiteriaRepo confiteriaRepo;
-    private  CuponRepo cuponRepo;
-    private  FuncionRepo funcionRepo;
-    private ClienteRepo clienteRepo;
-    private CuponClienteRepo cuponClienteRepo;
-    private CompraConfiteriaRepo compraConfiteriaRepo;
+    private final AdministradorSuperRepo adminSuperRepo;
+    private final AdministradorTeatroRepo adminTeatroRepo;
+    private final TeatroRepo teatroRepo;
+    private final PeliculaRepo peliculaRepo;
+    private final ConfiteriaRepo confiteriaRepo;
+    private final CuponRepo cuponRepo;
+    private final FuncionRepo funcionRepo;
+    private final ClienteRepo clienteRepo;
+    private final CuponClienteRepo cuponClienteRepo;
+    private final CompraConfiteriaRepo compraConfiteriaRepo;
 
-    public AdminSuperServicioImpl(AdministradorSuperRepo adminSuperRepo,ClienteRepo clienteRepo, AdministradorTeatroRepo adminTeatroRepo,CuponClienteRepo cuponClienteRepo,CompraConfiteriaRepo compraConfiteriaRepo,FuncionRepo funcionRepo, TeatroRepo teatroRepo, PeliculaRepo peliculaRepo, ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo) {
+    public  AdminSuperServicioImpl(AdministradorSuperRepo adminSuperRepo,ClienteRepo clienteRepo, AdministradorTeatroRepo adminTeatroRepo,CuponClienteRepo cuponClienteRepo,CompraConfiteriaRepo compraConfiteriaRepo,FuncionRepo funcionRepo, TeatroRepo teatroRepo, PeliculaRepo peliculaRepo, ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo) {
         this.cuponRepo            = cuponRepo;
         this.teatroRepo           = teatroRepo;
         this.funcionRepo          = funcionRepo;
@@ -33,21 +32,24 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         this.adminTeatroRepo      = adminTeatroRepo;
         this.cuponClienteRepo     = cuponClienteRepo;
         this.compraConfiteriaRepo = compraConfiteriaRepo;
-
     }
 
     @Override
+    /*
+     * Este metodo permite obtener toda la lista de administradores que existen en la base de datos
+     */
     public List<AdministradorSuper> listarAdministradores() throws Exception{
 
         List<AdministradorSuper> listaAdminSuper = adminSuperRepo.findAll();
-
         if(listaAdminSuper.isEmpty()){
             throw new Exception("La lista de super administradores esta vacia");
         }
-
         return listaAdminSuper;
     }
     @Override
+    /*
+     * Este metodo permite obtener toda la lista de administradores que existen en la base de datos ordenados por nombre
+     */
     public List<AdministradorSuper> listarAdministradoresOrdenados()  throws Exception{
 
         List<AdministradorSuper> listaAdminSuper = adminSuperRepo.findAllOrderByNombre();
@@ -58,18 +60,11 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
 
         return listaAdminSuper;
     }
+
     @Override
-    public AdministradorSuper verificarRegistroAdminSuper(String correo, String password) throws Exception {
-
-        AdministradorSuper adminSuper = adminSuperRepo.findByCorreoAndPassword(correo, password);
-
-        if(adminSuper == null){
-            throw new Exception("El correo o la contraseña son incorrectos");
-        }
-
-        return adminSuper;
-    }
-    @Override
+    /*
+     * Este metodo permite registrar un nuevo administrador de teatro en la base de datos
+     */
     public AdministradorTeatro crearAdminTeatro(AdministradorTeatro adminTeatro) throws Exception {
 
         AdministradorTeatro buscadoCedula = adminTeatroRepo.findByCedula(adminTeatro.getCedula());
@@ -85,6 +80,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return adminTeatroRepo.save(adminTeatro);
     }
     @Override
+    /*
+     * Este metodo permite actualizar los datos administrador de teatro en la base de datos
+     */
     public AdministradorTeatro actualizarDatosAdminTeatro(AdministradorTeatro adminTeatro) throws Exception {
 
         AdministradorTeatro buscadoCedula = adminTeatroRepo.findByCedula(adminTeatro.getCedula());
@@ -100,6 +98,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return adminTeatroRepo.save(adminTeatro);
     }
     @Override
+    /*
+     * Este metodo permite obtener un administrador de teatro dado su cedula
+     */
     public AdministradorTeatro obtenerAdminTeatroCedula(String cedula) throws Exception {
 
         AdministradorTeatro adminTeatro = adminTeatroRepo.findByCedula(cedula);
@@ -111,6 +112,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return adminTeatro;
     }
     @Override
+    /*
+     * Este metodo permite obtener un administrador de teatro dado su correo
+     */
     public AdministradorTeatro obtenerAdminTeatroCorreo(String correo) throws Exception {
 
         AdministradorTeatro adminTeatro = adminTeatroRepo.findByCorreo(correo);
@@ -122,6 +126,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return adminTeatro;
     }
     @Override
+    /*
+     * Este metodo permite eliminar un administrador de teatro dado su cedula
+     */
     public void eliminarAdminTeatro(String cedula) throws Exception {
 
         AdministradorTeatro adminbuscadoCedula = adminTeatroRepo.findByCedula(cedula);
@@ -137,6 +144,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         System.out.println("El administrador de teatro fue eliminado");
     }
     @Override
+    /*
+     * Este metodo permite obtener la lista de administradores de teatros que estan en la base de datos
+     */
     public List<AdministradorTeatro> listarAdminTeatros() throws Exception {
         List<AdministradorTeatro> listaAdminteatro = adminTeatroRepo.findAll();
 
@@ -147,7 +157,10 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return listaAdminteatro;
     }
     @Override
-    public Teatro asignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception {
+    /*
+     * Este metodo permite asignar un administrador de teatro a un teatro dado el codigo del teatro
+     */
+    public AdministradorTeatro  asignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception {
 
         Teatro teatro                   = teatroRepo.findByCodigo(codigoTeatro);
         AdministradorTeatro adminTeatro = adminTeatroRepo.findByCedula(cedulaAdminTeatro);
@@ -168,17 +181,15 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
                 adminTeatroRepo.save(adminTeatroAux);
             }
         }
-
         adminTeatro.getTeatros().add(teatro);
         teatro.setAdmiTeatro(adminTeatro);
 
-        adminTeatroRepo.save(adminTeatro);
-        Teatro teatroGuardado = teatroRepo.save(teatro);
-
-        //System.out.println("El teatro con direccion "+teatroGuardado.getDireccion()+" fue asignado a el administrador de teatro con cedula "+adminTeatro.getCedula());
-        return teatroGuardado;
+        return adminTeatroRepo.save(adminTeatro);
     }
     @Override
+    /*
+     * Este metodo permite desasignar un adminitrador de teatro de un teatro dado su codigo
+     */
     public Teatro desasignarAdministradorTeatro(Integer codigoTeatro, String cedulaAdminTeatro) throws Exception {
 
         Teatro teatro                   = teatroRepo.findByCodigo(codigoTeatro);
@@ -197,12 +208,12 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         adminTeatro.getTeatros().remove(teatro);
         teatro.setAdmiTeatro(null);
 
-        adminTeatroRepo.save(adminTeatro);
-        Teatro teatroGuardado  = teatroRepo.save(teatro);
-
-        return teatroGuardado;
+        return teatroRepo.save(teatro);
     }
     @Override
+    /*
+     * Este metodo permite crear una nueva pelicula
+     */
     public Pelicula crearPelicula(Pelicula pelicula) throws Exception {
 
         Pelicula peliculaNueva = peliculaRepo.findByNombre(pelicula.getNombre());
@@ -211,11 +222,12 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
             throw new Exception("La pelicula con nombre "+pelicula.getNombre()+" ya se encuentra registrada");
         }
 
-        Pelicula peliculaRegistrada = peliculaRepo.save(pelicula);
-
-        return peliculaRegistrada;
+        return peliculaRepo.save(pelicula);
     }
     @Override
+    /*
+     * Este metodo permite actualizar los datos de una pelicula dado su codigo
+     */
     public Pelicula actualizarDatosPelicula(Integer codigoPelicula,Pelicula pelicula) throws Exception {
 
         Pelicula peliculaActualizada = peliculaRepo.findByCodigo(codigoPelicula);
@@ -224,15 +236,16 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         if(peliculaActualizada == null){
             throw new Exception("No existe una pelicula con codigo "+codigoPelicula);
         }
-        if(peliculaActualizada != null && !peliculaAux.getNombre().equals(peliculaActualizada.getNombre())){
+        if(!peliculaAux.getNombre().equals(peliculaActualizada.getNombre())){
             throw new Exception("Ya existe una pelicula con nombre "+peliculaActualizada.getNombre());
         }
 
-        Pelicula peliculaRegistrada = peliculaRepo.save(pelicula);
-
-        return peliculaRegistrada;
+        return peliculaRepo.save(pelicula);
     }
     @Override
+    /*
+     * Este metodo permite obtener una pelicula dado su codigo
+     */
     public Pelicula obtenerPeliculaCodigo(Integer codigoPelicula) throws Exception {
 
         Pelicula peliculaEncontrada = peliculaRepo.findByCodigo(codigoPelicula);
@@ -244,6 +257,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return peliculaEncontrada;
     }
     @Override
+    /*
+     * Este metodo permite obtener una pelicula dado su nombre
+     */
     public Pelicula obtenerPeliculaNombre(String nombrePelicula) throws Exception {
 
         Pelicula peliculaEncontrada = peliculaRepo.findByNombre(nombrePelicula);
@@ -254,6 +270,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return peliculaEncontrada;
     }
     @Override
+    /*
+     * Este metodo permite eliminar una pelicula dado su codigo
+     */
     public void eliminarPelicula(Integer codigoPelicula) throws Exception {
 
         Pelicula peliculaEncontrada = peliculaRepo.findByCodigo(codigoPelicula);
@@ -270,6 +289,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         System.out.println("La pelicula con nombre "+ peliculaEncontrada.getNombre()+" fue eliminada");
     }
     @Override
+    /*
+     * Este metodo permite obtener la lista de peliculas registradas en la base de datos
+     */
     public List<Pelicula> listarPeliculas() throws Exception {
 
         List<Pelicula> peliculas = peliculaRepo.findAll();
@@ -281,6 +303,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         return peliculas;
     }
     @Override
+    /*
+     * Este metodo permite cambiar el estado de una pelicula dado si codigo
+     */
     public Pelicula cambiarEstadoPelicula(Integer codigoPelicula, EstadoPelicula estadoPelicula) throws Exception {
 
         Pelicula peliculaEncontrada = peliculaRepo.findByCodigo(codigoPelicula);
@@ -290,12 +315,15 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         }
 
         peliculaEncontrada.setEstadoPelicula(estadoPelicula);
-        Pelicula peliculaGuardada = peliculaRepo.save(peliculaEncontrada);
 
-        return peliculaGuardada;
+        return peliculaRepo.save(peliculaEncontrada);
+
     }
 
     @Override
+    /*
+     * Este metodo permite crear una nueva confiteria
+     */
     public Confiteria crearConfiteria(Confiteria confiteria) throws Exception {
 
         Confiteria confiteriaEncontrado = confiteriaRepo.findByNombre(confiteria.getNombre());
@@ -304,12 +332,13 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
             throw new Exception("Ya existe una confiteria con el nombre "+confiteria.getNombre());
         }
 
-        Confiteria confiteriaGuardado = confiteriaRepo.save(confiteria);
-
-        return confiteriaGuardado;
+        return confiteriaRepo.save(confiteria);
     }
 
     @Override
+    /*
+     * Este metodo permite actualizar los datos de una confiteria
+     */
     public Confiteria actualizarDatosConfiteria(Confiteria confiteria) throws Exception {
 
         Confiteria confiteriaCodigo     = confiteriaRepo.findByCodigo(confiteria.getCodigo());
@@ -322,12 +351,13 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
             throw new Exception("Ya existe una confiteria con el nombre "+confiteria.getNombre());
         }
 
-        Confiteria confiteriaGuardado = confiteriaRepo.save(confiteria);
-
-        return confiteriaGuardado;
+        return confiteriaRepo.save(confiteria);
     }
 
     @Override
+    /*
+     * Este metodo permite obtener una confiteria dado su codigo
+     */
     public Confiteria obtenerConfiteria(Integer codigoConfiteria) throws Exception {
         Confiteria confiteriaCodigo     = confiteriaRepo.findByCodigo(codigoConfiteria);
 
@@ -339,6 +369,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite eliminar una confiteria dado su codigo
+     */
     public void eliminarConfiteria(Integer codigoConfiteria) throws Exception {
 
         Confiteria confiteriaCodigo = confiteriaRepo.findByCodigo(codigoConfiteria);
@@ -357,6 +390,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite obtener la lista de confiterias registradas
+     */
     public List<Confiteria> listarConfiterias() throws Exception {
         List<Confiteria> listaConfiterias = confiteriaRepo.findAll();
 
@@ -368,21 +404,27 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite crear un nuevo cupon
+     */
     public Cupon crearCupon(Cupon cupon) throws Exception {
 
-        if(cuponRepo.findAll().contains(cupon.getCriterio())){
-            throw new Exception("Ya existe un cupon con este mismo criterio");
+        for (Cupon cuponAux: cuponRepo.findAll()) {
+            if(cuponAux.getCriterio().equals(cupon.getCriterio())){
+                throw new Exception("Ya existe un cupon con este mismo criterio");
+            }
         }
         if(cupon.getVencimiento().equals(LocalDate.now())){
             throw new Exception("La fecha de vencimineto debe ser superior a la fecha del dia de hoy");
         }
 
-        Cupon cuponGuardado = cuponRepo.save(cupon);
-
-        return cuponGuardado;
+        return cuponRepo.save(cupon);
     }
 
     @Override
+    /*
+     * Este metodo permite actualizar los datos de un cupon
+     */
     public Cupon actualizarCupon(Cupon cupon) throws Exception {
 
         Cupon cuponEncontrado = cuponRepo.findByCodigo(cupon.getCodigo());
@@ -390,19 +432,22 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         if(cuponEncontrado ==  null){
             throw new Exception("No existe un cupon con codigo "+cupon.getCodigo());
         }
-        if(cuponRepo.findAll().contains(cupon.getCriterio()) && !cupon.getCriterio().equals(cuponEncontrado.getCriterio())){
-            throw new Exception("Ya existe un cupon con este mismo criterio");
+        for (Cupon cuponAux: cuponRepo.findAll()) {
+            if(cuponAux.getCriterio().equals(cupon.getCriterio()) && !cuponAux.equals(cuponEncontrado)){
+                throw new Exception("Ya existe un cupon con este mismo criterio");
+            }
         }
         if(cupon.getVencimiento().equals(LocalDate.now())){
             throw new Exception("La fecha de vencimineto debe ser superior a la fecha del dia de hoy");
         }
 
-        Cupon cuponGuardado = cuponRepo.save(cupon);
-
-        return cuponGuardado;
+        return cuponRepo.save(cupon);
     }
 
     @Override
+    /*
+     * Este metodo permite obtener un cupon dado su codigo
+     */
     public Cupon obtenerCupon(Integer codigoCupon) throws Exception {
         Cupon cuponEncontrado = cuponRepo.findByCodigo(codigoCupon);
 
@@ -414,6 +459,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite eliminar un cupon dado su codigo
+     */
     public void eliminarCupon(Integer codigoCupon) throws Exception {
         Cupon cuponEncontrado = cuponRepo.findByCodigo(codigoCupon);
 
@@ -431,6 +479,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite obtener la lista de cupones registrados en la base de datos
+     */
     public List<Cupon> listarCupones() throws Exception {
 
         List<Cupon> listaCupones = cuponRepo.findAll();
@@ -443,6 +494,9 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
 
     @Override
+    /*
+     * Este metodo permite asignar un cuopn a un cliente
+     */
     public CuponCliente asignarCuponCliente(Integer codigoCupon, String cedulaCliente) throws Exception {
 
         Cupon cupon = cuponRepo.findByCodigo(codigoCupon);
@@ -456,14 +510,7 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         }
 
         CuponCliente cuponCliente = new CuponCliente(EstadoCupon.SIN_USAR,cliente,cupon);
-        cupon.getCuponesCliente().add(cuponCliente);
-        cliente.getCupones().add(cuponCliente);
-
-        CuponCliente cuponClienteGuardado = cuponClienteRepo.save(cuponCliente);
-        Cliente clienteGuardado = clienteRepo.save(cliente);
-        Cupon cuponGuardado = cuponRepo.save(cupon);
-
-        return cuponClienteGuardado;
+        return cuponClienteRepo.save(cuponCliente);
     }
 
 }

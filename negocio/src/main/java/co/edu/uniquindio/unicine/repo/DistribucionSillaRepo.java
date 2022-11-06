@@ -12,7 +12,6 @@ import java.util.List;
 public interface DistribucionSillaRepo extends JpaRepository<DistribucionSilla, Integer>{
 
     DistribucionSilla findByCodigo (Integer codigo);
-
     @Query("select s from DistribucionSilla ds join ds.salas s where ds.codigo = :codigo")
     List<Sala> obtenerSalasDistribucionSilla ( Integer codigo);
 }

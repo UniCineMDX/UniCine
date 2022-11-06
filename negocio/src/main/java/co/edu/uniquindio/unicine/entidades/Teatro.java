@@ -22,7 +22,6 @@ public class Teatro implements Serializable {
     @Column(nullable = false, length = 50)
     private String direccion;
 
-
     @Column(nullable = false, length = 10)
     private String telefono;
 
@@ -33,7 +32,6 @@ public class Teatro implements Serializable {
     @ManyToOne
     @ToString.Exclude
     private Ciudad ciudad;
-
 
     @OneToMany(mappedBy = "teatro")
     @ToString.Exclude

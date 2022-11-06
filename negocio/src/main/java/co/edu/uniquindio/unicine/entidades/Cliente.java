@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class Cliente extends Persona implements Serializable {
     @Builder
     public Cliente(String cedula, String nombre, String correo, String password, String fotoUrl) {
         super(cedula, nombre, correo, password, fotoUrl);
+        this.cupones = new ArrayList<>();
         this.estado = EstadoCliente.INACTIVO;
     }
 }

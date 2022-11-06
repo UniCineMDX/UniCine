@@ -10,7 +10,7 @@ public interface ClienteServicio {
 
     //Metodos del cliente
 
-    Cliente login(String correo, String password) throws Exception;
+    Persona login(String correo, String password) throws Exception;
     Cliente registrarCliente(Cliente cliente) throws Exception;
     Cliente obtenerClientePorCedula(String cedula) throws Exception;
     Cliente actualizarCliente(Cliente cliente) throws Exception;
@@ -22,14 +22,12 @@ public interface ClienteServicio {
     List<Compra> historialComprasRedimidas(String cedulaCliente)throws Exception;
     List<Compra> historialCompraNoRedimidas(String cedulaCliente)throws Exception;
     CuponCliente obtenerCuponSeleccionado(String cedula,Integer codigo) throws Exception;
-    boolean cambiarContraseña(String correo, String passwordNueva)throws Exception;
-    void solicitarCambiarContraseña(String correo) throws Exception;
+    boolean cambiarPassword(String correo, String passwordNueva)throws Exception;
+    void solicitarCambiarPassword(String correo) throws Exception;
     Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception;
-    boolean validarPago();
     List<Entrada> crearEntradas(List<String > filasColumnas) throws Exception;
 
     Compra realizarCompraConfiteria(Cliente cliente, List<List<Integer>>confiterias, MedioPago medioPago, CuponCliente cuponCliente)throws Exception;
-
     List<CompraConfiteria> crearComprasConfiteria(List<List<Integer>> confiterias)throws Exception;
     List<Pelicula> listarPeliculas() throws Exception;
     HashMap<String,Boolean> listaSillasFuncion(Integer codigoFuncion) throws Exception;
@@ -40,7 +38,4 @@ public interface ClienteServicio {
     List<Pelicula> buscarPeliculaNombre (String nombre) throws Exception;
     List<Pelicula> buscarPeliculaEstado(EstadoPelicula estadoPelicula) throws Exception;
     List<Pelicula> buscarPeliculaPorGenero (Genero genero) throws Exception;
-    DistribucionSilla distribucion(Integer codigoTeatro, Integer codigoSala) throws Exception;
-
-
 }

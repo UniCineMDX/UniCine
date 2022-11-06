@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -15,25 +16,21 @@ import java.util.Optional;
 @Service
 public class ClienteServicioImpl implements ClienteServicio {
 
-    @Autowired
-    private ClienteRepo clienteRepo;
-    private PeliculaRepo peliculaRepo;
-    private FuncionRepo funcionRepo;
-    private CuponRepo cuponRepo;
-    private CuponClienteRepo cuponClienteRepo;
-    private ConfiteriaRepo confiteriaRepo;
-    private CompraRepo compraRepo;
-    private EntradaRepo entradaRepo;
-    private CompraConfiteriaRepo compraConfiteriaRepo;
-    private CiudadRepo ciudadRepo;
-    private TeatroRepo teatroRepo;
-
-
-    private EmailServicio emailServicio;
+    private final ClienteRepo clienteRepo;
+    private final PeliculaRepo peliculaRepo;
+    private final FuncionRepo funcionRepo;
+    private final CuponRepo cuponRepo;
+    private final CuponClienteRepo cuponClienteRepo;
+    private final ConfiteriaRepo confiteriaRepo;
+    private final CompraRepo compraRepo;
+    private final EntradaRepo entradaRepo;
+    private final CompraConfiteriaRepo compraConfiteriaRepo;
+    private final CiudadRepo ciudadRepo;
+    private final TeatroRepo teatroRepo;
+    private final EmailServicio emailServicio;
 
 
     public ClienteServicioImpl(CiudadRepo ciudadRepo, TeatroRepo teatroRepo, ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo, CuponClienteRepo cuponClienteRepo, ConfiteriaRepo confiteriaRepo, CompraRepo compraRepo, EntradaRepo entradaRepo, CompraConfiteriaRepo compraConfiteriaRepo, EmailServicio emailServicio) {
-
         this.clienteRepo = clienteRepo;
         this.peliculaRepo = peliculaRepo;
         this.funcionRepo = funcionRepo;
@@ -46,33 +43,23 @@ public class ClienteServicioImpl implements ClienteServicio {
         this.emailServicio = emailServicio;
         this.ciudadRepo = ciudadRepo;
         this.teatroRepo = teatroRepo;
-
     }
 
 
     @Override
-    public Cliente login(String correo, String password) throws Exception {
-        Cliente clienteEncontrado = clienteRepo.findByCorreoAndPassword(correo, password);
+    public Persona login(String correo, String password) throws Exception {
+        Persona persona = clienteRepo.findByCorreoAndPassword(correo, password);
 
-        if (clienteEncontrado == null) {
+        if (persona == null) {
             throw new Exception("El correo o la contraseña son incorrectos");
         }
-
-        return clienteEncontrado;
-    }
-
-
-    //Metodo para buscar una pelicula por el genero
-
-    public List<Pelicula> buscarPeliculaPorGenero(Genero genero) throws Exception {
-        List<Pelicula> peliculaGuardada = peliculaRepo.obtenerPeliculasPorGenero(genero);
-
-        if (peliculaGuardada.isEmpty()) {
-            throw new Exception("La pelicula NO EXISTE");
+        if (persona instanceof Cliente) {
+            Cliente cliente = (Cliente) persona;
+            if (cliente.getEstado().equals(EstadoCliente.INACTIVO)) {
+                throw new Exception("La cuenta esta desactivada");
+            }
         }
-
-        return peliculaGuardada;
-
+        return persona;
     }
 
     /**
@@ -91,15 +78,16 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("Ya existe un cliente registrado con el correo " + cliente.getCorreo());
         }
 
-        Cliente clienteGuardado = clienteRepo.save(cliente);
         //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", cliente.getCorreo());
 
-        Cupon cuponRegistro = Cupon.builder().descuento(15.0).criterio("Cupon de descuento para clientes en su registro").vencimiento(LocalDate.of(2022,12,31)).build();
-        CuponCliente cuponCliente = CuponCliente.builder().cupon(cuponRegistro).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
-        cuponClienteRepo.save(cuponCliente);
-        clienteCedula.getCupones().add(cuponCliente);
+        Cupon cupon = cuponRepo.findByCodigo(1);
+        CuponCliente cuponBienvenida = new CuponCliente(EstadoCupon.SIN_USAR, cliente, cupon);
+        cuponClienteRepo.save(cuponBienvenida);
+        cliente.getCupones().add(cuponBienvenida);
+
         //emailServicio.enviarEmail("Cupon bienvenida", "Hola, has recibido un cupon con el 15% por realizar tu registro, para obtenerlo ve al siguiente enlace: ....", clienteCedula.getCorreo());
-        return clienteGuardado;
+
+        return clienteRepo.save(cliente);
     }
 
     /**
@@ -133,9 +121,7 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("Ya existe un cliente registrado con este correo " + cliente.getCorreo());
         }
 
-        Cliente clienteGuardado = clienteRepo.save(cliente);
-
-        return clienteGuardado;
+        return clienteRepo.save(cliente);
     }
 
     /**
@@ -149,9 +135,14 @@ public class ClienteServicioImpl implements ClienteServicio {
         if (clienteEncontrado == null) {
             throw new Exception("No existe un cliente con cedula " + cedulaCliente);
         }
+        if(clienteEncontrado.getCompras().isEmpty()){
+            throw new Exception("No existe un cliente con cedula " + cedulaCliente);
+        }
 
         clienteRepo.delete(clienteEncontrado);
     }
+
+    //Metodo para buscar una pelicula por el genero
 
     /**
      * Este metodo permite listar los clientes
@@ -209,7 +200,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public List<Compra> historialComprasRedimidas(String cedulaCliente) throws Exception {
 
-        List<Compra> listaComprasRedimidas = null;
+        List<Compra> listaComprasRedimidas = new ArrayList<>();
         List<Compra> listadoCompras = historialCompras(cedulaCliente);
 
         if (listadoCompras.isEmpty()) {
@@ -218,7 +209,6 @@ public class ClienteServicioImpl implements ClienteServicio {
         for (Compra compra : listadoCompras) {
             LocalDate fecha1 = compra.getFuncion().getHorario().getFechaFin();
             LocalDate fecha2 = LocalDate.now();
-
             if (fecha1.compareTo(fecha2) < 0) {
                 listaComprasRedimidas.add(compra);
             }
@@ -231,7 +221,7 @@ public class ClienteServicioImpl implements ClienteServicio {
      */
     @Override
     public List<Compra> historialCompraNoRedimidas(String cedulaCliente) throws Exception {
-        List<Compra> listaComprasNoRedimidas = null;
+        List<Compra> listaComprasNoRedimidas = new ArrayList<>();
         List<Compra> listadoCompras = historialCompras(cedulaCliente);
 
         if (listadoCompras.isEmpty()) {
@@ -241,7 +231,7 @@ public class ClienteServicioImpl implements ClienteServicio {
             LocalDate fecha1 = compra.getFuncion().getHorario().getFechaFin();
             LocalDate fecha2 = LocalDate.now();
 
-            if (fecha1.compareTo(fecha2) == 1) {
+            if (fecha1.compareTo(fecha2) > -1) {
                 listaComprasNoRedimidas.add(compra);
             }
         }
@@ -261,7 +251,7 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("La lista de cupones esta vacia "+codigo);
         }
         for (CuponCliente cupon: cliente.getCupones()) {
-            if(cupon.getCodigo() == codigo){
+            if(cupon.getCodigo().equals(codigo)){
                 return cupon;
             }
         }
@@ -270,7 +260,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public boolean cambiarContraseña(String correo, String passwordNueva) throws Exception {
+    public boolean cambiarPassword(String correo, String passwordNueva) throws Exception {
 
         Cliente clienteCorreo = clienteRepo.findByCorreo(correo);
         boolean centinela = false;
@@ -286,10 +276,9 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public void solicitarCambiarContraseña(String correo) throws Exception {
+    public void solicitarCambiarPassword(String correo) throws Exception {
 
         emailServicio.enviarEmail("Cambio de contraseña", "Hola, debe ir al siguiente enlace para cambiar la contraseña: ....", correo);
-
     }
 
 
@@ -298,7 +287,12 @@ public class ClienteServicioImpl implements ClienteServicio {
 
 
     public List<Pelicula> buscarPeliculaPorNombre(String nombre) throws Exception {
-        List<Pelicula> peliculaGuardada = (List<Pelicula>) peliculaRepo.findByNombre(nombre);
+
+        List<Pelicula> peliculaGuardada = peliculaRepo.obtenerPeliculasNombre(nombre);
+
+        if(peliculaGuardada.isEmpty()){
+            throw new Exception("La lista de peliculas con nombre "+nombre+" esta vacia");
+        }
 
         return peliculaGuardada;
     }
@@ -307,32 +301,28 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public Compra realizarCompra(Cliente cliente, List<Entrada> entradas, List<CompraConfiteria> compraConfiterias, MedioPago medioPago, CuponCliente cupon, Funcion funcion) throws Exception {
 
-        Cliente clienteCedula = clienteRepo.findByCedula(cliente.getCedula());
-        Funcion funcionCodigo = funcionRepo.findByCodigo(funcion.getCodigo());
-        CuponCliente cuponCodigo = cuponClienteRepo.buscarCuponClientePorCodigoCupon(cupon.getCodigo());
+        CuponCliente cuponCodigo;
+        Double valorEntradas     = 0.0;
+        Double valorConfiterias  = 0.0;
+        Double descuentoCompra   = 0.0;
+        Compra compra            = new Compra();
+        Cliente clienteCedula    = clienteRepo.findByCedula(cliente.getCedula());
+        Funcion funcionCodigo    = funcionRepo.findByCodigo(funcion.getCodigo());
 
         if (clienteCedula == null) {
             throw new Exception("El cliente con la cedula" + cliente.getCedula() + "no existe");
         }
-
         if (funcionCodigo == null) {
             throw new Exception("La funcion con el codigo" + funcion.getCodigo() + "no existe");
         }
-
-        if (cuponCodigo == null) {
-            throw new Exception("El cupon ingresado no existe");
-        }
-
         if (medioPago == null) {
             throw new Exception("Elija un medio de pago disponible");
         }
         if(entradas.isEmpty()){
             throw new Exception("La lista de entradas esta vacia");
         }
+        entradas.forEach(c -> {entradaRepo.save(c);});
 
-        Compra compra = new Compra();
-
-        double valorConfiterias = 0;
 
         if(!compraConfiterias.isEmpty()) {
             compraConfiterias.forEach(c -> {
@@ -340,88 +330,65 @@ public class ClienteServicioImpl implements ClienteServicio {
                 compraConfiteriaRepo.save(c);
             });
 
-
             for (int i = 0; i < compra.getCompraConfiterias().size(); i++) {
-
                 valorConfiterias = (compra.getCompraConfiterias().get(i).getPrecio()) + valorConfiterias;
             }
+            compra.setCompraConfiterias(compra.getCompraConfiterias());
         }
 
-
-        entradas.forEach(e -> {
-            e.setCompra(compra);
-            entradaRepo.save(e);
-        });
-
-
-
-        if (cuponCodigo != null) {
-            compra.setCuponCliente(cuponCodigo);
-            cuponCodigo.setEstado(EstadoCupon.USADO);
-            cuponClienteRepo.save(cuponCodigo);
+        if(cupon != null){
+            cuponCodigo = cuponClienteRepo.buscarCuponClientePorCodigoCupon(cupon.getCodigo());
+            if (cuponCodigo != null) {
+                compra.setCuponCliente(cuponCodigo);
+                cuponCodigo.setEstado(EstadoCupon.USADO);
+                cuponClienteRepo.save(cuponCodigo);
+            }
+            Double porcentajeDescuento = (cuponCodigo.getCupon().getDescuento()/100);
+            descuentoCompra            = (valorConfiterias + valorEntradas)*porcentajeDescuento;
         }
-        int numComprasCliente = compraRepo.contarComprasCliente(clienteCedula.getCedula());
 
-        CuponCliente cuponCliente;
-        if (numComprasCliente == 0) {
-            Cupon cuponPrimerCompra = Cupon.builder().descuento(10.0).criterio("Cupon de descuento para clientes en su primer compra").vencimiento(LocalDate.of(2022, 12, 31)).build();
-            cuponCliente = CuponCliente.builder().cupon(cuponPrimerCompra).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
-            cuponRepo.save(cuponPrimerCompra);
+        if (compraRepo.contarComprasCliente("123") == 0) {
+            Cupon cuponPrimerCompra =cuponRepo.findByCodigo(2);
+            CuponCliente cuponCliente = CuponCliente.builder().cupon(cuponPrimerCompra).cliente(clienteCedula).estado(EstadoCupon.SIN_USAR).build();
             cuponClienteRepo.save(cuponCliente);
-            clienteCedula.getCupones().add(cuponCliente);
             emailServicio.enviarEmail("Cupon primer compra", "Hola, has recibido un cupon del 10% por realizar tu primer compra, para obtenerlo ve al aiguiente enlace: ....", clienteCedula.getCorreo());
-
         }
 
-        double valorEntradas = 0;
 
-        for (int i = 0; i < compra.getEntradas().size(); i++) {
-
-            valorEntradas = (compra.getEntradas().get(i).getPrecio()) + valorEntradas;
+        for (int i = 0; i < entradas.size(); i++) {
+            valorEntradas = (entradas.get(i).getPrecio()) + valorEntradas;
         }
+        double valorTotal = (valorConfiterias + valorEntradas)- descuentoCompra;
 
-        double porcentajeDescuento = (cuponCodigo.getCupon().getDescuento()/100);
-        double descuento = (valorConfiterias + valorEntradas)*porcentajeDescuento;
-        double valorTotal = (valorConfiterias + valorEntradas)- descuento;
-
-
-        compra.setCliente(clienteCedula);
-        compra.setCuponCliente(cuponCodigo);
-        compra.setFechaCompra(LocalDate.now());
-        compra.setCompraConfiterias(compra.getCompraConfiterias());
-        compra.setEntradas(compra.getEntradas());
         compra.setFuncion(funcion);
         compra.setMedioPago(medioPago);
         compra.setValorTotal(valorTotal);
+        compra.setCliente(clienteCedula);
+        compra.setFechaCompra(LocalDate.now());
+        compra.setEntradas(entradas);
 
         Compra compraGuardada = compraRepo.save(compra);
-        clienteCedula.getCompras().add(compraGuardada);
+        entradas.forEach(c -> {entradaRepo.save(c);});
 
         emailServicio.enviarEmail("Compra unicine", "Hola" + clienteCedula.getNombre() + "has realizado una compra en unicine de los siguientes productos:" + compraGuardada.getCompraConfiterias() +"\n" + compraGuardada.getEntradas()+ " \n"+ compraGuardada.getFuncion()+"todo por un valor de $"+valorTotal, clienteCedula.getCorreo());
 
         return compraGuardada;
     }
 
-
-    @Override
-    public boolean validarPago() {
-        return false;
-    }
-
     @Override
     public List<Entrada> crearEntradas(List<String> filasColumnas) throws Exception {
 
-        List<Entrada> listaEntradas = null;
+        List<Entrada> listaEntradas = new ArrayList<>();
 
         if (filasColumnas.isEmpty()) {
             throw new Exception("No se ha seleccionado ninguna silla");
         }
-
         for (String filaColumna : filasColumnas) {
             Entrada entrada = new Entrada();
             entrada.setColumna(Integer.parseInt(filaColumna.charAt(0) + ""));
             entrada.setFila(Integer.parseInt(filaColumna.charAt(1) + ""));
             entrada.setPrecio(5000.0);
+            listaEntradas.add(entrada);
         }
 
         return listaEntradas;
@@ -506,19 +473,19 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public List<Pelicula> listarPeliculas() throws Exception {
+
         List<Pelicula> listarPeliculas = peliculaRepo.findAll();
 
         if(listarPeliculas.isEmpty()){
            throw new Exception("No existe peliculas creadas");
         }
-
         return listarPeliculas;
     }
 
     @Override
     public HashMap<String, Boolean> listaSillasFuncion(Integer codigoFuncion) throws Exception {
 
-        HashMap<String, Boolean> sillas = null;
+        HashMap<String, Boolean> sillas = new HashMap<>();
         Funcion funcion = funcionRepo.findByCodigo(codigoFuncion);
 
         if(funcion == null){
@@ -532,18 +499,17 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("El numero de filas y columas es incorrecto");
         }
 
-        for (int i = 1; i == filas; i++) {
-            for (int j = 1; j == columnas; j++) {
-                String codigo = i+j+"";
+        for (int i = 1; i < filas+1; i++) {
+            for (int j = 1; j < columnas+1; j++) {
+                String codigo = i+"-"+j;
                 sillas.put(codigo,false);
             }
         }
-
         List<Entrada> entradasFuncion = peliculaRepo.obtenerEntradasFuncion(funcion.getCodigo());
 
         if(!entradasFuncion.isEmpty()){
             for (Entrada entrada:entradasFuncion) {
-                String llave = entrada.getFila()+entrada.getColumna()+"";
+                String llave = entrada.getFila()+"-"+entrada.getColumna();
                 sillas.put(llave,true);
             }
         }
@@ -565,28 +531,6 @@ public class ClienteServicioImpl implements ClienteServicio {
         }
         return listaPeliculasCiudad;
     }
-
-
-    @Override
-    public List<Pelicula> buscarPeliculaNombre(String nombre) throws Exception {
-        List<Pelicula> listarPeliculasNombre = peliculaRepo.buscarPeliculaNombre(nombre);
-
-        if(listarPeliculasNombre.isEmpty()){
-            throw new Exception("No existe peliculas creadas con el nombre "+nombre);
-        }
-        return listarPeliculasNombre;
-    }
-
-    @Override
-    public List<Pelicula> buscarPeliculaEstado(EstadoPelicula estadoPelicula) throws Exception {
-        List<Pelicula> listarPeliculasEstado = peliculaRepo.obtenerPeliculasPorEstado(estadoPelicula);
-
-        if(listarPeliculasEstado.isEmpty()){
-            throw new Exception("No existe peliculas creadas con estado "+estadoPelicula.toString());
-        }
-        return listarPeliculasEstado;
-    }
-
     @Override
     public List<Pelicula> listarPeliculasCiudadTeatro(Integer codigoCiudad, Integer codigoTeatro) throws Exception {
 
@@ -653,14 +597,34 @@ public class ClienteServicioImpl implements ClienteServicio {
         return horarios;
     }
 
-
-
     @Override
-    public DistribucionSilla distribucion(Integer codigoTeatro, Integer codigoSala) throws Exception {
-        return null;
+    public List<Pelicula> buscarPeliculaNombre(String nombre) throws Exception {
+        List<Pelicula> listarPeliculasNombre = peliculaRepo.buscarPeliculaNombre(nombre);
+
+        if(listarPeliculasNombre.isEmpty()){
+            throw new Exception("No existe peliculas creadas con el nombre "+nombre);
+        }
+        return listarPeliculasNombre;
     }
 
 
+    @Override
+    public List<Pelicula> buscarPeliculaEstado(EstadoPelicula estadoPelicula) throws Exception {
+        List<Pelicula> listarPeliculasEstado = peliculaRepo.obtenerPeliculasPorEstado(estadoPelicula);
 
+        if(listarPeliculasEstado.isEmpty()){
+            throw new Exception("No existe peliculas creadas con estado "+estadoPelicula.toString());
+        }
+        return listarPeliculasEstado;
+    }
+
+    public List<Pelicula> buscarPeliculaPorGenero(Genero genero) throws Exception {
+        List<Pelicula> peliculaGuardada = peliculaRepo.obtenerPeliculasPorGenero(genero);
+
+        if (peliculaGuardada.isEmpty()) {
+            throw new Exception("La pelicula NO EXISTE");
+        }
+        return peliculaGuardada;
+    }
 }
 

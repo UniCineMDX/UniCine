@@ -28,24 +28,17 @@ public class Funcion implements Serializable {
     @ToString.Exclude
     private Horario horario;
 
-
-
     @ManyToOne
     @ToString.Exclude
     private Pelicula pelicula;
-
-
 
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
     private List<Compra>compras;
 
-
-
     @ManyToOne
     @ToString.Exclude
     private Sala sala;
-
 
     @Builder
     public Funcion(Double precio, Horario horario, Pelicula pelicula, Sala sala) {

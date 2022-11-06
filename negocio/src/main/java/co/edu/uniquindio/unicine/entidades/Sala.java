@@ -23,15 +23,12 @@ public class Sala implements Serializable {
     @Column(nullable = false,length = 50, unique = true)
     private String nombre;
 
-
     @Enumerated(EnumType.STRING)
     EstadoSala estadoSala;
-
 
     @ManyToOne
     @ToString.Exclude
     private DistribucionSilla distribucionSilla;
-
 
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
@@ -43,11 +40,11 @@ public class Sala implements Serializable {
 
 
     @Builder
-    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro, EstadoSala estadoSala) {
+    public Sala(String nombre, DistribucionSilla distribucionSilla, Teatro teatro) {
 
         this.nombre = nombre;
         this.distribucionSilla = distribucionSilla;
-        this.estadoSala = estadoSala;
+        this.estadoSala = EstadoSala.HABILITADA;
         this.teatro = teatro;
 
     }

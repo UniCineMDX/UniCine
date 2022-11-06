@@ -16,7 +16,7 @@ insert into ciudad values (3, "Medellin");
 insert into ciudad values (4, "Bogota");
 insert into ciudad values (5, "Manizales");
 
-insert into horario values (1, "Lunes","2021/01/01", "2021/01/01", "13:00");
+insert into horario values (1, "Lunes","2023/01/01", "2021/01/01", "13:00");
 insert into horario values (2, "Martes","2021/01/06", "2021/01/02", "11:00");
 insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
 insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
@@ -36,11 +36,11 @@ insert into teatro values (4, "Calle norte #3", "3125679834", "2", 4);
 insert into teatro values (5, "Calle #9", "3125679834", "3", 5);
 
 
-insert into distribucion_silla values (1, 10, "eegege", 10, 90);
-insert into distribucion_silla values (2, 10, "eegege", 10, 90);
-insert into distribucion_silla values (3, 10, "eegege", 10, 90);
-insert into distribucion_silla values (4, 10, "eegege", 10, 90);
-insert into distribucion_silla values (5, 10, "eegege", 10, 90);
+insert into distribucion_silla values (1, 10, "eegege", 10, 100);
+insert into distribucion_silla values (2, 10, "eegege", 10, 100);
+insert into distribucion_silla values (3, 10, "eegege", 10, 100);
+insert into distribucion_silla values (4, 10, "eegege", 10, 100);
+insert into distribucion_silla values (5, 10, "eegege", 10, 100);
 
 insert into sala values (1,"HABILITADA", "sala1", 1, 1);
 insert into sala values (2,"HABILITADA", "sala2", 1, 1);
@@ -73,7 +73,7 @@ insert into cliente_telefonos values ("922", "3123456757", "local");
 
 
 insert into cupon values (1, "cupon de bienvenida", "cupon a nuevos clientes del mes", 25, "2022/12/30");
-insert into cupon values (2, "cupon del mes", "san valentin", 25, "2022/12/30");
+insert into cupon values (2, "cupon primera compra", "Este cupon  primera compra", 25, "2022/12/30");
 insert into cupon values (3, "cupon del mes", "navidad", 25, "2022/12/30");
 insert into cupon values (4, "cupon del mes", "hallowen", 25, "2022/12/30");
 insert into cupon values (5, "cupon del mes", "pascua", 25, "2022/12/30");
