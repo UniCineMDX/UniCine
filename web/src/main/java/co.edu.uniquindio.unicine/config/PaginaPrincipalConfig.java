@@ -12,7 +12,7 @@ public class PaginaPrincipalConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         WebMvcConfigurer.super.addViewControllers(registry);
         registry.addViewController("/")
-                .setViewName("forward:/index.xhtml");
+                .setViewName("forward:/index.html");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

@@ -20,23 +20,15 @@ public class ClienteBean implements Serializable {
 
     @Getter  @Setter
     private Cliente cliente;
-
     @Getter @Setter
     private String confirmarPassword;
-
     @Autowired
     private ClienteServicio clienteServicio;
-
-
-
 
     @PostConstruct
     public void init (){
         cliente = new Cliente();
     }
-
-
-
     public void registrarCliente(){
 
         try {
