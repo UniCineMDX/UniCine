@@ -1,6 +1,4 @@
 rootProject.name = 'unicine'
 include 'negocio'
 include 'web'
-include 'web1'
-include 'webmogule'
 
