@@ -18,10 +18,12 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     private final CuponRepo cuponRepo;
     private final FuncionRepo funcionRepo;
     private final ClienteRepo clienteRepo;
+    private final CiudadRepo ciudadRepo;
     private final CuponClienteRepo cuponClienteRepo;
     private final CompraConfiteriaRepo compraConfiteriaRepo;
 
-    public  AdminSuperServicioImpl(AdministradorSuperRepo adminSuperRepo,ClienteRepo clienteRepo, AdministradorTeatroRepo adminTeatroRepo,CuponClienteRepo cuponClienteRepo,CompraConfiteriaRepo compraConfiteriaRepo,FuncionRepo funcionRepo, TeatroRepo teatroRepo, PeliculaRepo peliculaRepo, ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo) {
+    public  AdminSuperServicioImpl(CiudadRepo ciudadRepo,AdministradorSuperRepo adminSuperRepo,ClienteRepo clienteRepo, AdministradorTeatroRepo adminTeatroRepo,CuponClienteRepo cuponClienteRepo,CompraConfiteriaRepo compraConfiteriaRepo,FuncionRepo funcionRepo, TeatroRepo teatroRepo, PeliculaRepo peliculaRepo, ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo) {
+        this.ciudadRepo            = ciudadRepo;
         this.cuponRepo            = cuponRepo;
         this.teatroRepo           = teatroRepo;
         this.funcionRepo          = funcionRepo;
@@ -59,6 +61,15 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
         }
 
         return listaAdminSuper;
+    }
+
+    @Override
+    public List<Ciudad> listarCiudades() throws Exception {
+        List<Ciudad> ciudads = ciudadRepo.findAll();
+        if(ciudads.isEmpty()){
+            throw new Exception("La lista de super administradores esta vacia");
+        }
+        return ciudads;
     }
 
     @Override
@@ -511,6 +522,18 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
 
         CuponCliente cuponCliente = new CuponCliente(EstadoCupon.SIN_USAR,cliente,cupon);
         return cuponClienteRepo.save(cuponCliente);
+    }
+
+    @Override
+    public Ciudad obtenerCiudad(Integer codigo) throws Exception {
+
+        Ciudad ciudad = ciudadRepo.findByCodigo(codigo);
+
+        if(ciudad == null){
+            throw new Exception("No existe una ciudad con el codigo" +codigo);
+        }
+
+        return ciudad;
     }
 
 }

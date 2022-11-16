@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    margin-bottom: 40px;
+}
+.ui-tabs-panels{
+    background: rgba(21, 113, 149, 0.8) !important;
+}
+.datos{
+    margin: 20px 50px;
+    padding: 10px;
+    width: 40em;
+    height: 150px;
+    color: white;
+    background: #157195;
+    display: inline-block;
+}

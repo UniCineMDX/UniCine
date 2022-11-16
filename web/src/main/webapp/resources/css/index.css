@@ -1,0 +1,82 @@
+.bg-1{
+    background: #121931;
+}
+.bg-2{
+    background: #12405E;
+    color: white;
+}
+.bg-3{
+    background: #157195;
+}
+.bg-4{
+    background: #1FADD1;
+}
+.bg-5{
+    background: #06D0DC;
+}
+.bg-6{
+    background: #737874;
+}
+.bg-7{
+    background: #CCCCCC;
+}
+
+.iconuser{
+    background: #737874;
+}
+
+.logo{
+    width: 100px;
+    height: 50px;
+    margin-right: 100px;
+    padding: 0;
+}
+
+.div-nav{
+    margin-left: 42em;
+}
+.div-user{
+    padding: 10px;
+    margin-left: 5%;
+}
+.div-redes{
+    margin-right: 200px;
+}
+.nav-item{
+    background-color: #1FADD1;
+    border-radius: 20px;
+    margin: 10px;
+    width: 150px;
+    height: 40px;
+    padding: 0;
+    text-align: center;
+}
+
+.item{
+    color: white;
+}
+
+.nav-item:hover{
+    color: #1FADD1;
+    background-color: white;
+}
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    margin: 0;
+    margin-bottom: 40px;
+}
+footer {
+    background: #12405E;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    color: white;
+    align-items: center;
+}
+
+

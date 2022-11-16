@@ -56,7 +56,7 @@ insert into funcion values (4, 5000, 4, 1, 4);
 insert into funcion values (5, 6.500,5, 1, 5);
 
 
-insert into cliente values ("123", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");
+insert into cliente values ("125", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");
 insert into cliente values ("344", "pedro@gmail.com", "dgdddg", "Pedro", "gegeg", "ACTIVO");
 insert into cliente values ("984", "juan@gmail.com", "dgdddg", "Juan", "gegeg", "ACTIVO");
 insert into cliente values ("943", "man@gmail.com", "dgdddg", "Manuel", "gegeg", "ACTIVO");

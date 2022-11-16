@@ -78,16 +78,24 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("Ya existe un cliente registrado con el correo " + cliente.getCorreo());
         }
 
-        //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", cliente.getCorreo());
+        Cliente clienteGuardado = clienteRepo.save(cliente);
+        clienteGuardado.setEstado(EstadoCliente.INACTIVO);
+        //emailServicio.enviarEmail("Registro en unicine", "Hola, debe ir al siguiente enlace para activar la cuenta: ....", clienteGuardado.getCorreo());
 
-        Cupon cupon = cuponRepo.findByCodigo(1);
-        CuponCliente cuponBienvenida = new CuponCliente(EstadoCupon.SIN_USAR, cliente, cupon);
-        cuponClienteRepo.save(cuponBienvenida);
-        cliente.getCupones().add(cuponBienvenida);
 
-        //emailServicio.enviarEmail("Cupon bienvenida", "Hola, has recibido un cupon con el 15% por realizar tu registro, para obtenerlo ve al siguiente enlace: ....", clienteCedula.getCorreo());
+        //CuponCliente cuponBienvenida = new CuponCliente();
+        //Cupon cupon = cuponRepo.findByCodigo(1);
+        //cuponBienvenida.setEstado(EstadoCupon.SIN_USAR);
+        //cuponBienvenida.setCupon(cupon);
+        //cuponBienvenida.setCliente(clienteGuardado);
+        //CuponCliente cuponGuardado = cuponClienteRepo.save(cuponBienvenida);
 
-        return clienteRepo.save(cliente);
+        //clienteGuardado.getCupones().add(cuponGuardado);
+        Cliente clienteAux = clienteRepo.save(clienteGuardado);
+
+        //emailServicio.enviarEmail("Cupon bienvenida", "Hola, has recibido un cupon con el 15% por realizar tu registro, para obtenerlo ve al siguiente enlace: ....", clienteAux.getCorreo());
+
+        return clienteAux;
     }
 
     /**

@@ -12,6 +12,8 @@ public interface AdminSuperServicio {
     List<AdministradorSuper> listarAdministradores() throws Exception;
     List<AdministradorSuper> listarAdministradoresOrdenados() throws Exception;
 
+    List<Ciudad> listarCiudades() throws Exception;
+
     //Gestion de Teatros
 
     AdministradorTeatro crearAdminTeatro(AdministradorTeatro adminTeatro) throws Exception;
@@ -51,4 +53,6 @@ public interface AdminSuperServicio {
     void  eliminarCupon(Integer codigoCupon) throws Exception;
     List<Cupon>  listarCupones() throws Exception;
     CuponCliente asignarCuponCliente(Integer codigo, String cedulaCliente) throws Exception;
+
+    Ciudad obtenerCiudad(Integer codigo) throws Exception;
 }

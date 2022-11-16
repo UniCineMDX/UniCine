@@ -46,7 +46,7 @@ public class ClienteServicioTest {
         Cliente cliente = Cliente.builder().cedula("129").nombre("Lina").correo("lina@gmail.com").password("1234").fotoUrl("grgrgr").build();
         try {
             Cliente clienteNuevo = clienteServicio.registrarCliente(cliente);
-            System.out.println(clienteNuevo);
+            System.out.println(clienteNuevo.getCupones().get(0));
             Assertions.assertNotNull(clienteNuevo);
         } catch (Exception e) {
             e.printStackTrace();

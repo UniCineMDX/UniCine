@@ -9,31 +9,76 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/index.css"/>
+    <h:outputStylesheet name="index.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
     <title>Página de Inicio</title>
 </h:head>
-
-
 <h:body>
 
-    <h2>Pagina inicio</h2>
-
-    <div id="barra_navegacion">
-
-        <ul>
-
-            <li>  <a href="/registro.xhtml"> Registro </a>   </li>
-            <li>  <a href="http://www.youtube.com/watch?v=Z3ye3kkwiO4"> Trailer sirenita </a>   </li>
-            <li>  <a href="/adminSuper/crear_pelicula.xhtml"> Pelicula </a>   </li>
-
-
-        </ul>
-
-
-
-
+    <div id="nav_bar" class="bg-2 p-1"  >
+        <div class=" d-flex flex-wrap ">
+            <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
+            <ul class="nav div-nav">
+                <li class="nav-item"><a href="/index.xhtml" class="nav-link  item">Inicio</a></li>
+                <li class="nav-item"><a href="/cliente/cartelera.xhtml" class="nav-link  item">Cartelera</a></li>
+                <li class="nav-item"><a href="/cliente/confiteria.xhtml" class="nav-link  item">Confiteria</a></li>
+            </ul>
+            <div class="div-user">
+                <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="rounded-button ui-button-info iconuser"/>
+            </div>
+        </div>
     </div>
 
+    <p:dialog widgetVar="IniciarSesion" modal="true" header="Inicio de sesion" showEffect="fade" >
+        <h:form >
+            <h:panelGrid columns="3" cellpadding="5">
 
+                <p:outputLabel for="correo" value="Correo: "/>
+                <p:inputText id="correo" value="#{usuiarioBean.correo}" required="true" placeholder="Ingrese su correo"/>
+
+                <p:outputLabel for="password" value="Contraseña: "/>
+                <p:password id="password" value="#{usuiarioBean.password}" placeholder="Ingrese su contraseña" required="true" toggleMask="true" redisplay="true"/>
+            </h:panelGrid>
+            <p:commandButton value="Cancelar"  styleClass="" oncomplete="PF('IniciarSesion').hide()"/>
+            <p:commandButton value="Iniciar sesion" action="#{usuiarioBean.iniciarSesion()}" update="@form"/>
+            <p:growl for="mensaje_bean" showDetail="true"  sticky="true"/>
+        </h:form>
+        <p>¿No estas registrado aun? <a href="registro.xhtml">Registrate Aqui</a> </p>
+    </p:dialog>
+
+    <p:selectOneMenu id="ciudades-menu" value="#{sistemaBean.ciudades}" converter="#{ciudadConverter}">
+        <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="#{null}"/>
+        <f:selectItems value="#{sistemaBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+    </p:selectOneMenu>
+
+    <div class="container">
+        <div class="c-peliculasPreventa">
+
+        </div>
+        <div class="c-peliculasCartelera">
+
+        </div>
+        <div class="c-peliculasEstreno">
+
+        </div>
+    </div>
+
+    <div class="bg-2 footer">
+        <footer class="d-flex flex-wrap align-items-center">
+            <div class="col-md-4 d-flex ">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>
+                <span class="mb-3 mb-md-0 ">&copy; 2022 Unicine, Inc</span>
+            </div>
+
+            <ul class="nav col-md-8 justify-content-end  d-flex">
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-twitter"></i></a></li>
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-instagram"></i></a></li>
+                <li class="ms-3"><a class="text-white" href="#"><i class="pi pi-facebook"></i></a></li>
+            </ul>
+        </footer>
+    </div>
 </h:body>
 
 </html>
