@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Crear cupon</title>
+</h:head>
+
+
+<h:body>
+
+
+    <p:panel header="Crear cupon">
+
+        <h:form >
+            <h:panelGrid columns="3" cellpadding="5">
+
+                <p:outputLabel for="codigo" value="Codigo: "/>
+                <p:inputText id="codigo" value="#{cuponBean.cupon.codigo}" required="true" />
+                <p:message for="codigo"/>
+
+                <p:outputLabel for="criterio" value="Criterio: "/>
+                <p:inputText id="criterio" value="#{cuponBean.cupon.criterio}" required="true" />
+                <p:message for="criterio"/>
+
+                <p:outputLabel for="descripcion" value="Descripcion: "/>
+                <p:inputTextarea id="descripcion" rows="6" value="#{cuponBean.cupon.descripcion}" required="true" />
+                <p:message for="descripcion"/>
+
+                <p:outputLabel for="descuento" value="Descuento: "/>
+                <p:inputTextarea id="descuento" rows="6" value="#{cuponBean.cupon.descuento}" required="true" />
+                <p:message for="descuento"/>
+
+                <p:outputLabel for="vencimiento" value="Vencimiento: "/>
+                <p:inputTextarea id="vencimiento" rows="6" value="#{cuponBean.cupon.vencimiento}" required="true" />
+                <p:message for="vencimiento"/>
+
+
+            </h:panelGrid>
+
+            <p:commandButton value="Crear cupon" action="#{cuponBean.crearCupon()}" update="@form"/>
+            <p:growl for="mensaje_bean" showDetail="true"/>
+
+        </h:form>
+
+    </p:panel>
+
+</h:body>
+</html>

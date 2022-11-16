@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter // Genera los getters de todos los atributos sin necesidad de crearlos gracias Lombok
@@ -29,21 +30,18 @@ public class Pelicula implements Serializable {
     private String sipnosis;
 
 
-    @Column(nullable = false, length = 100)
-    private String urlTrailer;
-
-
-    @Column(nullable = false,length = 100)
-    private String urlImagen;
+    @ElementCollection
+    @Column(nullable = false)
+    private Map<String, String> imagenes;
 
 
     @Enumerated(EnumType.STRING)
     private EstadoPelicula estadoPelicula;
 
-
+    @ElementCollection
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Genero genero;
+    private List<Genero> generos;
 
 
     @Lob
@@ -51,20 +49,23 @@ public class Pelicula implements Serializable {
     private String Reparto;
 
 
+    @Column(nullable = false, length = 100)
+    private String urlTrailer;
+
+
     @OneToMany(mappedBy = "pelicula")
     @ToString.Exclude
     private List<Funcion>funciones;
 
-
-
-    public Pelicula(String nombre, String sipnosis, String urlTrailer, String urlImagen, String reparto, String genero) {
+    public Pelicula(String nombre, String sipnosis, Map<String, String> imagenes, EstadoPelicula estadoPelicula, List<Genero> generos, String reparto, String urlTrailer, List<Funcion> funciones) {
         this.nombre = nombre;
         this.sipnosis = sipnosis;
+        this.imagenes = imagenes;
+        this.estadoPelicula = estadoPelicula;
+        this.generos = generos;
+        Reparto = reparto;
         this.urlTrailer = urlTrailer;
-        this.urlImagen = urlImagen;
-        this.estadoPelicula = EstadoPelicula.CREADA;
-        this.Reparto = reparto;
-        this.genero = obtenerGenero(genero);
+        this.funciones = funciones;
     }
 
     private Genero obtenerGenero(String genero) {

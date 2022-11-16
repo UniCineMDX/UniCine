@@ -304,7 +304,7 @@ public class AdminSuperServicioImpl implements AdminSuperServicio{
     }
     @Override
     /*
-     * Este metodo permite cambiar el estado de una pelicula dado si codigo
+     * Este metodo permite cambiasr el estado de una pelicula dado si codigo
      */
     public Pelicula cambiarEstadoPelicula(Integer codigoPelicula, EstadoPelicula estadoPelicula) throws Exception {
 

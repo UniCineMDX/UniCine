@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Map;
+
 
 @AllArgsConstructor
 @Getter
@@ -17,7 +19,7 @@ public class FuncionDTO {
 
     private String nombrePelicula;
     private EstadoPelicula estadoPelicula;
-    private String urlImagen;
+    private Map<String, String> imagenes;
     private Integer numeroSala;
     private String direccionTeatro;
     private String nombreCiudad;

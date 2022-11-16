@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="styles.css" library="css" />
+    <title>Gestion Peliculas</title>
+</h:head>
+
+<h:body style="background-color: rgba(18,64,94,0.51)">
+
+    <div id = "barra_nav" >
+        <header>
+            <div class="px-3 py-2 text-bg-dark" style="background-color: #12405E">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <div>
+                            <a href="../adminSuper/gestionPeliculas.xhtml" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                                <img src="" alt=""/>
+                            </a>
+                        </div>
+
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="../adminSuper/tableroAdminSuper.xhtml" class="nav-link text-secondary">
+                                    INICIO
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="nav-link text-white">
+                                    TEATROS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/adminSuper/gestionAdminTeatro.xhtml" class="nav-link text-white">
+                                    ADMINISTRADORES
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/adminSuper/gestionPeliculas.xhtml" class="nav-link text-white">
+                                    PELICULAS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/adminSuper/gestionConfiteria.xhtml" class="nav-link text-white">
+                                    CONFITERIA
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/adminSuper/gestionCupones.xhtml" class="nav-link text-white">
+                                    CUPONES
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="dropdown text-end">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="..\imagenes\jij.jpg" alt="photo" width="32" height="32" class="rounded-circle" />
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Configuraciones</a></li>
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><hr class="dropdown-divider"></hr></li>
+                                <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <h:form id="crud_pelicula">
+
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Registrar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{peliculaBean.crearPeliculaDialog()}" update="dialogo_crear" oncomplete="PF('registrar_pelicula').show()" />
+                <p:commandButton id="boton_borrar" value="#{peliculaBean.mensajeBorrar}" icon="pi pi-trash" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{peliculaBean.eliminarPelicula}" update="crud_pelicula:lista_peliculas,@this" />
+            </p:toolbarGroup>
+        </p:toolbar>
+
+
+
+        <p:dataTable id="lista_peliculas" value="#{peliculaBean.peliculas}" var="pelicula" paginator="true" rows="10"
+                     rowKey="#{pelicula.codigo}"
+                     paginatorPosition="bottom" rowSelectMode="add"
+                     selection="#{peliculaBean.peliculasSeleccionadas}">
+
+            <p:ajax event="rowSelect" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowUnselect" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowSelectCheckbox" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowUnselectCheckbox" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="toggleSelect" update="crud_pelicula:boton_borrar" />
+
+            <p:column selectionMode="multiple" exportable="false" />
+
+            <p:column headerText="Codigo" >
+                <h:outputText value="#{pelicula.codigo}"/>
+            </p:column>
+
+            <p:column headerText="Nombre" >
+                <h:outputText value="#{pelicula.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Sinopsis" >
+                <h:outputText value="#{pelicula.sipnosis}"/>
+            </p:column>
+
+            <p:column headerText="Reparto" >
+                <h:outputText value="#{pelicula.reparto}"/>
+            </p:column>
+
+            <p:column headerText="Trailer" >
+                <h:outputText value="#{pelicula.urlTrailer}"/>
+            </p:column>
+
+            <p:column headerText="Estado" >
+                <h:outputText value="#{pelicula.estadoPelicula}"/>
+            </p:column>
+
+            <p:column headerText="Genero" >
+                <h:outputText value="#{pelicula.genero}"/>
+            </p:column>
+
+
+            <p:column headerText="" >
+                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(pelicula)}" oncomplete="PF('registrar_pelicula').show()" update="dialogo_crear"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+    <p:dialog id="dialogo_crear" widgetVar="registrar_pelicula" modal="true" header="#{peliculaBean.mensajeCrearEditar}" showEffect="fade">
+
+
+        <h1>REGISTRO PELICULA</h1>
+        <h:form>
+
+            <h:panelGrid columns="3" cellpadding="5" >
+
+                <p:outputLabel for="nombre" value = "Nombre : "/>
+                <p:inputText id="nombre" value = "#{peliculaBean.pelicula.nombre}" required="true"/>
+                <p:messages for="nombre"/>
+
+                <p:outputLabel for="trailer" value = "Trailer : "/>
+                <p:inputText id="trailer" value = "#{peliculaBean.pelicula.urlTrailer}" required="true"/>
+                <p:messages for="trailer"/>
+
+                <p:outputLabel for="sipnosis" value = "Sipnosis : "/>
+                <p:inputTextarea id="sipnosis" rows="3" value = "#{peliculaBean.pelicula.sipnosis}" required="true"/>
+                <p:messages for="sipnosis"/>
+
+                <p:outputLabel for="imagen" value = "Imagen : "/>
+                <p:fileUpload id="imagen" listener="#{peliculaBean.subirImagenes}"
+                              mode="advanced" multiple="true" sizeLimit="1000000" fileLimit="2"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" required="true"/>
+                <p:messages for="imagen"/>
+
+                <p:outputLabel for="reparto" value = "Reparto : "/>
+                <p:inputTextarea id="reparto" rows="6" value = "#{peliculaBean.pelicula.reparto}" required="true" />
+                <p:messages for="reparto"/>
+
+                <p:outputLabel for="genero" value = "Genero : " />
+                <p:selectManyCheckbox id="genero" value="#{peliculaBean.pelicula.generos}" layout="grid" columns="3">
+                    <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero}" itemValue="#{genero}"/>
+                </p:selectManyCheckbox>
+                <p:messages for="genero"/>
+
+
+            </h:panelGrid>
+            <p:commandButton value="#{peliculaBean.mensajeCrearEditar}" action= "#{peliculaBean.registrarPelicula()}" icon="pi pi-plus-circle" update="@form,crud_pelicula:lista_peliculas"/>
+            <p:growl for="mensaje_registro_pelicula" showDetail="true"/>
+
+        </h:form>
+    </p:dialog>
+   </h:body>
+
+</html>
