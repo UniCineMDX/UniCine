@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="styles.css" library="css" />
+    <title>Inicio | Administrador Super</title>
+</h:head>
+
+<h:body style="background-color: rgba(18,64,94,0.51)">
+
+    <div id = "barra_nav" >
+        <header>
+            <div class="px-3 py-2 text-bg-dark" style="background-color: #12405E">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <div>
+                            <a href="menuAdministrador.xhtml" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                                <img src="" alt=""/>
+                            </a>
+                        </div>
+
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="../adminSuper/tableroAdminSuper.xhtml" class="nav-link text-secondary">
+                                    INICIO
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../adminSuper/gestionTeatros.xhtml" class="nav-link text-white">
+                                    TEATROS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="nav-link text-white">
+                                    ADMINISTRADORES
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../adminSuper/gestionPeliculas.xhtml" class="nav-link text-white">
+                                    PELICULAS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../adminSuper/gestionConfiteria.xhtml" class="nav-link text-white">
+                                    CONFITERIA
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../adminSuper/gestionCupones.xhtml" class="nav-link text-white">
+                                    CUPONES
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="dropdown text-end">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="..\imagenes\jij.jpg" alt="photo" width="32" height="32" class="rounded-circle" />
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Configuraciones</a></li>
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><hr class="dropdown-divider"></hr></li>
+                                <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    </div>
+</h:body>
+
+</html>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="index.css" library="css"/>
+    <title>Gestion Peliculas</title>
+</h:head>
+
+<h:body style="background-color: rgba(18,64,94,0.51)">
+
+    <div id="nav_bar" class="bg-2 p-1"  >
+        <div class=" d-flex flex-wrap ">
+            <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
+            <ul class="nav div-nav">
+                <li class="nav-item"><a href="/index.xhtml" class="nav-link  item">Inicio</a></li>
+                <li class="nav-item"><a href="/cliente/cartelera.xhtml" class="nav-link  item">Cartelera</a></li>
+                <li class="nav-item"><a href="/cliente/confiteria.xhtml" class="nav-link  item">Confiteria</a></li>
+            </ul>
+            <div class="div-user">
+                <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="rounded-button ui-button-info iconuser"/>
+            </div>
+        </div>
+    </div>
+
+    <h:form id="crud_pelicula">
+
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Registrar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{peliculaBean.crearPeliculaDialog()}" update="dialogo_crear" oncomplete="PF('registrar_pelicula').show()" />
+                <p:commandButton id="boton_borrar" value="#{peliculaBean.mensajeBorrar}" icon="pi pi-trash" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{peliculaBean.eliminarPelicula}" update="crud_pelicula:lista_peliculas,@this" />
+            </p:toolbarGroup>
+        </p:toolbar>
+
+
+
+        <p:dataTable id="lista_peliculas" value="#{peliculaBean.peliculas}" var="pelicula" paginator="true" rows="10"
+                     rowKey="#{pelicula.codigo}"
+                     paginatorPosition="bottom" rowSelectMode="add"
+                     selection="#{peliculaBean.peliculasSeleccionadas}">
+
+            <p:ajax event="rowSelect" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowUnselect" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowSelectCheckbox" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="rowUnselectCheckbox" update="crud_pelicula:boton_borrar" />
+            <p:ajax event="toggleSelect" update="crud_pelicula:boton_borrar" />
+
+            <p:column selectionMode="multiple" exportable="false" />
+
+            <p:column headerText="Codigo" >
+                <h:outputText value="#{pelicula.codigo}"/>
+            </p:column>
+
+            <p:column headerText="Nombre" >
+                <h:outputText value="#{pelicula.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Sinopsis" >
+                <h:outputText value="#{pelicula.sipnosis}"/>
+            </p:column>
+
+            <p:column headerText="Reparto" >
+                <h:outputText value="#{pelicula.reparto}"/>
+            </p:column>
+
+            <p:column headerText="Trailer" >
+                <h:outputText value="#{pelicula.urlTrailer}"/>
+            </p:column>
+
+            <p:column headerText="Estado" >
+                <h:outputText value="#{pelicula.estadoPelicula}"/>
+            </p:column>
+
+            <p:column headerText="Genero" >
+                <h:outputText value="#{pelicula.generos}"/>
+            </p:column>
+
+
+            <p:column headerText="" >
+                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(pelicula)}" oncomplete="PF('registrar_pelicula').show()" update="dialogo_crear"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+    <p:dialog id="dialogo_crear" widgetVar="registrar_pelicula" modal="true" header="#{peliculaBean.mensajeCrearEditar}" showEffect="fade">
+
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5" >
+
+                <p:outputLabel for="nombre" value = "Nombre : "/>
+                <p:inputText placeholder="Ingrese el nombre de la pelicula" id="nombre" value = "#{peliculaBean.pelicula.nombre}" required="true"/>
+                <p:messages for="nombre"/>
+
+                <p:outputLabel for="trailer" value = "Trailer : "/>
+                <p:inputText id="trailer" value = "#{peliculaBean.pelicula.urlTrailer}" required="true"/>
+                <p:messages for="trailer"/>
+
+                <p:outputLabel for="sipnosis" value = "Sipnosis : "/>
+                <p:inputTextarea id="sipnosis" rows="3" value = "#{peliculaBean.pelicula.sipnosis}" required="true"/>
+                <p:messages for="sipnosis"/>
+
+                <p:outputLabel for="imagen" value = "Imagen : "/>
+                <p:fileUpload id="imagen" listener="#{peliculaBean.subirImagenes}"
+                              mode="advanced" multiple="true" sizeLimit="1000000" fileLimit="2"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" required="true"/>
+                <p:messages for="imagen"/>
+
+                <p:outputLabel for="reparto" value = "Reparto : "/>
+                <p:inputTextarea id="reparto" rows="6" value = "#{peliculaBean.pelicula.reparto}" required="true" />
+                <p:messages for="reparto"/>
+
+                <p:outputLabel for="genero" value = "Genero : " />
+                <p:selectManyCheckbox id="genero" value="#{peliculaBean.pelicula.generos}" layout="grid" columns="3">
+                    <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero}" itemValue="#{genero}"/>
+                </p:selectManyCheckbox>
+                <p:messages for="genero"/>
+
+
+            </h:panelGrid>
+            <p:commandButton value="#{peliculaBean.mensajeCrearEditar}" action= "#{peliculaBean.registrarPelicula()}" icon="pi pi-plus-circle" update="@form,crud_pelicula:lista_peliculas"/>
+            <p:growl for="mensaje_registro_pelicula" showDetail="true"/>
+
+        </h:form>
+    </p:dialog>
+    <div class="bg-2 footer">
+        <footer class="d-flex flex-wrap align-items-center">
+            <div class="col-md-4 d-flex ">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>
+                <span class="mb-3 mb-md-0 ">&copy; 2022 Unicine, Inc</span>
+            </div>
+
+            <ul class="nav col-md-8 justify-content-end  d-flex">
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-twitter"></i></a></li>
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-instagram"></i></a></li>
+                <li class="ms-3"><a class="text-white" href="#"><i class="pi pi-facebook"></i></a></li>
+            </ul>
+        </footer>
+    </div>
+</h:body>
+
+</html>

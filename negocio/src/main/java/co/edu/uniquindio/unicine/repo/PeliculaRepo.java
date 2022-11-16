@@ -23,7 +23,7 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
     @Query("select p from Pelicula p where p.estadoPelicula = :estado")
     List<Pelicula> obtenerPeliculasPorEstado(EstadoPelicula estado);
 
-    @Query("select p from Pelicula p where p.genero = :genero")
+    @Query("select p from Pelicula p where :genero member of p.generos")
     List<Pelicula> obtenerPeliculasPorGenero(Genero genero);
 
     @Query("select distinct p from Pelicula p join p.funciones f where f.sala.teatro.ciudad.codigo = :codigoCiudad")
@@ -38,7 +38,7 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, Integer>{
     @Query("select p from Pelicula p where p.nombre like concat('%', :nombre, '%') and p.estadoPelicula = :estado")
     List<Pelicula> buscarPeliculaEstado(String nombre, EstadoPelicula estado);
 
-    @Query("select p from Pelicula p where p.genero =:genero  order by p.nombre asc")
+    @Query("select p from Pelicula p where :genero member of p.generos order by p.nombre asc")
     List<Pelicula> listarPeliculas(Genero genero);
 
     @Query("select f from Pelicula p join p.funciones f where p.codigo = :codigoPelicula and f.horario.dia = :dia")

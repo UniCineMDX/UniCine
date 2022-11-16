@@ -1,4 +1,4 @@
-package co.edu.uniquindio.unicine.config;
+package co.edu.uniquindio.unicine.converter.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

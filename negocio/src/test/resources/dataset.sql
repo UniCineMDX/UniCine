@@ -22,11 +22,11 @@ insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
 insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
 insert into horario values (5, "Viernes","2021/01/06", "2021/01/05", "20:00");
 
-insert into pelicula values (1, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batman", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
-insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Batmn", "Pelicula de superheroe", "gfbfbfb", "fgbegegege");
-insert into pelicula values (3, "andrea, juan, roberto", "PREVENTA","TERROR", "Harry potter y la piedra filosofal", "Pelicula de suspenso", "gfbfbfb", "fgbegegege");
-insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "Btman", "Harry potter y el caliz de fuego", "gfbfbfb", "fgbegegege");
-insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA","COMEDIA", "atman", "Pelicula de superheroes", "gfbfbfb", "fgbegegege");
+insert into pelicula values (1, "andrea, juan, roberto",  "PREVENTA", "Batman", "Pelicula de superheroe", "gfbfbfb");
+insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA", "Batmn", "Pelicula de laura", "gfbfbfb");
+insert into pelicula values (3, "andrea, juan, roberto", "PREVENTA", "Harry potter y la piedra filosofal", "Pelicula de suspenso", "gfbfbfb");
+insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA", "Btman", "Harry potter y el caliz de fuego", "gfbfbfb");
+insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA", "atman", "Pelicula de super", "gfbfbfb");
 
 
 insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);

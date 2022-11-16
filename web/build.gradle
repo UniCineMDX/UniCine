@@ -1,6 +1,7 @@
 plugins {
     id 'org.joinfaces' version '4.7.3'
 }
+
 dependencies {
     implementation project(":negocio")
     implementation 'org.joinfaces:jsf-spring-boot-starter'
