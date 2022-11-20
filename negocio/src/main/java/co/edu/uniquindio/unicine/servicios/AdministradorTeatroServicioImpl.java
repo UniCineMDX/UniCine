@@ -133,12 +133,6 @@ public class AdministradorTeatroServicioImpl implements AdministradorTeatroServi
      */
     @Override
     public List<Teatro> listarTeatros() throws Exception{
-
-        List<Teatro> listaTeatros = teatroRepo.findAll();
-
-        if(listaTeatros.isEmpty()){
-            throw new Exception("la lista de teatros esta vacia");
-        }
         return teatroRepo.findAll();
     }
 

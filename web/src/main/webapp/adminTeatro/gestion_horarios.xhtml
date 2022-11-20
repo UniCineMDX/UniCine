@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/index.css"/>
+    <h:outputStylesheet name="index.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
+    <title>Gestionar horarios </title>
+</h:head>
+<h:body>
+
+    <div id="nav_bar" class="bg-2 p-1"  >
+        <div class=" d-flex flex-wrap ">
+            <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
+
+        </div>
+    </div>
+
+
+            <h:form id="crud_horario">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{horarioBean.crearHorarioDialog()}" oncomplete="PF('crear_horario').show()" update="dialog_crear"/>
+                        <p:commandButton id="btn_borrar" value="#{horarioBean.mensajeBorrar}" icon="pi pi-trash" disabled="#{horarioBean.horariosSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{horarioBean.eliminarHorarios()}" update="crud_horario:lista_horarios, @this"/>
+                        <p:growl for="mensaje_bean" showDetail="true"/>
+
+                    </p:toolbarGroup>
+
+                </p:toolbar>
+
+
+
+                <p:dataTable id="lista_horarios" value="#{horarioBean.horarios}" var="horario" paginator="true" rows="10" rowKey="#{horario.codigo}" paginatorPosition="bottom" rowSelectMode="add" selection="#{horarioBean.horariosSeleccionados}">
+
+                    <p:ajax event="rowSelect" update="crud_horario:btn_borrar" />
+                    <p:ajax event="rowUnselect" update="crud_horario :btn_borrar" />
+                    <p:ajax event="rowSelectCheckbox" update="crud_horario:btn_borrar" />
+                    <p:ajax event="rowUnselectCheckbox" update="crud_horario:btn_borrar" />
+                    <p:ajax event="toggleSelect" update="crud_horario:btn_borrar" />
+
+
+                    <p:column selectionMode="multiple" exportable="false"/>
+
+                    <p:column headerText="Código">
+                        <h:outputText value="#{horario.codigo}" />
+                    </p:column>
+
+                    <p:column headerText="Dia">
+                        <h:outputText value="#{horario.dia}" />
+                    </p:column>
+
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{horario.hora}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha inicio">
+                        <h:outputText value="#{horario.fechaInicio}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha fin">
+                        <h:outputText value="#{horario.fechaFin}" />
+                    </p:column>
+
+
+
+                    <p:column headerText="">
+                        <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{horarioBean.seleccionarHorario(horario)}" oncomplete="PF('crear_horario').show()" update="dialog_crear"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:form>
+
+
+
+            <p:dialog id="dialog_crear" widgetVar="crear_horario" modal="true" header="#{horarioBean.mensajeCrear}" showEffect="fade">
+
+                <h:form >
+                    <h:panelGrid columns="3" cellpadding="5">
+
+                        <p:outputLabel for="dia" value="Día: "/>
+                        <p:inputText id="dia" value="#{horarioBean.horario.dia}" required="true" />
+                        <p:message for="dia"/>
+
+                        <p:outputLabel for="hora" value="Hora: "/>
+                        <p:inputText id="hora" value="#{horarioBean.horario.hora}" required="true" />
+                        <p:message for="hora"/>
+
+                        <p:outputLabel for="fechaFin" value="Fecha fin: "/>
+                        <p:datePicker id="fechaFin" value="" monthNavigator="true" yearNavigator="true" showWeek="true"/>
+
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="#{horarioBean.mensajeCrear}" action="#{horarioBean.crearHorario()}" update="@form, crud_horario:lista_horarios"/>
+                    <p:growl for="mensaje_bean" showDetail="true"/>
+
+                </h:form>
+
+            </p:dialog>
+
+
+
+
+
+
+        <div class="bg-2 footer">
+            <footer class="d-flex flex-wrap align-items-center">
+                <div class="col-md-4 d-flex ">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>
+                    <span class="mb-3 mb-md-0 ">&copy; 2022 Unicine, Inc</span>
+                </div>
+
+                <ul class="nav col-md-8 justify-content-end  d-flex">
+                    <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-twitter"></i></a></li>
+                    <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-instagram"></i></a></li>
+                    <li class="ms-3"><a class="text-white" href="#"><i class="pi pi-facebook"></i></a></li>
+                </ul>
+            </footer>
+        </div>
+</h:body>
+
+</html>
