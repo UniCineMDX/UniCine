@@ -1,6 +1,11 @@
-body {
+*{
     margin: 0;
-    margin-bottom: 40px;
+    box-sizing: border-box;
+}
+body{
+    padding-top: 80px;
+    background: #F5F5F5 !important;
+
 }
 .ui-tabs-panels{
     background: rgba(21, 113, 149, 0.8) !important;
@@ -8,9 +13,66 @@ body {
 .datos{
     margin: 20px 50px;
     padding: 10px;
-    width: 40em;
+    width: 40%;
     height: 150px;
     color: white;
     background: #157195;
     display: inline-block;
+}
+.nav-link{
+    color: white !important;
+    text-decoration: none;
+}
+.nav-item a:hover{
+    color: #0dcaf0 !important;
+}
+
+.btn-edit{
+    position: absolute !important;
+    background: #0dcaf0 !important;
+    width: 230px!important;
+    margin-top: 270px!important;
+    margin-left: 1400px!important;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 25px !important;
+}
+.btn-edit:hover{
+    width: 240px!important;
+    height: 55px!important;
+}
+
+.btn-cerrar-sesion{
+    position: absolute !important;
+    background: #0dcaf0 !important;
+    width: 230px!important;
+    margin-top: 270px!important;
+    margin-left: 1700px!important;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 25px !important;
+}
+.btn-cerrar-sesion:hover{
+    width: 240px!important;
+    height: 55px!important;
+}
+
+.encabezado{
+    background: rgba(21, 113, 149, 0.8) !important;;
+    height: 300px;
+}
+.c-datos{
+    width: 1650px;
+    position: absolute;
+    top: 70%;
+    left: 10%;
+    right: 10%;
+    margin-top: 50px;
+}
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    color: white;
 }

@@ -21,13 +21,14 @@
         <div class="container-nav">
             <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
             <ul class="nav-menu">
-                <li class="nav-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
-                <li class="nav-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
-                <li class="nav-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
+                <li class="nav-item nav-link-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
+                <li class="nav-item nav-link-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
+                <li class="nav-item nav-link-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
                 <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
             </ul>
         </div>
     </div>
+
 
     <p:dialog widgetVar="IniciarSesion" modal="true" header="Inicio de sesion" showEffect="fade"  style="text-align: center">
         <h:form >
@@ -45,7 +46,7 @@
         </h:form>
         <p style="margin-top: 10px">¿No estas registrado aun? <a href="registro.xhtml">Registrate Aqui</a> </p>
     </p:dialog>
-     <div class="footer">
+    <div class="footer">
         <footer class="d-flex flex-wrap align-items-center">
             <div class="col-md-4 d-flex ">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>

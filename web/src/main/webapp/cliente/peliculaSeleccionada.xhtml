@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="resources/css/index.css"/>
+    <h:outputStylesheet name="index.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
+    <title>Unicine</title>
+</h:head>
+<h:body>
+    <div id="nav_bar" class="header" >
+        <div class="container-nav">
+            <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
+                <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
+            </ul>
+        </div>
+    </div>
+    <p>#{detallePeliculaBen.pelicula}</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/-Sn6z14JoxI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+    <div class="footer">
+        <footer class="d-flex flex-wrap align-items-center">
+            <div class="col-md-4 d-flex ">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>
+                <span class="mb-3 mb-md-0 ">&copy; 2022 Unicine, Inc</span>
+            </div>
+
+            <ul class="nav col-md-8 justify-content-end  d-flex">
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-twitter"></i></a></li>
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-instagram"></i></a></li>
+                <li class="ms-3"><a class="text-white" href="#"><i class="pi pi-facebook"></i></a></li>
+            </ul>
+        </footer>
+    </div>
+</h:body>
+</html>

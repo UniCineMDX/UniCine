@@ -1,82 +1,204 @@
-.bg-1{
-    background: #121931;
+*{
+    margin: 0;
+    box-sizing: border-box;
 }
-.bg-2{
+body{
+    padding-top: 80px;
+}
+.header{
+    left: 0;
+    top: 0;
+    height: 80px;
+    width: 100%;
     background: #12405E;
+    position: fixed;
+    z-index: 1000;
     color: white;
 }
-.bg-3{
-    background: #157195;
-}
-.bg-4{
-    background: #1FADD1;
-}
-.bg-5{
-    background: #06D0DC;
-}
-.bg-6{
-    background: #737874;
-}
-.bg-7{
-    background: #CCCCCC;
-}
 
-.iconuser{
-    background: #737874;
+.container-nav{
+    display: flex;
+    justify-content: space-between;
 }
-
-.logo{
+.nav-link-nav{
+    color: white ;
+    text-decoration: none;
+}
+.nav-link-item{
+    color: white;
+    height: 80px;
     width: 100px;
-    height: 50px;
-    margin-right: 100px;
-    padding: 0;
-}
+    text-decoration: none;
 
-.div-nav{
-    margin-left:50em;
 }
-.div-user{
-    padding: 10px;
-    margin-left: 5%;
+.logo{
+    line-height: 80px;
+    width: 200px;
+    height: 80px;
+    background: #12405E;
 }
-.div-redes{
-    margin-right: 200px;
+.nav-menu{
+    display: flex;
+    margin-right: 40px;
+    list-style: none;
+
 }
 .nav-item{
-    background-color: #1FADD1;
+
+    font-size: 28px;
+    margin: 15px  30px;
+    text-transform: uppercase;
     border-radius: 20px;
-    margin: 10px;
-    width: 150px;
-    height: 40px;
-    padding: 0;
+    background-color: #0dcaf0;
+    width: 200px;
     text-align: center;
 }
 
-.item{
-    color: white;
-}
-
 .nav-item:hover{
-    color: #1FADD1;
     background-color: white;
+    transition: 0.5s;
+    color: #0dcaf0 !important;
+}
+.nav-item a:hover{
+    color: #0dcaf0;
+}
+.btn-perfil{
+    height: 50px !important;
+    width: 50px !important;
+    margin-top: 12px !important;
+    margin-left: 40px !important;
+    .nav-item:
+    margin-top: 20px;
+
+    background: #0dcaf0 !important;
+}
+.nav-item{
+    margin-top: 20px;
+}
+.btn-perfil:hover{
+    height: 55px !important;
+    width: 55px !important;
+    color: #0dcaf0 !important;
+    background: white !important;
+}
+.ui-dialog-titlebar{
+    color: white !important;
+    background: #12405E !important;
+}
+.ui-dialog-content{
+    padding-top: 20px !important;
+}
+.ui-dialog-content button{
+    background: #12405E !important;
+}
+.carrusel_superior{
+    background: #12405E;
+    height: 350px !important;
+}
+.container-filter{
+    height: 100px;
+    padding: 10px 0 10px 30px;
+    background: #12405E;
+}
+.img-index-carrusel{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+.container-filter-p{
+    color: white !important;
+    font-size: 20px !important;
+    display: inline !important;
+    margin-top: 20px !important;
+    margin-right: 10px !important;
+}
+.chip-genero {
+    color: white !important;
+    background: #737874 !important;
+    font-size: 20px !important;
+    font-weight: 15 !important;
+    margin-right: 5px !important;
+}
+.pelicula-item{
+    background: rgba(21, 113, 149, 0.8) !important;
+    margin: 0 15px;
+    height: 350px;
+}
+.ui-carousel-indicators{
+    display: none;
+}
+.pelicula-item-content{
+    color: white;
+    width: 60%;
+    height: 100%;
+    padding: 20px;
+    display: inline-block;
+}
+.imagen-pelicula{
+    height: 100px;
+    width: 200px;
+    display: inline-block;
+
+}
+.div-generos{
+    color: white;
+    height: 40px;
+    margin-bottom: 10px;
+}
+.etq-genero{
+    background: #6f42c1;
+}
+.div-nombre-pelicula{
+    width: 100%;
+    height: 80%;
+    font-size: 50px;
+}
+.tituloPelicula{
+    height: 100%;
+    width: 100%;
+    font-size: 35px;
+}
+.div-container-filter {
+    margin-top: 20px;
+}
+.form-filtro{
+    display: inline-block;
+}
+.form-filtro button{
+    align-items: center;
+    background: #0dcaf0;
+    height: 45px;
 }
 
-html {
-    min-height: 100%;
-    position: relative;
+.form-filtro button :hover{
+    background-color: white;
+    color:#12405E ;
+    transition: 0.5s;
 }
-body {
-    margin: 0;
-    margin-bottom: 40px;
+.barra-peliculas{
+    color: #12405E;
+    height: 50px;
+    padding-left: 20px;
+    margin-top: 20px;
+    background: #CCCCCC;
+}
+.select-pelicula{
+    transition: all 500ms;
+}
+.select-pelicula:hover{
+    background: #0dcaf0 !important;
+}
+.img-carrusel-pelicula{
+    margin-top: 50px;
+    height: 250px;
+    width: 220px;
 }
 footer {
     background: #12405E;
-    position: absolute;
     bottom: 0;
     width: 100%;
     height: 40px;
     color: white;
-    align-items: center;
 }
 
 

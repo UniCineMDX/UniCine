@@ -155,7 +155,7 @@ public class AdminSuperServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearPelicula() {
 
-        Pelicula pelicula = new Pelicula("El regreso del aguacate","el aguacate regresa","sd","as","asd","Creada");
+        Pelicula pelicula = new Pelicula();
         try {
             Pelicula peliculaCreada =  adminSuperServicio.crearPelicula(pelicula);
             System.out.println(peliculaCreada);
@@ -169,7 +169,7 @@ public class AdminSuperServicioTest {
     @Sql("classpath:dataset.sql")
     public void actualizarPelicula() {
 
-        Pelicula pelicula = new Pelicula("El regreso del aguacate","el aguacate regresa","sd","as","asd","Creada");
+        Pelicula pelicula = new Pelicula();
         try {
             Pelicula peliculaCreada =  adminSuperServicio.crearPelicula(pelicula);
             Pelicula peliculaActualizada =  adminSuperServicio.actualizarDatosPelicula(peliculaCreada.getCodigo(),peliculaCreada);

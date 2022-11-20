@@ -17,11 +17,11 @@ public class CiudadConverter implements Converter<Ciudad> {
 
     @Override
     public Ciudad getAsObject(FacesContext context, UIComponent component, String value) {
-        Ciudad ciudad;
+        Ciudad ciudad = null;
         try {
             ciudad = adminServicio.obtenerCiudad(Integer.parseInt(value));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return ciudad;
     }
@@ -30,8 +30,7 @@ public class CiudadConverter implements Converter<Ciudad> {
     public String getAsString(FacesContext context, UIComponent component, Ciudad value) {
         if(value != null){
             return ""+value.getCodigo();
-        }else{
-            return "";
         }
+        return "";
     }
 }

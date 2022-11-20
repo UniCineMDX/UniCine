@@ -11,16 +11,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="resources/css/perfil.css"/>
     <h:outputStylesheet name="perfil.css" library="css"/>
+    <h:outputStylesheet name="index.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
     <title>Registro cliente</title>
 </h:head>
 <h:body>
 
-    <div class="encabezado">
+    <div id="nav_bar" class="header" >
+        <div class="container-nav">
+            <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link" href="/index.xhtml">Inicio</a></li>
+                <li class="nav-item"><a  class="nav-link" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
+                <li class="nav-item"><a  class="nav-link" href="/cliente/confiteria.xhtml">Confiteria</a></li>
+                <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
+            </ul>
+        </div>
+    </div>
+    <div class="encabezado item">
         <div class="c-avatar">
 
         </div>
-        <p:commandButton value="Editar perfil" />
-        <p:commandButton value="Cerrar sesion" />
+        <p:commandButton value="Editar perfil" styleClass="btn-edit"/>
+        <p:commandButton value="Cerrar sesion" styleClass="btn-cerrar-sesion"/>
     </div>
 
     <div class="card c-datos">
@@ -55,6 +69,20 @@
                 </p>
             </p:tab>
         </p:tabView>
+    </div>
+    <div class="footer">
+        <footer class="d-flex flex-wrap align-items-center">
+            <div class="col-md-4 d-flex ">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"><h:graphicImage></h:graphicImage></a>
+                <span class="mb-3 mb-md-0 ">&copy; 2022 Unicine, Inc</span>
+            </div>
+
+            <ul class="nav col-md-8 justify-content-end  d-flex">
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-twitter"></i></a></li>
+                <li class="ms-3"><a class="text-white"  href="#"><i class="pi pi-instagram"></i></a></li>
+                <li class="ms-3"><a class="text-white" href="#"><i class="pi pi-facebook"></i></a></li>
+            </ul>
+        </footer>
     </div>
 </h:body>
 </html>

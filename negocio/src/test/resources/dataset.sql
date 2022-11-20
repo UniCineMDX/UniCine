@@ -22,18 +22,18 @@ insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
 insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
 insert into horario values (5, "Viernes","2021/01/06", "2021/01/05", "20:00");
 
-insert into pelicula values (1, "andrea, juan, roberto",  "PREVENTA", "Batman", "Pelicula de superheroe", "gfbfbfb");
-insert into pelicula values (2, "andrea, juan, roberto",  "PREVENTA", "Batmn", "Pelicula de laura", "gfbfbfb");
-insert into pelicula values (3, "andrea, juan, roberto", "PREVENTA", "Harry potter y la piedra filosofal", "Pelicula de suspenso", "gfbfbfb");
-insert into pelicula values (4, "andrea, juan, roberto",  "PREVENTA", "Btman", "Harry potter y el caliz de fuego", "gfbfbfb");
-insert into pelicula values (5, "andrea, juan, roberto",  "PREVENTA", "atman", "Pelicula de super", "gfbfbfb");
+insert into pelicula values (1, "andrea, juan, roberto",  "PROXIMAMENTE", "pelicula1", "Pelicula de superheroe", "gfbfbfb");
+insert into pelicula values (2, "andrea, juan, roberto",  "PROXIMAMENTE", "pelicula2", "Pelicula de laura", "gfbfbfb");
+insert into pelicula values (3, "andrea, juan, roberto", "PROXIMAMENTE", "pelicula3", "Pelicula de suspenso", "gfbfbfb");
+insert into pelicula values (4, "andrea, juan, roberto",  "CARTELERA", "pelicula4", "Harry potter y el caliz de fuego", "gfbfbfb");
+insert into pelicula values (5, "andrea, juan, roberto",  "CARTELERA", "pelicula5", "Pelicula de super", "gfbfbfb");
 
 
 insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);
-insert into teatro values (2, "Calle novena #18", "3125679834", "1", 2);
-insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 3);
-insert into teatro values (4, "Calle norte #3", "3125679834", "2", 4);
-insert into teatro values (5, "Calle #9", "3125679834", "3", 5);
+insert into teatro values (2, "Calle novena #18", "3125679834", "1", 1);
+insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 1);
+insert into teatro values (4, "Calle norte #3", "3125679834", "2", 1);
+insert into teatro values (5, "Calle #9", "3125679834", "3", 1);
 
 
 insert into distribucion_silla values (1, 10, "eegege", 10, 100);
@@ -50,10 +50,10 @@ insert into sala values (5,"HABILITADA", "sala5", 1, 5);
 
 
 insert into funcion values (1, 6.500, 1, 1, 1);
-insert into funcion values (2, 6500, 2, 1, 2);
-insert into funcion values (3, 7000, 3, 1, 3);
-insert into funcion values (4, 5000, 4, 1, 4);
-insert into funcion values (5, 6.500,5, 1, 5);
+insert into funcion values (2, 6500, 2, 2, 2);
+insert into funcion values (3, 7000, 3, 3, 3);
+insert into funcion values (4, 5000, 4, 4, 4);
+insert into funcion values (5, 6.500,5, 5, 5);
 
 
 insert into cliente values ("125", "lala@gmail.com", "dgdddg", "Laura", "gegeg", "ACTIVO");

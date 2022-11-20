@@ -32,7 +32,7 @@ public class PeliculaTest {
 
     public void registrar(){
 
-        Pelicula pelicula = new Pelicula("Batman", "pelicula de accion", "fggrgrgr", "hhhhrhr","Preventa", "Creada");
+        Pelicula pelicula = new Pelicula();
         Pelicula guardado = peliculaRepo.save(pelicula);
 
         System.out.println(guardado);
@@ -63,7 +63,7 @@ public class PeliculaTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void buscarPeliculaCiudad(){
-        List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasCiudad(2);
+        List<Pelicula> peliculas = peliculaRepo.obtenerPeliculasCiudad(2,EstadoPelicula.CARTELERA);
         peliculas.forEach(System.out::println);
     }
 
@@ -71,6 +71,13 @@ public class PeliculaTest {
     @Sql("classpath:dataset.sql")
     public void listarPeliculas(){
         List<Pelicula> listaPeliculas = peliculaRepo.listarPeliculas(Genero.TERROR);
+        System.out.println(listaPeliculas);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtpelis(){
+        List<Pelicula> listaPeliculas = peliculaRepo.obtpelis("Medellin");
         System.out.println(listaPeliculas);
     }
 

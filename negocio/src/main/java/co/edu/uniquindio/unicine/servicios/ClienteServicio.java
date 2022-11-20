@@ -31,7 +31,7 @@ public interface ClienteServicio {
     List<CompraConfiteria> crearComprasConfiteria(List<List<Integer>> confiterias)throws Exception;
     List<Pelicula> listarPeliculas() throws Exception;
     HashMap<String,Boolean> listaSillasFuncion(Integer codigoFuncion) throws Exception;
-    List<Pelicula> listarPeliculasCiudad(Integer codigoCiudad) throws Exception;
+    List<Pelicula> listarPeliculasCiudad(Integer codigoCiudad,EstadoPelicula estado) throws Exception;
     List<Pelicula> listarPeliculasCiudadTeatro(Integer codigoCiudad, Integer codigoTeatro) throws Exception;
     List<LocalDate> listarFechaFuncionesPelicula(Integer codigoPelicula,Integer codigoTeatro) throws Exception ;
     List<String> listarHorariosFechaFuncionesPelicula(Integer codigoPelicula, LocalDate fechaPelicula, Integer codigoTeatro) throws Exception ;

@@ -525,17 +525,15 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Pelicula> listarPeliculasCiudad(Integer codigoCiudad) throws Exception {
+    public List<Pelicula> listarPeliculasCiudad(Integer codigoCiudad, EstadoPelicula estado) throws Exception {
 
-        List<Pelicula> listaPeliculasCiudad = peliculaRepo.obtenerPeliculasCiudad(codigoCiudad);
+        List<Pelicula> listaPeliculasCiudad = peliculaRepo.obtenerPeliculasCiudad(codigoCiudad,estado);
         Ciudad ciudad = ciudadRepo.findByCodigo(codigoCiudad);
 
         if(ciudad == null){
             throw new Exception("No existe una ciudad con codigo "+codigoCiudad);
         }
-        if(listaPeliculasCiudad.isEmpty()){
-            throw new Exception("No existen peliculas para esta ciudad");
-        }
+
         return listaPeliculasCiudad;
     }
     @Override
@@ -618,10 +616,6 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public List<Pelicula> buscarPeliculaEstado(EstadoPelicula estadoPelicula) throws Exception {
         List<Pelicula> listarPeliculasEstado = peliculaRepo.obtenerPeliculasPorEstado(estadoPelicula);
-
-        if(listarPeliculasEstado.isEmpty()){
-            throw new Exception("No existe peliculas creadas con estado "+estadoPelicula.toString());
-        }
         return listarPeliculasEstado;
     }
 

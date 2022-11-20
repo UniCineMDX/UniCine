@@ -284,7 +284,7 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarPeliculasCiudad(){
         try {
-            List<Pelicula> listaPeliculasCiudad = clienteServicio.listarPeliculasCiudad(1);
+            List<Pelicula> listaPeliculasCiudad = clienteServicio.listarPeliculasCiudad(1,EstadoPelicula.CARTELERA);
             listaPeliculasCiudad.forEach(System.out::println);
             Assertions.assertNotNull(listaPeliculasCiudad);
         } catch (Exception e) {
