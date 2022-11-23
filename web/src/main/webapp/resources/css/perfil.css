@@ -32,8 +32,8 @@ body{
     background: #0dcaf0 !important;
     width: 230px!important;
     margin-top: 270px!important;
-    margin-left: 1400px!important;
-    border-radius: 20px;
+    margin-left: 70vw!important;
+    border-radius: 20px !important;
     text-transform: uppercase;
     font-size: 25px !important;
 }
@@ -43,11 +43,12 @@ body{
 }
 
 .btn-cerrar-sesion{
+    border-radius: 20px !important;
     position: absolute !important;
     background: #0dcaf0 !important;
     width: 230px!important;
     margin-top: 270px!important;
-    margin-left: 1700px!important;
+    margin-left: 85vw!important;
     border-radius: 20px;
     text-transform: uppercase;
     font-size: 25px !important;
@@ -60,6 +61,7 @@ body{
 .encabezado{
     background: rgba(21, 113, 149, 0.8) !important;;
     height: 300px;
+    width: 100%;
 }
 .c-datos{
     width: 1650px;
@@ -68,6 +70,31 @@ body{
     left: 10%;
     right: 10%;
     margin-top: 50px;
+}
+.img-avatar{
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    background:#12405E;
+}
+.container-datos{
+    text-align: center;
+}
+.outputs-perfil{
+    margin-top: 10px;
+    font-size: 30px;
+}
+h3{
+    text-align: left;
+}
+.c-cupon{
+    width: 500px;
+    height: 300px;
+    display: inline;
+    margin: 20px;
 }
 .footer{
     position: absolute;

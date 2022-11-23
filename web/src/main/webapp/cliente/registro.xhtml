@@ -6,19 +6,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <h:head>
+    <h:outputStylesheet name="registro.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Registro cliente</title>
 </h:head>
 
 
-<h:body>
+<h:body styleClass="body">
 
-    <p:panel header="Registro De Usuario" styleClass="text-white bg-3 display-2">
-        <h:form >
+    <p:panel header="Registro De Usuario"  styleClass="formulario">
+        <h:form>
 
-            <h:panelGrid columns="3" cellpadding="5">
+            <h:panelGrid columns="3" cellpadding="5" >
 
                 <p:outputLabel for="cedula" value="Cedula: "/>
                 <p:inputText id="cedula" value="#{usuiarioBean.cliente.cedula}" required="true"/>
@@ -41,8 +45,11 @@
                 <p:message for="password_confirmacion"/>
 
             </h:panelGrid>
-            <p:button value="Cancelar" href="/cliente/inicioSesion.xhtml" styleClass=""/>
-            <p:commandButton value="Registrarse" action="#{usuiarioBean.registrarCliente()}" update="@form"/>
+            <div class="botones">
+                <p:button value="Cancelar" href="/cliente/inicioSesion.xhtml" styleClass="btn-registro"/>
+                <p:commandButton value="Registrarse" action="#{usuiarioBean.registrarCliente()}"  styleClass="btn-registro" update="@form"/>
+            </div>
+
             <p:growl for="mensaje_bean" showDetail="true"/>
 
         </h:form>

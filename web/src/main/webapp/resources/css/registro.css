@@ -1,6 +1,29 @@
-.clas{
-    width: 400px;
-text-align: center;
-margin: auto;
-margin-top: 9em;
+.body{
+    background: rgba(21, 113, 149, 0.8) !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario{
+    width: 500px;
+}
+
+.ui-widget-header{
+    color: white !important;
+    background: #157195 !important;
+}
+
+.botones{
+    margin-top: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-registro{
+    margin: 0 20px !important;
+    background: #0dcaf0 !important;
 }

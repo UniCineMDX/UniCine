@@ -20,12 +20,12 @@
     <div id="nav_bar" class="header" >
         <div class="container-nav">
             <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
-                <ul class="nav-menu">
-                    <li class="nav-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
-                    <li class="nav-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
-                    <li class="nav-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
-                    <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
-                </ul>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
+                <p:commandButton onclick="#{seguridadBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
+            </ul>
         </div>
     </div>
     <div class="carrusel_superior">

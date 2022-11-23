@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
-import co.edu.uniquindio.unicine.entidades.AdministradorSuper;
-import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Persona;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Scope("session")
@@ -32,28 +31,58 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private Persona usuario;
 
+    @Getter @Setter
+    private Cliente cliente;
+
+    @Getter @Setter
+    private List<Compra> listaCompraRedimidas;
+
+    @Getter @Setter
+    private List<Compra> listaCompraSinRedimir;
+
+    @Getter @Setter
+    private AdministradorSuper administradorSuper;
+
+    @Getter @Setter
+    private AdministradorTeatro administradorTeatro;
+
     @PostConstruct
     public void inicializar(){
         autenticado = false;
+        listaCompraSinRedimir = new ArrayList<>();
+        listaCompraRedimidas  = new ArrayList<>();
     }
-
+    public String verificarInicioSesion(){
+        if(!autenticado){
+            return "PF('IniciarSesion').show()";
+        }else{
+            if(usuario instanceof Cliente){
+                return "/cliente/perfil.xhtml?faces-redirect=true";
+            }else{
+                if(usuario instanceof AdministradorSuper){
+                    return "/tableroAdminTeatro.xhtml?faces-redirect=true";
+                }else{
+                    return "/tableroAdminSuper.xhtml?faces-redirect=true";
+                }
+            }
+        }
+    }
     public String iniciarSesion(){
         try {
             if(!correo.isEmpty() || !password.isEmpty()){
                 usuario = clienteServicio.login(correo,password);
+                autenticado = true;
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Inicio de sesion existoso");
                 FacesContext.getCurrentInstance().addMessage("mensaje_bean" , fm);
 
                 if(usuario instanceof Cliente){
-                    tipoSesion = "cliente";
+                    cliente = (Cliente) usuario;
                     return "/cliente/perfil.xhtml?faces-redirect=true";
                 }
                 if(usuario instanceof AdministradorSuper){
-                    tipoSesion = "adminSuper";
                     return "/tableroAdminTeatro.xhtml?faces-redirect=true";
                 }
                 if(usuario instanceof AdministradorTeatro) {
-                    tipoSesion = "adminTeatro";
                     return "/tableroAdminSuper.xhtml?faces-redirect=true";
                 }
                 return "/index.xhtml?faces-redirect=true";
@@ -69,6 +98,7 @@ public class SeguridadBean implements Serializable {
     }
 
     public String cerrarSesion(){
+        autenticado = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/index.xhtml?faces-redirect=true";
     }

@@ -22,13 +22,6 @@ insert into horario values (3, "Miercoles","2021/01/06", "2021/01/03", "1:00");
 insert into horario values (4, "Jueves","2021/01/06", "2021/01/04", "12:00");
 insert into horario values (5, "Viernes","2021/01/06", "2021/01/05", "20:00");
 
-insert into pelicula values (1, "andrea, juan, roberto",  "PROXIMAMENTE", "pelicula1", "Pelicula de superheroe", "gfbfbfb");
-insert into pelicula values (2, "andrea, juan, roberto",  "PROXIMAMENTE", "pelicula2", "Pelicula de laura", "gfbfbfb");
-insert into pelicula values (3, "andrea, juan, roberto", "PROXIMAMENTE", "pelicula3", "Pelicula de suspenso", "gfbfbfb");
-insert into pelicula values (4, "andrea, juan, roberto",  "CARTELERA", "pelicula4", "Harry potter y el caliz de fuego", "gfbfbfb");
-insert into pelicula values (5, "andrea, juan, roberto",  "CARTELERA", "pelicula5", "Pelicula de super", "gfbfbfb");
-
-
 insert into teatro values (1, "Calle sexta #12", "3125679834", "1", 1);
 insert into teatro values (2, "Calle novena #18", "3125679834", "1", 1);
 insert into teatro values (3, "Calle diagonal #34", "3125679834", "2", 1);

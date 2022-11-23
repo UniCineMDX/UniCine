@@ -68,11 +68,16 @@ public class UsuiarioBean implements Serializable {
     }
 
     public String verificarInicioSesion(){
-        if(usuario == null){
-            return "PF('IniciarSesion').show()";
-        }else{
-            return "/cliente/inicioSesion.xhtml?faces-redirect=true";
-        }
+            if(usuario instanceof Cliente){
+                return "/cliente/perfil.xhtml?faces-redirect=true";
+            }else{
+                if(usuario instanceof AdministradorSuper){
+                    return "/tableroAdminTeatro.xhtml?faces-redirect=true";
+                }else{
+                    return "/tableroAdminSuper.xhtml?faces-redirect=true";
+                }
+            }
+
     }
 
     public String iniciarSesion(){

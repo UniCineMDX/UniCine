@@ -14,59 +14,53 @@
     <h:outputStylesheet name="index.css" library="css"/>
     <h:outputStylesheet name="bootstrap.min.css" library="css"/>
     <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
-    <title>Registro cliente</title>
+    <title>Perfil</title>
 </h:head>
 <h:body>
-
     <div id="nav_bar" class="header" >
         <div class="container-nav">
             <h:graphicImage library="img" name="logoUnicine.svg" styleClass="logo"/>
             <ul class="nav-menu">
-                <li class="nav-item"><a class="nav-link" href="/index.xhtml">Inicio</a></li>
-                <li class="nav-item"><a  class="nav-link" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
-                <li class="nav-item"><a  class="nav-link" href="/cliente/confiteria.xhtml">Confiteria</a></li>
-                <p:commandButton onclick="#{usuiarioBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
+                <li class="nav-item"><a class="nav-link-item" href="/index.xhtml">Inicio</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/cartelera.xhtml" >Cartelera</a></li>
+                <li class="nav-item"><a  class="nav-link-item" href="/cliente/confiteria.xhtml">Confiteria</a></li>
+                <p:commandButton onclick="#{seguridadBean.verificarInicioSesion()}" icon="pi pi-user" href="cliente/inicioSesion.xhtml" styleClass="btn-perfil rounded-button ui-button-info"/>
             </ul>
         </div>
     </div>
     <div class="encabezado item">
-        <div class="c-avatar">
-
-        </div>
+        <p:graphicImage library="img" name="banner6.jpg" styleClass="img-avatar"/>
         <p:commandButton value="Editar perfil" styleClass="btn-edit"/>
-        <p:commandButton value="Cerrar sesion" styleClass="btn-cerrar-sesion"/>
+        <p:commandButton action="#{seguridadBean.cerrarSesion()}" value="Cerrar sesion" styleClass="btn-cerrar-sesion"/>
     </div>
 
     <div class="card c-datos">
-        <p:tabView dynamic="true" styleClass="" cache="true">
+        <p:tabView dynamic="true"  cache="true">
             <p:tab title="MIS DATOS" >
-                <div id="cedula" class="datos">
+                <div id="cedula" class="datos container-datos" >
                     <h3>CODIGO DE USUARIO:</h3>
+                    <h:outputLabel  value="#{seguridadBean.cliente.cedula}" styleClass="outputs-perfil"/>
                 </div>
-                <div id="nombre" class="datos">
+                <div id="nombre" class="datos container-datos">
                     <h3>NOMBRE COMPLETO:</h3>
-
+                    <h:outputLabel styleClass="outputs-perfil" value="#{seguridadBean.cliente.nombre}"/>
                 </div>
-                <div id="correo" class="datos">
+                <div id="correo" class="datos container-datos">
                     <h3>CORREO:</h3>
-
+                    <h:outputLabel styleClass="outputs-perfil" value="#{seguridadBean.cliente.correo}"/>
                 </div>
-                <div id="telefono" class="datos">
+                <div id="telefono" class="datos container-datos">
                     <h3>TELEFONOS:</h3>
+                    <h:outputLabel styleClass="outputs-perfil" value="telefonos"/>
                 </div>
             </p:tab>
             <p:tab title="MIS CUPONES">
-                <p class="m-0">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                </p>
+                <p:dataScroller value="#{seguridadBean.cliente.cupones}" var="cupon" chunkSize="10" mode="inline" scrollHeight="500">
+                    <p:graphicImage  library="img" name="banner7.png" styleClass="c-cupon"/>
+                </p:dataScroller>
             </p:tab>
             <p:tab title="MIS COMPRAS">
-                <p class="m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                    et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                </p>
+
             </p:tab>
         </p:tabView>
     </div>
